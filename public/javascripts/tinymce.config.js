@@ -76,6 +76,7 @@ export default class EditorConfig {
           ? 'hr,fullscreen,instructure-ui-icons,instructure_condensed_buttons,instructure_documents,instructure_html_view,instructure_media_embed'
           : 'textcolor'
       },link,directionality,a11y_checker,wordcount`,
+      paste_preprocess: (pl,ev) => {return this.preventPaste(pl,ev)},
       external_plugins: {
         instructure_image: '/javascripts/tinymce_plugins/instructure_image/plugin.js',
         instructure_links: '/javascripts/tinymce_plugins/instructure_links/plugin.js',
@@ -240,5 +241,9 @@ export default class EditorConfig {
   toolbar() {
     const instructure_buttons = this.buildInstructureButtons()
     return this.balanceButtons(instructure_buttons)
+  }
+
+  preventPaste(plugin,event) {
+    event.content = ''
   }
 }
