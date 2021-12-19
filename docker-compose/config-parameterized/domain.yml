@@ -1,0 +1,13 @@
+test:
+  domain: localhost
+
+development:
+  domain: "localhost:3000"
+
+production:
+  #domain: "canvas-docker.xinics.kr"
+  domain: <%= ENV['DOMAIN'] %>
+  # whether this instance of canvas is served over ssl (https) or not
+  # defaults to true for production, false for test/development
+  ssl: <%= ENV['SSL_ENABLED'] %>
+  # files_domain: "canvasfiles.example.com"

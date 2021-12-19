@@ -1,0 +1,29 @@
+# do not create a queue: section for your test environment
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: canvas_test
+  host: localhost
+  username: canvas
+  timeout: 5000
+
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: canvas_development
+  timeout: 5000
+
+# read/write 분리가 없는 경우라면 slave 설정값을 master 설정값과 동일하게
+# 설정하면 될 것으로 예상한다.
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= ENV['POSTGRESQL_DB'] %>
+  host: <%= ENV['POSTGRESQL_HOST'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
+  slave:
+    host: <%= ENV['POSTGRESQL_SLAVE_HOST'] %>
+    port: <%= ENV['POSTGRESQL_SLAVE_PORT'] %>
+  username: <%= ENV['POSTGRESQL_USER'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  timeout: 5000
