@@ -42,7 +42,7 @@
           <img src="<%= tool.extension_setting(:global_navigation, :icon_url) %>" alt="" />
         <% end %>
         <div class="menu-item__text">
-          <%= tool.label_for(:global_navigation) %>
+          <%= tool.label_for(:global_navigation, I18n.locale) %>
         </div>
       </a>
     </li>
