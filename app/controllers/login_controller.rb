@@ -112,11 +112,15 @@ class LoginController < ApplicationController
     # LearningX 에서 Canvas 를 로그아웃 시킬 때 discovery url 로 이동되지 않게 하기 위함.
     # 통합 로그인 모듈을 사용하여 자동 로그인 연동을 하는 경우
     # 로그아웃 되지마자 다시 자동 로그인이 되는 문제가 발생하기 때문임.
-    if params[:not_move]
-      render :plain => ""
-    else
-      redirect_to redirect
-    end
+    return render :plain => "" if params[:not_move]
+
+    # https://xinics.atlassian.net/browse/PTTLIW-1522
+    # Canvas 모바일 UI에서도 정해진 로그아웃 주소로 이동하도록 하기 위해서는
+    # Canvas 코드를 수정하는 방법 밖에 없었다. custom js로는 모바일 UI를
+    # 제어할 수가 없었다.
+    default_redirect = Setting.get('default_redirect_after_logout', '')
+    return redirect_to redirect if default_redirect.empty?
+    return redirect_to default_redirect
   end
 
   # GET /logout
