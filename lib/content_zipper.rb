@@ -348,7 +348,7 @@ class ContentZipper
     # Attachment.make_unique_filename 참조 (동일 내용 가져옴)
     dir = File.dirname(name)
     dir = dir == "." ? "" : "#{dir}/"
-    extname = name[/(\.[A-Za-z][A-Za-z0-9]*)*(\.[A-Za-z0-9]*)$/]
+    extname = name[/(\.[A-Za-z][A-Za-z0-9]*)*(\.[A-Za-z0-9]*)$/] || ''
     basename = File.basename(name, extname)
 
     newbase = basename
