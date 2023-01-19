@@ -25,7 +25,9 @@ module AttachmentHelper
       anonymous_instructor_annotations: attrs.delete(:anonymous_instructor_annotations),
       enable_annotations: attrs.delete(:enable_annotations),
       moderated_grading_allow_list: attrs[:moderated_grading_allow_list],
-      submission_id: attrs.delete(:submission_id)
+      submission_id: attrs.delete(:submission_id),
+      course_id: params[:course_id].to_i,
+      request_fullpath: request.fullpath
     }
     url_opts[:enrollment_type] = attrs.delete(:enrollment_type) if url_opts[:enable_annotations]
 
@@ -35,7 +37,7 @@ module AttachmentHelper
       rescue => e
         Canvas::Errors.capture_exception(:crocodoc, e)
       end
-    elsif attachment.canvadocable?
+    elsif attachment.custom_previewable? || attachment.canvadocable?
       attrs[:canvadoc_session_url] = attachment.canvadoc_url(@current_user, url_opts)
     end
     attrs[:attachment_id] = attachment.id

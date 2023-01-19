@@ -17,6 +17,7 @@
 
 class FilePreviewsController < ApplicationController
   include AttachmentHelper
+  include CanvadocsHelper
 
   before_action :get_context
 
@@ -33,6 +34,15 @@ class FilePreviewsController < ApplicationController
         formats: [:html]
     end
     if authorized_action(@file, @current_user, :read)
+      url_opts = {
+        enable_annotations: false,
+        course_id: params[:course_id],
+        request_fullpath: request.fullpath
+      }
+      if url_opts[:enable_annotations]
+        course = Course.find_by(id: params[:course_id].to_i)
+        url_opts[:enrollment_type] = canvadocs_user_role(course, @current_user)
+      end
       unless @file.grants_right?(@current_user, session, :download)
         @lock_info = @file.locked_for?(@current_user)
         return render template: 'file_previews/lock_explanation', layout: false
@@ -45,7 +55,7 @@ class FilePreviewsController < ApplicationController
       if Canvas::Plugin.value_to_boolean(params[:annotate]) && (url = @file.crocodoc_url(@current_user))
         redirect_to url and return
       # canvadocs
-      elsif url = @file.canvadoc_url(@current_user)
+      elsif url = @file.canvadoc_url(@current_user, url_opts)
         redirect_to url and return
       # google docs
       elsif GoogleDocsPreview.previewable?(@domain_root_account, @file)

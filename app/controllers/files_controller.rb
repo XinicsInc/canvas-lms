@@ -152,6 +152,7 @@ class FilesController < ApplicationController
   include Api::V1::Attachment
   include Api::V1::Avatar
   include AttachmentHelper
+  include CanvadocsHelper
 
   before_action { |c| c.active_tab = "files" }
 
@@ -479,7 +480,36 @@ class FilesController < ApplicationController
     end
     params[:include] = Array(params[:include])
     if authorized_action(@attachment,@current_user,:read)
-      json = attachment_json(@attachment, @current_user, {}, { include: params[:include], omit_verifier_in_app: !value_to_boolean(params[:use_verifiers]) })
+      case @attachment.context_type
+      when 'Course'
+        course_id = @attachment.context_id
+        unless course_id.nil?
+          course = Course.find_by(id: course_id)
+        end
+      when 'User'
+        submission = Submission.where("attachment_ids = :attachment_id OR attachment_ids LIKE :attachment_ids1 OR attachment_ids LIKE :attachment_ids2 OR attachment_ids LIKE :attachment_ids3", {
+          :attachment_id => @attachment.id.to_s,
+          :attachment_ids1 => "#{@attachment.id},%",
+          :attachment_ids2 => "%,#{@attachment.id},%",
+          :attachment_ids3 => "%,#{@attachment.id}"
+        }).first
+        unless submission.nil?
+          course_id = submission.course_id
+          unless course_id.nil?
+            course = Course.find_by(id: course_id)
+          end
+        end
+      end
+      enrollment_type = canvadocs_user_role(course, @current_user) unless course.nil?
+      options = {
+        include: params[:include],
+        omit_verifier_in_app: !value_to_boolean(params[:use_verifiers]),
+        enable_annotations: course_id.present?,
+        enrollment_type: enrollment_type,
+        course_id: course_id,
+        request_fullpath: request.fullpath
+      }
+      json = attachment_json(@attachment, @current_user, {}, options)
 
       json.merge!(doc_preview_json(@attachment, @current_user))
       render :json => json
