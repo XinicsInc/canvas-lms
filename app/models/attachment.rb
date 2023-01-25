@@ -1660,11 +1660,11 @@ class Attachment < ActiveRecord::Base
   end
 
   def custom_preview_base_url
-    Setting.get('xn_custom_preview_base_url', nil)
+    Setting.skip_cache { Setting.get('xn_custom_preview_base_url', nil) }
   end
 
   def custom_previewable_mime_types
-    JSON.parse Setting.get('xn_custom_previewable_mime_types', '[]')
+    JSON.parse Setting.skip_cache { Setting.get('xn_custom_previewable_mime_types', '[]') }
   end
 
   def custom_preview_url
@@ -1682,11 +1682,11 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editor_mime_types
-    JSON.parse Setting.get('xn_pdf_comment_editor_mime_types', '[]')
+    JSON.parse Setting.skip_cache { Setting.get('xn_pdf_comment_editor_mime_types', '[]') }
   end
 
   def pdf_comment_editor_use_paths
-    JSON.parse Setting.get('xn_pdf_comment_editor_use_paths', '[]')
+    JSON.parse Setting.skip_cache { Setting.get('xn_pdf_comment_editor_use_paths', '[]') }
   end
 
   def pdf_comment_editor_launch_token(user, opts={})
@@ -1737,7 +1737,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editor_jwt_secret
-    return Setting.get('xn_pdf_comment_editor_jwt_secret', nil)
+    return Setting.skip_cache { Setting.get('xn_pdf_comment_editor_jwt_secret', nil) }
   end
 
   def pdf_comment_editor_url(user, opts={})
@@ -1745,7 +1745,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editor_base_url
-    return Setting.get('xn_pdf_comment_editor_base_url', nil)
+    return Setting.skip_cache { Setting.get('xn_pdf_comment_editor_base_url', nil) }
   end
 
   def self.submit_to_canvadocs(ids)
