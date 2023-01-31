@@ -1655,8 +1655,8 @@ class Attachment < ActiveRecord::Base
     Canvadocs.enabled? && canvadocable_mime_types.include?(content_type_with_text_match)
   end
 
-  def custom_previewable?
-    !$mobile_app && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
+  def custom_previewable?(opts={})
+    !opts[:mobile_app] && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
   end
 
   def custom_preview_base_url
@@ -1668,12 +1668,11 @@ class Attachment < ActiveRecord::Base
   end
 
   def custom_preview_url
-    return unless custom_previewable?
     custom_preview_base_url + ERB::Util.url_encode(public_download_url)
   end
 
   def pdf_comment_editorable?(opts = {})
-    return !$mobile_app &&
+    return !opts[:mobile_app] &&
       opts[:course_id].present? &&
       opts[:request_fullpath].present? &&
       pdf_comment_editor_base_url.present? &&
@@ -2083,7 +2082,7 @@ class Attachment < ActiveRecord::Base
 
   def canvadoc_url(user, opts={})
     return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts)
-    return custom_preview_url if custom_previewable?
+    return custom_preview_url if custom_previewable?(opts)
     return unless canvadocable?
     "/api/v1/canvadoc_session?#{preview_params(user, 'canvadoc', opts)}"
   end
