@@ -413,7 +413,9 @@ class GroupCategoriesController < ApplicationController
     GuardRail.activate(:secondary) do
       if authorized_action(@context, @current_user, :manage_groups)
         include_sis_id = @context.grants_any_right?(@current_user, session, :read_sis, :manage_sis)
-        csv_string = CSV.generate do |csv|
+        # TI-2667 Download Course Roster CSV 기능으로 받은 CSV 파일을 엑셀로 바로 열어도 한글이 깨지지 않게
+        # UTF-8 BOM 문자열을 파일 앞에 추가함.
+        csv_string = CSV.generate("\xEF\xBB\xBF") do |csv|
           section_names = @context.course_sections.select(:id, :name).index_by(&:id)
           users = @context.participating_students_by_date.
             select("users.id, users.sortable_name,
