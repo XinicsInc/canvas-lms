@@ -103,13 +103,6 @@ class CourseHomeDialog extends React.Component {
         disabled: !wikiFrontPageTitle
       },
       {
-        value: 'modules',
-        get label() {
-          return I18n.t('Course Modules')
-        },
-        checked: selectedDefaultView === 'modules'
-      },
-      {
         value: 'assignments',
         get label() {
           return I18n.t('Assignments List')
