@@ -212,6 +212,7 @@ hvd: application/vnd.yamaha.hv-dic
 hvp: application/vnd.yamaha.hv-voice
 hvs: application/vnd.yamaha.hv-script
 hwp: application/x-hwp
+hwpx: application/vnd.hancom.hwpx
 hwt: application/x-hwt
 hxx: text/x-c++hdr
 ica: application/x-ica
