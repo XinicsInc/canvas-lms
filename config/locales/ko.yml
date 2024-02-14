@@ -2305,7 +2305,7 @@ ko:
       due_at: 마감
       date_time_by: '%{date} 기준 %{time}'
       no_due_date: 마감일 없음
-      points: 점수
+      points: 배점
       no_points: 없음
       turnitin_enabled_short: (터 니틴 활성화)
       vericite_enabled_short: (VeriCite 활성화 됨)
@@ -2332,7 +2332,7 @@ ko:
           view_quiz: 퀴즈 제출물 보기
         view_rubric_evaluation: 루브릭 평가 보기
       labels:
-        grade: '성적: %{grade} *(%{points_possible}점 가능)*'
+        grade: '성적: %{grade} *(%{points_possible}점 배점)*'
         yes: '예'
         no: '아니오'
         graded_anonymously: '익명으로 채점 : %{value}'
@@ -7140,7 +7140,7 @@ ko:
         none: 없음
         allowed_attempts: 제출 가능 횟수
         unlimited: 무제한
-        requires_lockdown: Respondus LockDown Browser 필요
+        requires_lockdown: 퀴즈 응시 - 시험 전용 브라우저 필요
       quiz_edit_details:
         labels:
           quiz_instructions: 설명
@@ -7186,8 +7186,8 @@ ko:
         code: 액세스 코드
         filter: IP 필터
         one_question_at_a_time: 한 번에 문제 하나씩
-        require_lockdown_browser: Respondus LockDown Browser 필요
-        require_lockdown_browser_for_results: 퀴즈 결과를 보려면 필요
+        require_lockdown_browser: 퀴즈 응시 - 시험 전용 브라우저 필요
+        require_lockdown_browser_for_results: 퀴즈 결과 확인 - 시험 전용 브라우저 필요
         require_lockdown_browser_monitor: 웹캠 필요
         cant_go_back: 답변 후에 문제 잠금
         anonymous_submissions: 익명 제출물
@@ -7214,7 +7214,7 @@ ko:
         quiz_submission_needs_review: 이 퀴즈는 제출 이후에 중대한 변경이 있었습니다. 제출물을 다시 평가해야 할 수도 있습니다.
         submitted_at: '%{when}에 제출됨'
         attempt_duration: "이 시도는 %{duration} 걸렸습니다."
-        requires_lockdown: 퀴즈 결과를 보려면 Respondus LockDown Browser가 필요합니다.
+        requires_lockdown: 퀴즈 결과를 보려면 시험 전용 브라우저(TrustLock Browser)가 필요합니다.
         links:
           click_to_view_results: 결과를 보려면 클릭
         buttons:
@@ -7291,12 +7291,12 @@ ko:
         quiz_protected: 이 퀴즈는 보호된 것으로 특정 위치에서만 사용할 수 있습니다. 현재 이용 중인 컴퓨터는 이 퀴즈를 치르기에 유효한 위치에 있지 않은 것으로 보입니다.
       lockdown_browser_required:
         headers:
-          requires_lockdown: Respondus LockDown Browser 필요
-        requires_lockdown: 이 퀴즈는 Respondus LockDown Browser가 필요합니다. 이 퀴즈를 치르거나 퀴즈 결과를 보려면 Respondus LockDown Browser를 실행하십시오.
+          requires_lockdown: 시험 전용 브라우저 (TrustLock Browser)를 통한 응시 필요
+        requires_lockdown: 이 퀴즈는 반드시 시험 전용 브라우저 (TrustLock Browser)를 통해서만 응시할 수 있습니다. 퀴즈를 응시하거나, 퀴즈 결과를 보려면 시험 전용 브라우저를 설치해 주시기 바랍니다.
         labels:
-          download_lockdown: 아직 브라우저를 설치하지 않았다면 여기에서 다운로드하시기 바랍니다.
+          download_lockdown: 아직 시험 전용 브라우저를 설치하지 않았다면 여기에서 다운로드 하여 설치해 주시기 바랍니다.
         links:
-          download_lockdown: '[Respondus LockDown Browser 다운로드]'
+          download_lockdown: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
       managed_quiz_data:
         titles:
           submission_needs_review: 이 제출물은 검토가 필요함
@@ -7401,8 +7401,8 @@ ko:
         one_question_at_a_time: 한 번에 문제 하나만 표시
         quiz_title: 퀴즈 제목
         quiz_type: 퀴즈 유형
-        require_lockdown_browser: Respondus LockDown Browser 필요
-        require_lockdown_browser_for_results: 퀴즈 결과를 보려면 필요
+        require_lockdown_browser: 퀴즈 응시 - 시험 전용 브라우저 필요
+        require_lockdown_browser_for_results: 퀴즈 결과 확인 - 시험 전용 브라우저 필요
         score_to_keep: 유지할 퀴즈 점수
         show_correct_answers: 학생이 정답을 보도록 허용
         show_correct_answers_at: 답변 보기 시간
@@ -7422,7 +7422,7 @@ ko:
           question_details: 퀴즈 상세 정보 표시
       refresh_quiz_after_popup:
         headers:
-          loading_in_lockdown: Respondus LockDown 브라우저에 퀴즈 로드 중
+          loading_in_lockdown: TrustLock Browser에 퀴즈 로드 중
       show:
         links:
           survey_statistics: 설문 통계
@@ -7492,7 +7492,7 @@ ko:
           draft_preview: 이는 퀴즈 초안 미리 보기입니다.
       take_quiz_in_popup:
         headers:
-          loading_in_lockdown: Respondus LockDown 브라우저에 퀴즈 로드 중
+          loading_in_lockdown: TrustLock Browser에 퀴즈 로드 중
         links:
           return_to_quiz_page: 퀴즈 페이지로 돌아가려며 [여기를 클릭](%{url})하십시오.
       fabulous_quizzes:
@@ -11626,7 +11626,7 @@ ko:
   qti_name: QTI 변환기
   qti_display: QTI
   qti_file_description: QTI .zip 파일
-  respondus_lockdown_browser_support_413352eb: Respondus LockDown Browser 지원
+  respondus_lockdown_browser_support_413352eb: 시험 전용 브라우저 (TrustLock Browser) 지원
   google_drive_7cb003c9: google drive
   google_docs_preview_9f41b23c: Google Docs Preview
   skype_18850ba7: Skype
@@ -15130,8 +15130,8 @@ ko:
   filter_ip_addresses_2f296bd2: 접근 가능한 IP 주소 설정
   filter_by_ip_address_40965f66: IP 주소로 필터링
   find_ip_address_filter_96ec70bb: IP 주소 필터 찾기
-  require_respondus_lockdown_browser_31425b3a: Respondus LockDown 브라우저 필요
-  required_to_view_quiz_results_dba7368b: 퀴즈 결과를 보려면 필수
+  require_respondus_lockdown_browser_31425b3a: 시험 전용 브라우저 (TrustLock) 사용
+  required_to_view_quiz_results_dba7368b: 퀴즈 결과 확인도 시험 전용 브라우저에서만 허용
   assign_eedf72bb: 할당
   notify_users_this_quiz_has_changed_c5b05995: 이 퀴즈가 변경되었음을 사용자에게 알리기
   save_publish_36440725: 저장 및 공개
@@ -15860,7 +15860,7 @@ ko:
     no_answer: 대답 없음
     question_answers:
       essay:
-        view_plain_answer: 평야보기
+        view_plain_answer: 일반답변보기
         view_html_answer: HTML보기
     question_header: 'Question #%{position}'
     question_type: '%{type}'

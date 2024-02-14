@@ -355,3 +355,29 @@ en:
       student_support: 'NetAcad Support - Student'
       student_support_description: 'Your Instructor should be your first point of contact. They can answer your Networking Academy questions or contact the support desk for you. You can contact your instructor by using the Inbox feature.'
       support_desk_livechat: 'Support Desk Live Chat'
+  quizzes:
+    quizzes:
+      quiz_show_teacher:
+        require_lockdown_browser: Require TrustLock Browser
+        require_lockdown_browser_for_results: Required to View Quiz Results    
+      quiz_submission:
+        requires_lockdown: TustLock Browser is required to view your quiz results.
+      quiz_details:
+        requires_lockdown: Requires TrustLock Browser
+      lockdown_browser_required:
+        headers:
+          requires_lockdown: TrustLock Browser Required
+        requires_lockdown: This quiz requires TrustLock Browser. Please launch TrustLock Browser to take this quiz or view your quiz results.
+        labels:
+          download_lockdown: If you have not already installed the browser, please download it from here
+        links:
+          download_lockdown: "[Download TrustLock Browser]"
+      refresh_quiz_after_popup:
+        headers:
+          loading_in_lockdown: Loading Quiz in TrustLock Browser
+      take_quiz_in_popup:
+        headers:
+          loading_in_lockdown: Loading Quiz in TrustLock Browser
+  respondus_lockdown_browser_support_413352eb: TrustLock Browser support
+  require_respondus_lockdown_browser_31425b3a: Require TrustLock Browser
+  required_to_view_quiz_results_dba7368b: Required to view quiz results
