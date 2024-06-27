@@ -27,5 +27,15 @@ fi
 #export GEM_HOME=/path/to/gem/home
 export RAILS_ENV=production
 
+# TI-4884
+# Ubuntu 22.04 부터는 ruby 2.6을 설치하기 위해서 rvm을 사용합니다.
+# /etc/profile.d/rvm.sh 파일이 존재하면 rvm 사용 환경이라고 판단합니다.
+# rvm 기반 ruby 2.6이 정상적으로 동작하도록 하기 위해서 rvm.sh 를
+# source 하고, 기본 ruby 버전을 ruby-2.6으로 설정합니다.
+if [ -e "/etc/profile.d/rvm.sh" ]; then
+  source "/etc/profile.d/rvm.sh"
+  rvm --default use ruby-2.6
+fi
+
 # run delayed jobs
 exec script/delayed_job $@
