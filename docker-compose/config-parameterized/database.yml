@@ -15,15 +15,16 @@ development:
 
 # read/write 분리가 없는 경우라면 slave 설정값을 master 설정값과 동일하게
 # 설정하면 될 것으로 예상한다.
+# => 실질적으로 분리하는 경우가 없어서 slave는 주석처리.
 production:
   adapter: postgresql
   encoding: utf8
   database: <%= ENV['POSTGRESQL_DB'] %>
   host: <%= ENV['POSTGRESQL_HOST'] %>
   port: <%= ENV['POSTGRESQL_PORT'] %>
-  slave:
-    host: <%= ENV['POSTGRESQL_SLAVE_HOST'] %>
-    port: <%= ENV['POSTGRESQL_SLAVE_PORT'] %>
+  # slave:
+  #   host: <%= ENV['POSTGRESQL_SLAVE_HOST'] %>
+  #   port: <%= ENV['POSTGRESQL_SLAVE_PORT'] %>
   username: <%= ENV['POSTGRESQL_USER'] %>
   password: <%= ENV['POSTGRESQL_PASSWORD'] %>
   timeout: 5000
