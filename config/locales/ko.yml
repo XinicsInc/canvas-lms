@@ -12922,6 +12922,7 @@ ko:
         labels:
           file_included: 포함된 파일
         html:
+          body_notice: '공지 본문 내용이 수정되었을 수 있으므로, 하단의 ‘공지 확인하기’ 버튼을 클릭하여 공지 내용을 반드시 확인해 주세요.'
           link: 공지 확인하기
           attached_file: 첨부 파일
       twitter:

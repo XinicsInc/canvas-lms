@@ -12,6 +12,8 @@
   </a>
 <% end %>
 
+<%= t :body_notice, "The body of the announcement may have been modified, so be sure to check the announcement by clicking the 'View announcement' button at the bottom." %>
+
 <%= html_to_simple_html(asset.message,
       :base_url => dashboard_url,
       :tags => ['tr', 'td', 'table', 'tbody', 'caption', 'span'],
