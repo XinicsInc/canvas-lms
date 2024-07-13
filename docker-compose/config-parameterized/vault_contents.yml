@@ -1,0 +1,6 @@
+production:
+  "app-canvas/data/secrets":
+    data:
+      canvas_security:
+        encryption_secret: <%= ENV['CANVAS_SECURITY_ENCRYPTION_SECRET'] %>
+        signing_secret: <%= ENV['CANVAS_SECURITY_SIGNING_SECRET'] %>
