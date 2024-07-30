@@ -1,0 +1,9 @@
+production:
+  address: "smtp.mailgun.org"
+  port: "587"
+  user_name: <%= ENV['CANVAS_OUTGOING_MAIL_USER'] %>
+  password: "<%= ENV['CANVAS_OUTGOING_MAIL_PW'] %>"
+  authentication: "plain" # plain, login, or cram_md5
+  domain: <%= ENV['CANVAS_OUTGOING_MAIL_DOMAIN'] %>
+  outgoing_address: <%= ENV['CANVAS_OUTGOING_MAIL_OUT_ADDR'] %>
+  default_name: "<%= ENV['CANVAS_OUTGOING_MAIL_DEFAULT_NAME'] %>"
