@@ -1,5 +1,6 @@
-#240717 허채원
-#canvas - cnvs merged and aligned ko.yml (1차)
+#240730 허채원
+#ko_xinics.yml 로컬라이징 2차
+#240730 https://xinics.atlassian.net/browse/TI-5059 접수된 로컬라이징 항목 반영 완료 + Canvas 신기능에 대한 문구 일괄 변경
 
 ko:
   1_item_scores_5512cd03: 1- 항목 점수
@@ -98,7 +99,7 @@ ko:
     more_external_tools: 더 많은 외부 도구
   GradingSchemeManagement:
     confirm:
-      delete: 이 평가 구성표를 삭제하시겠습니까?
+      delete: 이 평가 기준표를 삭제하시겠습니까?
   GroupDetailView:
     delete_confirm: 이 그룹을 제거하시겠습니까?
     flash:
@@ -1080,7 +1081,7 @@ ko:
           account_reports:
             default:
               description:
-                text: 이 보고서는 해당 학기의 모든 학생에 대한 최종 평가 결과를 표시합니다. 결과 csv 파일은 등록 학생 당
+                text: 이 보고서는 해당 학기의 모든 학생에 대한 최종 평가 결과를 표시합니다. 성과 csv 파일은 등록 학생 당
                   하나의 행을 가지며, 과목 평가 기록부에 표시된 현재 평가 및 최종 평가를 표시합니다.
     last_enrollment_activity_csv_description:
       account_reports:
@@ -1379,6 +1380,7 @@ ko:
         can_add_pronouns: 개인 대명사 활성화
         canvadocs_prefer_office_online: Office 365 파일 뷰어 선호
         canvas_authentication: Canvas 인증
+        course_template_id: 선택한 과목 템플릿은 모든 새 과목에 사용됩니다
         default_language: 기본 언어
         default_time_zone: 기본 표준 시간대
         domain: '도메인:'
@@ -1390,6 +1392,7 @@ ko:
         enable_fullstory: FullStory로 추적 허용
         enable_google_analytics: Google Analytics로 추적 허용
         enable_profiles: 프로필 사용
+        enable_push_notifications: 모바일 기기 푸시 알림 활성화
         enable_turnitin: Turnitin
         enable_user_notes: 교원 일지
         end_at: 끝
@@ -1404,6 +1407,7 @@ ko:
         help_link_text: 링크에 표시할 텍스트
         help_link_url: URL
         include_students_in_global_survey: 글로벌 설문 조사에 학생 포함
+        kill_joy: 404 페이지 내 히든 게임 제거
         limit_parent_app_web_access: Canvas Parent 앱에서 Canvas 웹에 대한 액세스 제한
         locked: 하위 계정 및 과목의 경우 이 설정 잠금
         login_handle_name: 로그인 레이블
@@ -1418,6 +1422,7 @@ ko:
         outgoing_email_default_name_option_custom: 사용자 정의 "보낸 사람" 이름
         outgoing_email_default_name_option_default: 기본 Canvas 설정
         prevent_course_renaming_by_teachers: 교수가 과목 이름을 변경하지 못하도록 함
+        prevent_course_availability_editing_by_teachers: 교수가 과목 이용 기간을 수정하지 못하도록 함
         restrict_quiz_questions: 과목 종료일 이후 학생들이 퀴즈 문제를 보는 것을 제한합니다.
         restrict_student_future_listing: 학생이 등록 목록에서 향후 과목을 볼 수 없도록 제한
         role_id: 추가
@@ -1429,6 +1434,7 @@ ko:
         students_can_create_courses: 학생
         sub_account_includes: 하위 계정이 테마 편집기를 사용하여 커스터마이징 할 수 있음
         subject: 주제
+        suppress_notifications: 알림 생성 및 발송 금지
         teachers_can_create_courses: 교수
         trusted_referers: Trusted HTTP Referers
         turnitin: Turnitin
@@ -1437,7 +1443,9 @@ ko:
         turnitin_host: Turnitin 호스트
         turnitin_pledge: 서약
         turnitin_shared_secret: Turnitin 공유 비밀
-        users_can_edit_name: 사용자 자신의 이름 수정 허용
+        users_can_edit_name: 사용자가 자신의 이름을 수정할 수 있도록 함
+        users_can_edit_profile: 사용자가 자신의 프로필을 수정할 수 있도록 함
+        users_can_edit_comm_channels: 사용자가 자신의 커뮤니케이션 채널을 수정할 수 있도록 함
         value: 공지 사항에 대한 코멘트 사용 중지
       links:
         add_admins: 계정 관리자 추가
@@ -1486,7 +1494,7 @@ ko:
       quiz_ip_filters_title: 퀴즈 IP 주소 필터
       quotas:
         ? "\n          megabytes_tooltip"
-        : 메가바이트
+        : MB
         default_account_quota_title: 기본 계정 할당량
         default_course_storage_quota: 과목 할당량
         default_group_storage_quota: 그룹 할당량
@@ -1668,7 +1676,7 @@ ko:
           account_reports:
             default:
               description:
-                text: 이 보고서는 해당 학기의 모든 학생에 대한 최종 평가 결과를 표시합니다. 결과 csv 파일은 등록 학생 당
+                text: 이 보고서는 해당 학기의 모든 학생에 대한 최종 평가 결과를 표시합니다. 성과 csv 파일은 등록 학생 당
                   하나의 행을 가지며, 과목 평가 기록부에 표시된 현재 평가 및 최종 평가를 표시합니다.
       provisioning:
         parameters:
@@ -2037,7 +2045,7 @@ ko:
     토론 설정
   adds_analytics_link_on_the_user_settings_menu_3a048816: 사용자 설정 메뉴에 분석 링크를 추가합니다.
   adds_analytics_to_a_student_s_context_card_d4c1e3a3: 학생의 컨텍스트 카드에 분석을 추가합니다.
-  adjust_events_and_due_dates_879744fc: 행사와 기한 조정
+  adjust_events_and_due_dates_879744fc: 일정과 마감일 조정
   admin_4d3ba42f: 관리자
   admin_csv_f8d1b3eb: 관리자 CSV
   admin_export_for_multiple_grading_periods_8a0c5ac1: 여러 채점 기간에 대한 관리자 내보내기
@@ -2211,6 +2219,7 @@ ko:
     설정하도록 허용
 
     HTTPS 웹훅을 통해'
+  allow_liking_6dad6e52: 좋아요 허용
   allow_migration_of_quizzes_during_course_copy_and__35d80756: 과목 복사 및 가져 오기 중에 퀴즈
     마이그레이션 허용
   allow_moderator_to_review_multiple_independent_gra_c59d64f6: 제출물에 대하여 복수의 채점자가 채점한
@@ -2219,6 +2228,7 @@ ko:
   allow_opt_out_of_inbox: 사용자가 대화의 메시지함에서 옵트 아웃하도록 허용합니다. 이렇게 하면 모든 대화 메시지 및 알림이 사용자의
     기본 이메일에 ASAP 알림으로 전송되고메시지함에서 대화의 메시지함 읽지 않은 메시지 배지를 숨기고 대화의 알림 기본 설정을 숨 깁니다.
   allow_outcome_extra_credit_57c1e84e: 성과에서 추가 점수 허용
+  allow_participants_to_comment_2380a686: 사용자가 댓글을 달 수 있도록 허용
   allow_pages_to_be_deleted_in_bulk_199d3d3b: 페이지를 일괄 삭제하도록 허용
   allow_passive_acceptance_of_terms_of_service_63ef5994: 서비스 약관에 대한 수동적 동의 허용
   allow_reorder_dashboard_cards_78215947: 대시보드 카드 순서 변경을 허용함
@@ -2961,7 +2971,7 @@ ko:
     update: 업데이트
   arabic_c5c87acd: 아라비아 말
   arc_a935e585: 호
-  archive_3f794d7e: 저장소
+  archive_3f794d7e: 보관함 _ Xinics(2)
   archive_selected_d64506ca: 선택한 아카이브
   archived_de543437: 저장된 메시지
   are_you_sure_26795d3c: 확실합니까?
@@ -3146,7 +3156,7 @@ ko:
     buttons:
       select_url: 선택
     name_is_required: 이름이 필요합니다!
-    points_possible_number: 가능한 점수는 숫자이어야 함
+    points_possible_number: 배점은 숫자이어야 함
     select_external_tool_dialog_title: 외부 도구 구성
   assignment_enhancements_student_557372ab: 과제 향상-학생
   assignment_excused_eb6c08fa: 양도 면제
@@ -3160,13 +3170,13 @@ ko:
     \ 입력되는 즉시 학생에게 표시됩니다.\n          이미 숨겨진 성적은 숨겨진 상태로 유지됩니다.\n        "
   assignment_grading_type:
     grading_type_options:
-      letter_grade: 알파벳 평점
+      letter_grade: 알파벳 성적
       not_graded: 평가 안 됨
       pass_fail: 완료/미완료
       percent: 퍼센트
       points: 배점
     titles:
-      grading_scheme_info: 평가 구성표 보기/편집
+      grading_scheme_info: 평가 기준표 보기/편집
   assignment_group:
     default_name: 과제
     default_title: 과제
@@ -3174,7 +3184,7 @@ ko:
   assignment_group_export_fd77c394: 평가 그룹 내보내기
   assignment_group_filter_c03f8a1d: 할당 그룹 필터
   assignment_group_selector:
-    assignment_group_must_have_group: 이 과제에 대한 과제 그룹을 선택하시기 바랍니다.
+    assignment_group_must_have_group: 이 과제에 대한 평가 그룹을 선택하시기 바랍니다.
   assignment_group_was_saved_successfully_5caa27d3: 평가 그룹이 성공적으로 저장되었습니다.
   assignment_group_weight_data_report_449e1d1d: 발령 그룹 비중 데이터 보고서
   assignment_group_weights_and_drop_rules_can_t_be_e_7b5f305d: 마감일이 마감 된 그룹 중 하나에
@@ -3282,7 +3292,7 @@ ko:
       assignment_group: 평가 그룹
       assignment_group_options:
         create_group: 그룹 만들기
-        new_group: 새 그룹
+        new_group: 평가 그룹 _ Xinics(1)
     assignment_groups_count:
       one: 그룹 %{count}개
       other: 그룹 %{count}개
@@ -3696,7 +3706,7 @@ ko:
         graded_anonymously: '익명으로 채점 : %{value}'
         none_assigned: 할당 안 됨
         'no': ''
-        rqd_grade: '평점: %{grade}'
+        rqd_grade: '성적: %{grade}'
         'yes': ''
       links:
         submission:
@@ -3821,7 +3831,7 @@ ko:
       headers:
         date: 날짜
         details: 세부 정보
-        due: 기한
+        due: 마감일
       instructions:
         syllabus: '수업 계획서 페이지는 과목 일정의 표 중심보기와 기본 사항을 보여줍니다.
 
@@ -3835,7 +3845,7 @@ ko:
         assignments_summary: 과제 요약
         syllabus_body: 수업 계획서 설명
         syllabus_course_summary: 과목 요약보기
-        syllabus_description: 강의 계획 설명
+        syllabus_description: 수업 계획서 설명
       links:
         edit_syllabus_description: 편집
         jump_to_today: 오늘
@@ -4201,7 +4211,7 @@ ko:
   being_processed_by_plagiarism_service_2269be71: 표절 서비스 처리 중
   belarusian_b2f19c76: 벨라루스 어
   belgium_32_e5f5b598: 벨기에 (32)
-  below_mastery_abd1dca5: 숙달 이하
+  below_mastery_abd1dca5: 미흡
   below_this_search_field_is_a_list_of_content_type__58aaa03f: 이 검색 필드 아래에는 %{content_type}
     목록이 있습니다. 입력 할 때 목록이 쿼리와 일치하도록 필터링됩니다. 선택한 옵션에 따라 대화 메시지가 필터링됩니다.
   beta_lti_launch_c200ffdf: '베타 LTI 출시 :'
@@ -4413,7 +4423,7 @@ ko:
   by_default_students_can_always_create_groups_in_a__149d08b7: 기본적으로 학생은 과목에서 항상 그룹을
     만들 수 있습니다. 학생이 그룹을 생성하지 못하도록 제한하려면 과목-추가 / 편집 / 삭제를 활성화하고 과목 설정에서 학생이 자신의 그룹을
     구성하도록 허용 확인란을 선택 취소해야합니다.
-  by_due_date_648d7f3b: 기한으로
+  by_due_date_648d7f3b: 마감으로
   by_lti_2_registration_url_e421e523: LTI 2 등록 URL로
   by_url_a163275e: URL로
   c_2001_acme_inc_283f7f80: (c) 2001 Acme Inc.
@@ -4641,14 +4651,14 @@ ko:
       delete: 삭제
       different_date_for_each_section: 각 섹션에 다른 날짜를 사용
       edit_calendar_event_header: 캘린더 일정 편집
-      end_time: 끝 시각
+      end_time: 종료 시간
       event_description: 이벤트 설명
       event_title: 이벤트 제목
       location_address: '주소:'
       location_name: '위치:'
       new_calendar_event_header: 새 이벤트
       repeat: 반복
-      start_time: 시작 시각
+      start_time: 시작 시간
     edit_event:
       tabs:
         appointment_group: 약속 그룹
@@ -4657,16 +4667,16 @@ ko:
         todo: 내 할 일
     edit_planner_note:
       calendar: '캘린더:'
-      date: '데이트:'
-      time: '시각:'
+      date: '날짜:'
+      time: '시간:'
       title: '제목:'
     edit_to_do_item:
       date: '날짜:'
       links:
         more_options: 상세 옵션
-      time: '시각:'
+      time: '시간:'
       title: '제목:'
-    end_before_start_error: 시작 시각은 끝 시각 이전이어야 함
+    end_before_start_error: 시작 시간은 종료 시간 이전이어야 함
     ends_in_past_error: 지난 시간에 끝나는 약속 슬롯을 만들 수 없음
     errors:
       send_message_failed: 메시지 전송 중 오류 발생
@@ -4796,7 +4806,14 @@ ko:
     ics_title: '%{course_or_group_name} 캘린더 (Canvas)'
     invalid_date_or_time: '%{attr}에 대한 잘못된 날짜 또는 잘못된 날짜 시간'
   calendar_frequency_picker:
+    annually: 연간 (%{month} %{date})
+    custom: 상세 설정
     daily: 매일
+    every_weekday: 일간 (월요일 ~ 금요일)
+    frequency: 반복
+    monthly_last_day: 월간 (%{weekNumber} %{day})
+    not_repeat: 없음
+    weekly_day: 주간 (%{day})
   calendars:
     event:
       due: 마감
@@ -4811,6 +4828,7 @@ ko:
       feed_title: 과목 캘린더 Atom 피드
       links:
         feed: 피드를 보려면 여기를 클릭
+      other_calendars: 다른 캘린더
       page_title_header: 캘린더
       skip_to_calendar: 캘린더으로 건너뛰기
       undated_items: 마감일 없는 과제
@@ -5200,7 +5218,7 @@ ko:
   classic_quizzes_dee3c7b7: 클래식 퀴즈
   classic_quizzes_option_for_timed_quizzes_without_s_567b117d: 제출하지 않고 시간 제한 퀴즈를 위한
     클래식 퀴즈 옵션
-  clear_2084585f: 맑은
+  clear_2084585f: 초기화
   clear_all_e23811b1: 모두 지우기
   clear_selected_file_82388e50: 선택한 파일 지우기
   clear_user_cache_ef079f7f: 사용자 캐시 지우기
@@ -5523,6 +5541,7 @@ ko:
   collapse_list_of_group_members_for_groupname_d6c66fa0: '%{groupName}의 그룹 회원 목록 접기'
   collapse_replies_ef4fc36b: 답변 축소
   collapse_subdiscussion_89af1f5c: 하위 토론 접기
+  collapse_threads_ef7ca000: 댓글 접기
   collapse_tutorial_tray_66ee7dc1: 튜토리얼 트레이 접기
   collapsed_510aa02a: 접힘
   collection_of_responsive_improvements_throughout_c_dedfe6dc: Canvas 전반에 걸친 반응형 개선
@@ -5645,7 +5664,7 @@ ko:
   concluded_63150003: 결론
   concluded_conferences_cdbe53f9: 종료 된 회의
   concluded_courses_94782e21: 종료 된 과목
-  concluded_e1e482a0: 종결됨
+  concluded_e1e482a0: 종료됨
   concluded_enrollments_9da8da6: 종료된 등록
   conditional_release:
     and: ''
@@ -5695,7 +5714,7 @@ ko:
     general_error_with_message: '회의에 참여하는 중에 오류가 발생했습니다. 메시지: ''%{message}'''
     inactive_error: 활성된 회의가 아님
     index:
-      concluded_conferences: 종결된 회의
+      concluded_conferences: 종료된 회의
       conference: 회의
       conference_header: 회의
       new_conference: 새 회의
@@ -5718,7 +5737,7 @@ ko:
       to: 다음 요일로
       type: '%{type}'
       view: 보기
-    no_concluded_conferences: 종결된 회의 없음
+    no_concluded_conferences: 종료된 회의 없음
     no_new_conferences: 새 회의 없음
     no_settings_error: 이 회의에는 고급 설정 페이지가 없음
     no_urls_error: 죄송합니다. 이 회의에는 아직 %{type} 페이지가 없습니다.
@@ -6113,7 +6132,7 @@ ko:
       completed_enrollment: '*%{completed_at}*에 완료됨'
       confirm:
         conclude: 이 등록을 끝내시겠습니까?
-        conclude_student: 이 학생의 등록을 종결하시겠습니까?
+        conclude_student: 이 학생의 등록을 종료하시겠습니까?
         delete_enrollment: 이 학생의 등록을 삭제하시겠습니까?
       enrolled_as: '%{enrollment_type}로 등록됨'
       enrollment_change_failed: 등록 권한 변경 실패
@@ -6134,7 +6153,7 @@ ko:
       links:
         access_report: 액세스 보고서
         cant_delete: 삭제할 수 없음
-        conclude_enrollment: 이 등록 종결
+        conclude_enrollment: 이 등록 종료
         delete_enrollment: 이 등록 삭제
         faculty_journal: 교수 저널
         link_enrollment: 이 등록 연결
@@ -6512,7 +6531,7 @@ ko:
       read_more: 더 보기...
     course_options:
       course_options:
-        concluded: 종결됨
+        concluded: 종료됨
         favorite: 즐겨찾기 과목
         groups: 그룹
         more_courses: 기타 과목
@@ -6839,7 +6858,7 @@ ko:
       id: ID
       points_possible: 배점
       read_only_field: (읽기 전용)
-      root_account: 루트 계정
+      root_account: 하위 계정
       section: 섹션
       sis_login_id: SIS 로그인 ID
       sis_user_id: SIS 사용자 ID
@@ -7005,7 +7024,7 @@ ko:
       manual: 설명서
       sis: SIS
     event_type:
-      concluded: 종결됨
+      concluded: 종료됨
       copied_from: 복사 출처
       copied_to: 복사 됨
       corrupted: 사용할 수없는 상세 정보
@@ -7027,6 +7046,7 @@ ko:
       allow_student_wiki_edits: 학생 위키 편집 허용
       allow_wiki_comments: Wiki 댓글 허용
       conclude_at: 결론
+      conditional_release: 마스터리 경로
       course_code: 과목 코드
       created_at: 생성 위치
       default_view: 기본보기
@@ -7049,7 +7069,7 @@ ko:
       public_syllabus: 공개 수업 계획서
       replacement_course_id: 교체 과목 ID
       restrict_enrollments_to_course_dates: 과목 날짜로 등록 제한
-      root_account_id: 루트 계정 ID
+      root_account_id: 하위 계정 ID
       self_enrollment: 자체 등록
       self_enrollment_code: 자체 등록 코드
       self_enrollment_limit: 자체 등록 제한
@@ -7160,7 +7180,7 @@ ko:
   course_settings_f6d0bbf8: 과목 설정
   course_settings_sections_tab_4ae03a9a: 과목 설정 (섹션 탭)
   course_settings_sub_navigation_b95deae: 과목 설정 하위 탐색
-  course_setup_checklist_78dcff7e: 과목 설정 검사 목록
+  course_setup_checklist_78dcff7e: 과목 설정 체크리스트
   course_setup_checklist_course_home_page_f8baa04a: 과목 설정 체크리스트, 과목 홈 페이지
   course_setup_wizard_is_showing_a7c087c1: 과목 설정 마법사가 표시됩니다.
   course_sis_7ae8f649: 물론 sis
@@ -7212,8 +7232,8 @@ ko:
           과목 날짜 설정에 대한 자세한 내용은 가이드 * 여기 *를 참조하십시오.
         confirm_conclude: '"주의: 과정을 종료하면 모든 과목 내용은 보관됩니다." "그리고 점수를 변경할 수 없게 됩니다"'
         confirm_delete: 이 과목을 삭제하시겠습니까? 삭제하고 나면 학생과 교수는 더 이상 과목에 액세스할 수 없습니다. 이를 과목
-          드롭다운에서만 제거하려면 *과목을 종결해야 합니다*.
-        confirm_delete_addendum: 과목을 종결할 권한이 없는 경우에는 *과목 종료 날짜를 바꾸거나* 관리자에게 과목 종결을
+          드롭다운에서만 제거하려면 *과목을 종료해야 합니다*.
+        confirm_delete_addendum: 과목을 종료할 권한이 없는 경우에는 *과목 종료 날짜를 바꾸거나* 관리자에게 과목 종료을
           요청할 수 있습니다.
       headings:
         confirm_conclude: 과목 종료 확인
@@ -7239,16 +7259,20 @@ ko:
         copy_course: 과목 복사
     course_show_secondary:
       details:
-        confirm_unenroll: 이 과목에서 등록을 해제하시겠습니까? 더 이상 과목 명부를 볼 수 없고, 교사와 직접 통신할 수 없으며,
-          스트림에서 과목 행사를 볼 수 없고 알림을 받을 수도 없습니다.
+        confirm_unenroll: 이 과목에서 등록을 해제하시겠습니까? 더 이상 과목 명부를 볼 수 없고, 교수와 직접 통신할 수 없으며,
+          스트림에서 과목 일정을 볼 수 없고 알림을 받을 수도 없습니다.
+      headers:
+        course_status: 과목 상태
       headings:
         confirm_unenroll: 등록 취소 확인
       links:
-        course_setup: 과목 설정 검사 목록
+        course_setup: 과목 설정 체크리스트
         drop_course: 이 과목 드롭
+        import: 기존 학기 과목 콘텐츠 가져오기
         join_course: 이 과목에 참여
         new_announcement: 새 공지
-        view_course_calendar: 과목 달력 보기
+        view_course_calendar: 과목 캘린더 보기
+        view_course_notification_settings: 과목 알림 보기
         view_course_stream: 과목 스트림 보기
     description:
       links:
@@ -7349,7 +7373,7 @@ ko:
         points: null
     notices:
       backup_restored: 백업을 성공적으로 복원함
-      concluded: 과목을 성공적으로 종결함
+      concluded: 과목을 성공적으로 종료함
       deleted: 과목을 성공적으로 삭제함
       enrollment_not_active: '%{course} 과목의 멤버 자격이 아직 할성화되지 않았습니다.'
       failed_conclude: 과목 종료 실패
@@ -7517,15 +7541,19 @@ ko:
         course_description: 설명
         course_epub_export: Epub 내보내기
         course_format: 형식
-        course_grading_standard_enabled: 과목 평가 구성표 사용
+        course_grading_standard_enabled: 과목 평가 기준표 사용
         course_lock_all_announcements: 공지 사항에 의견 사용 안 함
         course_name: 과목명
         course_offline_export: 오프라인 과목
+        course_paces: 과목 속도
         course_section_name: 새 섹션 추가
         course_status_published: 과목이 공개되었습니다.
         course_status_unpublished: 과목이 공개되지 않았습니다.
+        course_template: 과목 템플릿
         course_visibility: 공개 범위
         custom_course_visibility: 사용자 정의
+        default_due_time: 기본 마감 기한
+        enable_course_paces: 과목 속도 활성화
         enrollment_term_id: 학기
         enrollments_from_homeroom: 등록
         grading_scheme: 평가 기준표
@@ -7540,6 +7568,7 @@ ko:
         license: 라이선스
         lock_all_announcements: 공지 사항에 대한 코멘트 기능 비활성화
         open_enrollment: 과목 홈 페이지에 "이 과목에 참여" 링크 추가
+        participation_id: 참여 기간
         public_syllabus: 이 과목의 요강을 공개적으로 표시
         restrict_enrollments_to_course_dates: 과목 기간 중에만 등록 가능
         restrict_student_future_view: 시작일 이전에 학생들이 보는 것을 제한
@@ -7598,6 +7627,8 @@ ko:
       buttons:
         reset: 과목 콘텐츠 리셋
         unconclude: 과목 종료 해제
+      headers:
+        course_status: 과목 상태
       headings:
         current_users: 현재 사용자
       help:
@@ -7760,7 +7791,7 @@ ko:
   create_developer_key_78de8510: 개발자 키 만들기
   create_discussion_topics_8330d52b: 토론 주제 만들기
   create_failed_15d07ad4: 생성 실패
-  create_group_set_7fe1cd53: 그룹 집합 만들기
+  create_group_set_7fe1cd53: 그룹 세트 만들기
   create_interactive_course_content_76665336: 대화 형 과목 콘텐츠 만들기
   create_live_event_subscriptions_on_toolproxy_7c8378b1: ToolProxy에서 라이브 이벤트 구독 생성
   create_lookup_7ceb6d90: 조회 생성
@@ -8086,7 +8117,7 @@ ko:
   date_at_time_25a04cd2: '%{date} %{time}'
   date_created_87e265bc: 만든 날짜
   date_created_createdat_265a0dfa: '만든 날짜: %{createdAt}'
-  date_ee500367: 데이트
+  date_ee500367: 날짜
   date_error_7b38f8ff: 날짜 오류
   date_is_required_9c6f5e83: 날짜가 필요합니다!
   date_modified_e1c8ac8f: 수정일
@@ -8176,6 +8207,7 @@ ko:
     설정을 정의합니다.
   define_text_to_go_before_and_after_the_dropdown_an_be8d16e2: 드롭 다운 전후로 이동할 텍스트를
     정의하고 가능한 답변 세트를 만듭니다.
+  delay_posting_f45eed7d: 공개 예약
   delay_posting_this_topic_until_aa483eec: 다음까지 이 주제 게시 연기
   delayed_until_58b7af4b: '지연 시간 :'
   delete_a143a2ab: 삭제
@@ -8423,7 +8455,7 @@ ko:
   disable_uploads_to_canvas_media_from_the_enhanced__2381c79b: 향상된 리치 콘텐츠 편집기에서 Canvas
     미디어로의 업로드 비활성화
   disabled_18c33a73: (비활성화 됨)
-  disabled_3b1b332a: 장애인
+  disabled_3b1b332a: 비활성화 됨
   disabled_and_locked_d14dc6c2: 비활성화 및 잠금
   disabled_links_b3bdea99: 비활성화 된 링크
   disabled_not_visible_to_students_2c9d693f: 비활성화되었습니다. 학생에게 표시되지 않습니다.
@@ -9066,8 +9098,10 @@ ko:
   edit_user_details_4d7b63ff: 사용자 상세 정보 편집
   edit_when_36c1c2c8: '%{when} 편집'
   edit_your_catalog_account_cce59310: 카탈로그 계정 편집
+  edited_by_editorname_editedtimingdisplay_ae2f4692: 편집 됨 by %{editorName} %{editedTimingDisplay}
   edited_c4fcbdbf: '편집 :'
   edited_date_b0455372: (편집 됨) %{date}
+  edited_editedtimingdisplay_85d8f1db: 편집 됨 %{editedTimingDisplay}
   editing_permissions_for_name_3503e235: '%{name}에 대한 권한 편집'
   editor:
     alt_text: '대체 텍스트:'
@@ -9194,7 +9228,7 @@ ko:
     인터페이스의 글꼴이 변경되고 과목의 모든 사용자에 대한 과목 탐색 메뉴가 단순화됩니다.
   encourage_student_discourse_7836b9f7: 학생 담론 장려
   encrypted_sourcedids_for_basic_outcomes_87fa11ea: 기본 성과를 위한 암호화 된 Sourcedids
-  end_78c581cd: 끝
+  end_78c581cd: 종료일
   end_course_set_up_tutorial_f358b85d: 끝 과목 설정 자습서
   end_date_cannot_be_before_start_date_eb62ed6d: 종료일은 시작일보다 이전일 수 없습니다.
   end_date_e0093ed7: 종료일
@@ -9287,10 +9321,10 @@ ko:
     \ 사용자 목록을 보려면 사용자-목록보기를 활성화해야합니다. SIS ID를 보려면 SIS 데이터-읽기를 활성화해야합니다.\nSIS ID를 통해\
     \ 과목에 사용자를 추가하려면 SIS 데이터-관리도 활성화되어야합니다. 교수 또는 TA 섹션을 편집하려면 대화-개별 과목 구성원에게 메시지\
     \ 보내기도 활성화되어야합니다. 관찰자를 학생에 연결하려면 대화-개별 과목 구성원에게 메시지 보내기도 활성화되어야합니다."
-  enrollments_observers: 감독자
+  enrollments_observers: 관찰자
   enrollments_students: 학생
   enrollments_tas: 조교
-  enrollments_teachers: 교사
+  enrollments_teachers: 교수
   ensures_that_outcomes_that_have_already_been_impor_c3ca3173: 이미 과목로 가져온 성과를 다시 가져올
     경우 중복되지 않도록합니다.
   enter_a_course_to_narrow_results_e992f93: 결과 범위를 좁히려면 과목을 입력하세요.
@@ -9726,7 +9760,7 @@ ko:
   event_fe9ba3fe: 일정
   event_start_time_441b491f: 이벤트 시작 시간
   event_title_57a50568: '이벤트 제목 :'
-  event_title_7f1051a6: 행사 제목
+  event_title_7f1051a6: 일정 제목
   event_title_course_name_changed_to_37510fbb: '%{event_title}, %{course_name}이 (가)
     다음으로 변경되었습니다.'
   everthing_updated_after_start_date_f3be8ba: 시작일 이후 업데이트 된 모든 것
@@ -9765,6 +9799,7 @@ ko:
   expand_permission_b45bf097: '%{permission} 펼치기'
   expand_permission_c61d5958: 권한 확장
   expand_subdiscussion_cd226ed4: 하위 토론 확장
+  expand_threads_634fe7a1: 댓글 펼치기
   expand_tutorial_tray_22630c49: 튜토리얼 트레이 확장
   expanded_f4493860: 퍼지는
   expires_at_6214b43f: 만료일
@@ -10506,7 +10541,7 @@ ko:
       points_out_of: / %{assignment.points_possible}
       this_assignment_is_muted: 이 과제는 성적 비공개 상태임
       zero_point_assignment: 이 그룹의 과제는 배점이 없으므로 평가 계산에 포함될 수 없음
-    concluded_course_error_message: 이는 종결된 과목이므로 종결된 등록만 사용할 수 있습니다.
+    concluded_course_error_message: 이는 종료된 과목이므로 종료된 등록만 사용할 수 있습니다.
     dropped_for_grading: 평가 목적에서 탈락
     error:
       update: 이 과제를 업데이트하는 데 오류가 있습니다. 페이지를 새로 고친 후에 다시 시도하시기 바랍니다.
@@ -10751,7 +10786,7 @@ ko:
       see_scoring_details_screenreader: 점수 상세 정보 보기
       see_turnitin_results: Turnitin 결과 보기
       see_vericite_results: VeriCite 결과보기
-      student_mute_legend: 교수가 평가 중입니다. 교수가 평가하는 중에는 평점과 의견 정보를 알 수 없습니다.
+      student_mute_legend: 교수가 평가 중입니다. 교수가 평가하는 중에는 성적과 의견 정보를 알 수 없습니다.
       student_mute_notification: 교수가 평가 중
       submission_score: '*%{score}* / %{possible}'
       titles:
@@ -10926,7 +10961,7 @@ ko:
       submissions_upload: '%{assignment} 제출물 업로드'
     titles:
       total: 합계
-  graded_25cd3fcd: 채점 현황
+  graded_25cd3fcd: 성적 평가에 반영함
   graded_date_by_grader_e8e1ff75: '%{grader}의 %{grader}'
   graded_quiz_7fabdf1f: 평가용 퀴즈
   graded_survey_c0f0c395: 평가용 설문
@@ -11158,7 +11193,7 @@ ko:
   group_people_50e9785b: 그룹 사람들
   group_roster_1846bf84: 그룹 명단
   group_select_330df8bd: 그룹 선택
-  group_set_4d1e7b06: 그룹 집합
+  group_set_4d1e7b06: 그룹 세트
   group_set_name_2aed2347: 그룹 세트 이름
   group_settings:
     invitation_sent: 초대 보냄
@@ -11859,7 +11894,7 @@ ko:
     manage: 관리
   iceland_354_1a03c558: 아이슬란드 (354)
   icelandic_9d6d35de: 아이슬란드 어
-  icon_215a1dc6: 상
+  icon_215a1dc6: 아이콘
   icon_url_e3d56e89: 아이콘 URL
   icon_url_ecce6557: '아이콘 URL:'
   icons:
@@ -12142,8 +12177,7 @@ ko:
   include_scores_when_alerting_about_grades_if_your__b221c2c8: 평가 점수에 대해 알림을 보낼 때
     실제 성적도 포함합니다.
   include_speedgrader_in_assignment_header_menu_69cd8656: 할당 헤더 메뉴에 SpeedGrader 포함
-  include_the_datadog_rum_js_agent_in_the_document_h_dab3570d: 문서 HEAD에 Datadog RUM
-    JS 에이전트를 포함합니다.
+  include_the_datadog_rum_js_agent_in_the_document_h_dab3570d: 문서 HEAD에 Datadog RUM JS 에이전트를 포함합니다.
   include_this_assignment_s_grades_when_syncing_to_y_55bfa487: 학교의 학생 정보 시스템에 동기화
     할 때이 과제의 성적 포함
   include_unpublished_assignments_83ebbaec: 공개되지 않은 과제 포함
@@ -12190,7 +12224,7 @@ ko:
   information_816d9fa5: 정보
   information_icon_8a514faa: 정보 아이콘
   inherit_content_security_policy_94aff861: 콘텐츠 보안 정책 상속
-  inherited_d4d0bc33: 상 속됨
+  inherited_d4d0bc33: 상속됨
   inherited_developer_keys_table_e4a65b67: 상속 된 개발자 키 표
   inner_box_background_6f9092f: 내부 상자 배경
   inner_box_border_d0524b03: 내부 상자 테두리
@@ -12525,7 +12559,7 @@ ko:
     않음'
   label_values_76f4b5fa: 라벨 값
   labels:
-    due: 기한
+    due: 마감일
     lock_module_until: 잠금 설정
   language_6b3e2c7c: 언어
   large_course_db3d58b: '대규모 과목 :'
@@ -12547,6 +12581,7 @@ ko:
   last_name_303122f3: 성
   last_post_at_date_bf77652f: 마지막 업데이트 일시 %{date}
   last_pushed_update_last_export_at_9f634f7c: '마지막으로 푸시 된 업데이트 : %{last_export_at}'
+  last_reply_lastreplyatdisplay_7a4af30: 최신 댓글 %{lastReplyAtDisplay}
   last_submission_activity_64ada9d0: 마지막 제출 활동
   last_used_f9457313: '마지막 사용 :'
   last_user_access_title: 최종 사용자 액세스
@@ -12629,7 +12664,7 @@ ko:
   learning_mastery_5fc34276: 러닝 마스터리
   learning_mastery_6ed4fd63: 러닝 마스터
   learning_mastery_context_name_a0b70957: 숙련도 학습-%{context_name}
-  learning_mastery_gradebook_72097130: 학습 숙달 평점 기록부
+  learning_mastery_gradebook_72097130: 학습 숙달 성적 기록부
   learning_mastery_gradebook_description: 'Learning Mastery Gradebook은 교수가 학생과 과목을
     빠르게 볼 수있는 방법을 제공합니다.
 
@@ -12795,7 +12830,7 @@ ko:
     사용자로 제한합니다.
   limited_322546c5: 제한 있음
   line_items_828f62cc: 품목
-  link_7262adec: Link
+  link_7262adec: 링크
   link_color_55f8b835: 링크 색상
   link_description_4355ca82: 링크 설명
   link_enrollment:
@@ -12921,7 +12956,7 @@ ko:
   location_3b6ff307: '위치:'
   location_e17bd402: 위치
   lock_at_time_3c8a044e: '잠금 시간 : %{time}'
-  lock_c341af13: 자물쇠
+  lock_c341af13: 잠금
   lock_date_cannot_be_after_course_end_a473158b: 잠금 날짜는 과목 종료 이후 일 수 없습니다.
   lock_date_cannot_be_after_section_end_d37da70c: 잠금 날짜는 섹션 종료 이후 일 수 없습니다.
   lock_date_cannot_be_after_term_end_cf1a188f: 잠금 날짜는 기말 이후 일 수 없습니다.
@@ -12930,7 +12965,7 @@ ko:
   lock_discussion_title_succeeded_fb24ebfc: 토론 %{title} 잠금 성공
   lock_questions_after_answering_5aecef9d: 답변 후 문제 잠금(이전 문제 이동 불가)
   lock_selected_announcements_33740f80: 선택한 공지 사항 잠금
-  lock_this_setting_for_sub_accounts_2ae5af17: 하위 계정에 대해이 설정 잠금
+  lock_this_setting_for_sub_accounts_2ae5af17: 하위 계정에 대해 이 설정 잠금
   lock_until_549bb904: 이 시각까지 잠금
   locked_762f138b: 잠김
   locked_796957c7: '잠김 :'
@@ -13148,7 +13183,7 @@ ko:
     prompts:
       delete_avatar: 이 사용자 프로필 그림을 삭제하시겠습니까?
       lock_avatar: 이 사진을 잠그면 그것을 승인하고 사용자가 업데이트하는 것을 방지합니다. 계속 진행하시겠습니까?
-  manage_b88f7150: 꾸리다
+  manage_b88f7150: 성과 설정
   manage_create_edit_delete_groups_f9046ee3: 그룹 관리(만들기/편집/삭제)
   manage_discussion_c1dd8f4e: 토론 관리
   manage_grading_schemes_in_context_name_e3678273: '%{context_name}에서 채점 체계 관리'
@@ -13191,7 +13226,7 @@ ko:
   marked_done_9fd646f: 완료로 표시
   master_lock_590266b6: 마스터 잠금
   mastered_34d4c857: 마스터
-  mastery_7ec348b5: 지배
+  mastery_7ec348b5: 기준 등급 _ Xinics(1)
   mastery_at_cf0c477b: 숙달 점수
   mastery_connect_64598f55: 마스터리 커넥트
   mastery_mastery_for_proficiency_rating_position_74aa3b56: 숙련도 등급 %{position}에 대한
@@ -15133,7 +15168,7 @@ ko:
         body: 'Canvas 알림 - 퀴즈 제출: %{quiz}, %{user_name}'
     submission_posted:
       email:
-        body: 교사가 %{title}에 대한 평점 변경 사항과 새 의견을 배포했습니다. 이제 변경 사항을 볼 수 있습니다.
+        body: 교수가 %{title}에 대한 성적 변경 사항과 새 의견을 배포했습니다. 이제 변경 사항을 볼 수 있습니다.
         graded_date: '평가됨: %{date}'
         html:
           body: 교수가 %{title}에 대한 성적 변경 사항과 새 의견을 배포했습니다. 이제 변경 사항을 볼 수 있습니다.
@@ -15142,11 +15177,11 @@ ko:
           no_date_set: 날짜 설정 안 됨
           not_applicable: 해당 사항 없음
           score: '점수:  %{score} / %{total}'
-          score_pending_review: 점수가 교사의 검토 대기 중임
+          score_pending_review: 점수가 교수의 검토 대기 중임
         no_date_set: 날짜 설정 안 됨
         not_applicable: 해당 사항 없음
         score: '점수:  %{score} / %{total}'
-        score_pending_review: 점수가 교사의 검토 대기 중임
+        score_pending_review: 점수가 교수의 검토 대기 중임
       sms:
         graded_date: '평가됨: %{date}'
         no_date_set: 날짜 설정 안 됨
@@ -15157,7 +15192,7 @@ ko:
         no_date_set: 날짜 설정 안 됨
         not_applicable: 해당 사항 없음
         score: '점수:  %{score} / %{total}'
-        score_pending_review: 점수가 교사의 검토 대기 중임
+        score_pending_review: 점수가 교수의 검토 대기 중임
     submissions_posted:
       email:
         html:
@@ -15733,9 +15768,9 @@ ko:
   new_anonymous_comment_for_assignment_title_student_d34cb28f: '%{assignment_title},
     학생 (%{user_id}), %{course_name}에 대한 새로운 익명 댓글입니다.'
   new_appointment_timeslots_are_available_for_signup_a3e3f964: 예약 가능한 약속 그룹이 생성됨
-  new_assignment_2a984756: 새로운 과제
+  new_assignment_2a984756: 과제
   new_assignment_for_course_name_f71dd337: '%{course_name}에 대한 새 과제'
-  new_attempt_57eae3d9: 재응시
+  new_attempt_57eae3d9: 과제 다시 제출
   new_bd30f253: 새로운
   new_canvas_message_from_user_name_94cc720: '%{user_name}의 새 Canvas 메시지'
   new_comment_by_author_name_for_assignment_title_us_19f3c2a5: '%{course_name}, %{assignment_title},
@@ -15758,7 +15793,7 @@ ko:
   new_file_added_for_name_a5ec3156: '%{name}에 대한 새 파일이 추가되었습니다.'
   new_file_s_8876bba1: '[새 파일]'
   new_gradebook_plagiarism_indicator_8dd22971: 새로운 성적표 표절 표시기
-  new_group_8d6ad781: 새 그룹
+  new_group_8d6ad781: 평가 그룹 _ Xinics(2)
   new_group_category_66be9cbd: 새 그룹 카테고리
   new_module_4e9287e4: 새 모듈
   new_outcome_7fba8c7d: 새 성과
@@ -15849,7 +15884,7 @@ ko:
   no_details_d15fa1ec: 세부 정보 없음
   no_directory_is_selected_please_select_a_directory_46ded46: 디렉토리를 선택하지 않았습니다. '이동'을
     클릭하기 전에 디렉토리를 선택하십시오.
-  no_due_date_1d63d13b: 기한 없음
+  no_due_date_1d63d13b: 마감일 없음
   no_due_date_44271c53: 마감일 없음
   no_due_date_6e6a23c1: (마감일 없음)
   no_e16d9132: 아니오
@@ -16361,7 +16396,7 @@ ko:
     new_observee_username: 사용자 이름
     observee_added: 이제 %{user}를 관찰합니다.
     observing: 관찰
-  observer_248a192e: 감독자
+  observer_248a192e: 관찰자
   observer_accounts_only_30c70a70: 관찰자 계정 만
   observer_id_2be07260: observer_id
   observer_pairing_code:
@@ -16723,7 +16758,7 @@ ko:
   overwrite_848c08f: 덮어쓰기
   overwrite_all_users_existing_default_dashboard_pre_9b2ad7d1: 모든 사용자의 기존 기본 대시 보드
     환경 설정 덮어 쓰기
-  overwrite_already_entered_grades_64a98037: 이미 입력한 평점을 다시 정의
+  overwrite_already_entered_grades_64a98037: 이미 입력한 성적을 다시 정의
   overwrite_assessment_content_with_matching_ids_b388f114: ID가 일치하는 평가 내용을 덮어쓰기
   overwrite_assessment_help_icon_875d00a5: 평가 덮어쓰기 도움말 아이콘
   own_copyright_cc59db55: 자신의 저작권
@@ -16825,6 +16860,7 @@ ko:
   partially_anonymous_483a892d: 부분적으로 익명
   partially_enabled_and_locked_9a39d38a: 부분적으로 활성화되고 잠김
   partially_enabled_cd506819: 부분적으로 활성화 됨
+  participants_must_respond_to_the_topic_before_view_27a0395a: 자신의 댓글 게시 후 다른 댓글 보기 가능
   participation_af2598: 참여
   participation_cap_for_assignment_pages_in_minutes_5e60bf9d: 과제 페이지에 대한 참여 한도 (분)
   participation_cap_for_discussion_pages_in_minutes_a7aaf6df: 토론 페이지에 대한 참여 한도 (분)
@@ -19838,7 +19874,8 @@ ko:
     MathJax 형식 버전으로. 이것은 더 나은 접근성을 제공합니다
 
     독자가 페이지의 방정식과 상호 작용할 수있는 많은 옵션이 있습니다.'
-  reply_389d6fb9: 댓글 작성...
+  replies_4a8577c8: 댓글
+  reply_389d6fb9: 회신하기
   reply_all_80298bee: 전체 회신
   reply_from_name: Canvas 알림을 통한 %{name}
   reply_to_comment_72d96728: 댓글에 답장
@@ -19850,6 +19887,15 @@ ko:
   reply_to_this_message_in_canvas_7ec72dce: Canvas에서이 메시지에 답장
   reply_to_title_f227303f: '%{title}에 답장'
   reply_to_topic_12412b0f: 주제에 응답
+  replycount_replies_e8c8953d:
+    one: "%{replyCount} 댓글"
+    other: "%{replyCount} 댓글"
+  replycount_replies_unreadcount_39489e1a:
+    one: "%{replyCount} 댓글 (%{unreadCount})"
+    other: "%{replyCount} 댓글 (%{unreadCount})"
+  replycount_replies_unreadcount_unread_4e2876fa:
+    one: "%{replyCount} 댓글, %{unreadCount} 읽지 않은 댓글"
+    other: "%{replyCount} 댓글, %{unreadCount} 읽지 않은 댓글"
   report_end_date_bce94160: 종료일보고
   report_has_been_aborted_2b5763ed: 보고서가 중단되었습니다
   report_inappropriate_picture_af4eefeb: 부적절한 사진 보고
@@ -20378,11 +20424,11 @@ ko:
   search_280d00bd: 검색
   search_a28cbc02: 검색…
   search_announcements_by_title_407a998e: 제목으로 공지 사항 검색
-  search_assignments_8c3c21bb: 할당 검색
+  search_assignments_8c3c21bb: 과제 검색
   search_by_99d1ba5f: 검색
   search_by_student_name_26536097: 학생 이름으로 검색
   search_by_title_or_author_273a8f49: 제목, 내용, 작성자 검색
-  search_by_title_short_name_or_sis_id_fe84aa12: 제목, 과목 코드 또는 SIS ID로 검색
+  search_by_title_short_name_or_sis_id_fe84aa12: 제목, 과목 코드 또는 SIS IdpD로 검색
   search_by_user_dd3ad189: 사용자 검색
   search_courses_591bc900: 과목 검색 ...
   search_courses_7b5c4ab3: 과목 검색
@@ -20390,6 +20436,7 @@ ko:
   search_discussion_by_title_30466604: 제목으로 토론 검색
   search_endpoints_d5abf37f: 엔드 포인트 검색
   search_entries_or_author_63fb0a86: 항목이나 작성자 검색
+  search_entries_or_author_8a737938: 항목이나 작성자 검색...
   search_flickr_6f28b02e: 플리커 검색
   search_for_a_course_58fdc7a6: 과목 검색
   search_for_a_deleted_course_by_id_f553398d: 삭제 된 과목을 ID로 검색
@@ -21517,7 +21564,7 @@ ko:
   show_by_type_c5d61732: 유형별로 보기
   show_calendar_events_in_the_month_view_on_multiple_e94c33ae: 캘린더 월별 보기에서 이벤트 제목이
     한 줄에 들어가지 않는 경우 여러 줄로 나타내기
-  show_concluded_enrollments_6a05544c: 종결된 등록 표시
+  show_concluded_enrollments_6a05544c: 종료된 등록 표시
   show_correct_answers_at_30c37e01: 정답 공개 시작
   show_correct_answers_at_a5475aa3: 정답 공개 시작
   show_course_sections_for_course_name_5f715702: 과목 %{name}에 대한 과목 섹션 표시
@@ -21753,6 +21800,7 @@ ko:
   sorry_the_action_performed_on_this_recording_faile_2a1badda: 죄송합니다.이 녹화에서 수행 한 작업이
     실패했습니다. 나중에 다시 시도
   sorry_we_couldn_t_find_anything_that_matched_91793bb7: 죄송합니다. 일치하는 항목을 찾을 수 없습니다.
+  sort_15eac63f: 정렬
   sort_by_72dbba9c: 정렬 기준
   sort_by_e75f9e3e: 정렬 기준
   sortable_name_73f707cf: 정렬용 이름
@@ -21884,7 +21932,7 @@ ko:
   starred_no_subject_click_to_unstar_3191d64: 별표 표시된 "(제목 없음)", 별표를 제거하려면 클릭하십시오.
   starred_no_subject_click_to_unstar_bff04bce: 별표 표시된 '(제목 없음)', 별표를 제거하려면 클릭하세요.
   starred_subject_click_to_unstar_6aafcddc: 별표 표시된 "%{subject}", 별표를 제거하려면 클릭하십시오.
-  start_5a4cfcd6: 시작
+  start_5a4cfcd6: 시작일
   start_a_conversation_with_your_instructor_in_the_c_50c9b8d5: Canvas Inbox에서 교수와
     대화를 시작합니다.
   start_date_e937be8a: 시작 날짜
@@ -22462,6 +22510,7 @@ ko:
     conferences: 회의
     course_assignments: 과목 과제
     course_settings: 과목 설정
+    course_paces: 과목 속도
     discussions: 토론
     eportfolios: ePortfolios
     files: 파일
@@ -22499,7 +22548,7 @@ ko:
   target_link_uri_bbed67d1: '* 대상 링크 URI'
   target_link_uri_d166858: 대상 링크 URI
   teacher_5a73b637: 교수
-  teacher_activity_report_abf49a06: 교사 활동 보고서
+  teacher_activity_report_abf49a06: 교수 활동 보고서
   teacher_count_teachers_a92f7199: 교수 %{teacher_count} 명
   teacher_engagement_report_ec03613d: 교수 참여 보고서
   teacher_s_fdefb2c: 교수
@@ -22591,6 +22640,7 @@ ko:
     index:
       page_title: '%{account} 학기'
       terms_add_new: 새 학기 추가
+      terms_search_name: 학기 이름으로 검색
       titles:
         term_details: 학기 세부 정보
     term:
@@ -22601,32 +22651,32 @@ ko:
         one: 과목 %{count}개
         other: 과목 %{count}개
       labels:
-        designers_can_access_from: '**디자이너**가 액세스할 수 있는 시점'
+        designers_can_access_from: '**디자이너** 접근 가능 기간'
         sis_id: SIS ID
-        students_can_access_from: '**학생**이 액세스할 수 있는 시점'
-        tas_can_access_from: '**조교**가 액세스할 수 있는 시점'
-        teachers_can_access_from: '**교사**가 액세스할 수 있는 시점'
+        students_can_access_from: '**학생** 접근 가능 기간'
+        tas_can_access_from: '**조교** 접근 가능 기간'
+        teachers_can_access_from: '**교수** 접근 가능 기간'
       name: '학기 이름:'
       sis_source_id: 'SIS ID:'
-      term_runs_from: '**학기 운영** 시작 시점'
+      term_runs_from: '**학기 운영** 기간'
       titles:
-        term_ends: 학기 끝
+        term_ends: 학기 종료
         term_starts: 학기 시작
       tooltips:
-        term_ends_designers: 디자이너의 학기 끝
-        term_ends_students: 학생의 학기 끝
-        term_ends_tas: 조교의 학기 끝
-        term_ends_teachers: 교사의 학기 끝
+        term_ends_designers: 디자이너의 학기 종료
+        term_ends_students: 학생의 학기 종료
+        term_ends_tas: 조교의 학기 종료
+        term_ends_teachers: 교수의 학기 종료
         term_starts_designers: 디자이너의 학기 시작
         term_starts_students: 학생의 학기 시작
         term_starts_tas: 조교의 학기 시작
-        term_starts_teachers: 교사의 학기 시작
+        term_starts_teachers: 교수의 학기 시작
     timespan:
       date:
-        term_end: 학기 끝
+        term_end: 학기 종료
         term_start: 학기 시작
         unspecified: 항상
-      timespan: '%{start_at}*부터* %{end_at}까지'
+      timespan: '%{start_at}* ~* %{end_at}'
   terms_not_found_terms_must_be_included_with_multi__ca2e5c25: 학기를 찾을 수 없습니다. 학기는
     multi_term_batch_mode에 포함되어야합니다.
   terms_of_service_attributes_not_valid_f3f9fca9: 서비스 약관 속성이 유효하지 않습니다.
@@ -23020,7 +23070,7 @@ ko:
     않습니다.
   this_assignment_is_in_a_closed_grading_period_for__a22bb4ed: 이 과제는이 학생의 마감 채점 기간에
     있습니다.
-  this_assignment_is_muted_915e2dab: 이 과제는 평점 비공개 상태임
+  this_assignment_is_muted_915e2dab: 이 과제는 성적 비공개 상태임
   this_assignment_is_not_applicable_to_this_student_c149a5ad: 이 과제는이 학생에게 적용되지 않습니다.
   this_assignment_is_not_graded_576f1244: 이 과제는 채점되지 않았습니다.
   this_assignment_is_overdue_a44bea3b: 이 과제는 마감일이 지났습니다.
@@ -23191,7 +23241,7 @@ ko:
     \  사용자 sis ID, 콘텐츠 유형, 콘텐츠, 조회 시간, 참여 시간, 마지막\n  본. 시청 시간과 참여 시간은\n  보고서가 생성 될\
     \ 때까지의 시작 시간입니다."
   this_report_shows_all_the_activity_from_users_enro_8f8e0ca1: "이 보고서는 모든 과목에 등록한\
-    \ 사용자의 모든 활동을 보여줍니다.\n  주어진 기간에. 결과 csv 파일에는 학생당 하나의 행이 있습니다.\n  섹션 ID, 섹션 sis\
+    \ 사용자의 모든 활동을 보여줍니다.\n  주어진 기간에. 성과 csv 파일에는 학생당 하나의 행이 있습니다.\n  섹션 ID, 섹션 sis\
     \ ID,\n  섹션 이름, 과목 ID, 과목 sis ID, 과목 이름, 학기 ID, 학기 sis ID,\n  학기 이름, 사용자 ID, 사용자\
     \ sis ID, 사용자 이름, 콘텐츠 유형, 콘텐츠, 조회 시간,\n  참여한 횟수, 마지막으로 본 횟수. 시청 시간과 참여 시간은\n \
     \ 시작부터 보고서가 생성 될 때까지의 카운터.\n  최대 1 개월의 데이터가 검색됩니다. 기본적으로\n  지난주의 시작 데이터."
@@ -23236,6 +23286,7 @@ ko:
     계속 하시겠습니까?
   this_will_update_all_rubrics_using_this_outcome_th_6954ca45: 아직 평가되지 않은이 성과를 사용하여
     모든 루브릭이 업데이트됩니다.
+  thread_addd9799: 스레드
   threshold_pts_45f0e5d8: '임계 값 : %{점}'
   ticket_successfully_submitted_f6254460: 티켓이 성공적으로 제출되었습니다.
   ticketing_system_52205bff: 발권 시스템
@@ -24761,7 +24812,7 @@ ko:
   view_app_configurations_52b52441: 앱 구성 보기
   view_ba339f93: 보기
   view_course_analytics_eefe6b2: 과목 분석보기
-  view_edit_grading_scheme_238d3028: 평가 구성표 보기/편집
+  view_edit_grading_scheme_238d3028: 평가 기준표 보기/편집
   view_faculty_journals_ad0e8c8f: 교수 저널보기
   view_feature_settings_at_an_account_level_ec7f5e10: 계정 수준에서 기능 설정보기
   view_file_8a1c62e5: 파일보기
@@ -24779,6 +24830,7 @@ ko:
   view_prior_enrollments_9b519b25: 이전 등록보기
   view_question_banks_188a9e0f: 문제 은행보기
   view_range_student_details_8116d68a: 범위 학생 상세 정보보기
+  view_replies_8565a729: 댓글 보기
   view_rubric_d71cce10: 루브릭 보기
   view_submission_ff3da5d: 제출물보기
   view_the_assignment_e61ca4fc: 과제 바로가기
@@ -24946,8 +24998,8 @@ ko:
   which_course_is_this_question_about_f819a158: 이 질문은 어떤 과목에 관한 것입니까?
   while_the_grades_for_an_assignment_are_set_to_manu_457c38ff: 과제 성적이 수동으로 공개되도록 설정되어
     있는 동안 학생은 다음에 항목에 대한 새로운 알림을 받거나 볼 수 없습니다.
-  while_the_grades_for_this_assignment_are_hidden_st_c5d1992b: 이 과제의 평점을 비공개로 하시겠습니까?
-    이 과제의 평점이 비공개인 동안 학생은 새 알림을 받거나 볼 수 없습니다.
+  while_the_grades_for_this_assignment_are_hidden_st_c5d1992b: 이 과제의 성적을 비공개로 하시겠습니까?
+    이 과제의 성적이 비공개인 동안 학생은 새 알림을 받거나 볼 수 없습니다.
   while_the_grades_for_this_assignment_are_set_to_ma_cb716ede: 과제 성적이 수동으로 공개하도록 설정되어
     있는 동안 학생은 다음에 항목에 대한 새로운 알림을 받거나 볼 수 없습니다.
   who_can_create_new_courses_7a6c1338: 새로운 과목을 만들 수있는 사람
@@ -25120,8 +25172,8 @@ ko:
     previous_label: '&#8592; 이전'
   wimba_conference:
     external_urls:
-      archive: 저장소
-      archive_link: 저장소 보기
+      archive: 보관함 _ Xinics(1)
+      archive_link: 보관함 _ Xinics(1)
   windows_tile_color_2b786bd9: Windows 타일 색상
   windows_tile_square_b91d2b33: 'Windows 타일 : 정사각형'
   windows_tile_wide_4d40910: 'Windows 타일 : 와이드'
@@ -25184,7 +25236,7 @@ ko:
   you_can_access_the_welcome_tour_here_any_time_as_w_95b44855: 여기에서 언제든지 환영 둘러보기와
     기타 새로운 리소스에 액세스 할 수 있습니다.
   you_can_also_manage_access_at_this_time_105a2530: 이때 액세스를 관리 할 수도 있습니다.
-  you_can_begin_sending_notifications_again_by_click_50d3f0cf: 이 과제의 평점을 비공개로 하고 나서
+  you_can_begin_sending_notifications_again_by_click_50d3f0cf: 이 과제의 성적을 비공개로 하고 나서
     "과제 성적 비공개 해제"를 클릭해서 알림을 다시 보낼 수 있습니다.
   you_can_check_out_other_groups_by_clicking_this_li_1c09e4fb: 다음 링크를 클릭하여 다른 그룹을
     확인할 수 있습니다. %{link}
@@ -25502,3 +25554,496 @@ ko:
     \    교수와 학생이 함께합니다. 예약하고 실행할 수 있습니다.\n    Zoom 링크를 추가하여 Canvas 내에서 직접 화상 회의\n\
     \    Canvas 과목, 과목 공지, 모듈 또는 캘린더를 통해."
   zoom_tutorial_tray_5dcb7fc: 줌 튜토리얼 트레이
+  view_inline_ffb3928b: 한 화면으로 보기
+  view_split_screen_ca35b78a: 분할 화면으로 보기
+  go_to_quoted_reply_6f4661e: 인용한 글 바로가기
+  quote_reply_e56ad360: 인용 댓글 달기
+  mark_thread_as_read_41c1bcb3: 읽음으로 표시
+  mark_thread_as_unread_bc3d7a4: 읽지 않음으로 표시
+  create_new_assignment_d77dfc4: 과제 추가
+  submitted_on_bb3b53fc: 제출됨
+  submitted_on_date_13c89fb: 제출됨 %{date}
+  next_up_review_feedback_59555dbd: '다음: 피드백 보기'
+  next_up_submit_assignment_2fdb7174: '다음: 과제 제출하기'
+  attempt_attempt_score_2a973edc: '제출 횟수 %{attempt} 번:'
+  attempt_attempt_feedback_1b042ff5: 피드백 수 %{attempt}
+  review_feedback_4b4abb38: 피드백 보기
+  submitted_718f5cbc: '제출됨: '
+  view_feedback_b88c99c: 피드백 보기
+  view_feedback_f2feabca: 피드백 보기
+  formattedpoints_points_possible_1d93043f:
+    one: "*1* 점수 가능"
+    other: "*%{formattedPoints}* 점수 가능"
+  anonymous_discussion_1e9b981: '익명 토론 | '
+  anonymous_discussion_54517e84: 익명 토론
+  off_student_names_and_profile_pictures_will_be_vis_6891e2cf: '끄기: 학습자의 이름과 프로필 사진이 과목 내 다른 사용자에게 드러납니다.'
+  partial_students_can_choose_to_reveal_their_name_a_baa936d4: '부분 허용: 학습자가 본인의 이름과 프로필 사진을 드러낼 것인지 선택할 수 있습니다.'
+  full_student_names_and_profile_pictures_will_be_hi_ddfba94e: '허용: 학습자의 이름과 프로필 사진이 드러나지 않습니다.'
+  this_is_a_group_discussion_2f9acdae: 그룹 토론으로 출제
+  select_date_f799ef47: 날짜 선택
+  save_and_publish_1b765e7: 저장 & 공개
+  manually_mark_replies_as_read_580adc59: 모든 댓글 읽음으로 표시
+  create_anonymous_discussion_topics_d573e88e: 익명 토론 토픽 생성
+  edit_and_delete_their_own_replies_e5b9d793: 본인 댓글 수정 / 삭제 허용
+  report_replies_500cdcd3: 댓글 신고
+  create_quiz_d08bb72a: 퀴즈
+  search_3a8c530b: 검색
+  student_names_ea4b671a: 학생 이름
+  assignment_names_858b1880: 과제명
+  search_students_e1f506c: 학생 검색
+  export_current_gradebook_view_6cb376a3: 현재 성적표 내보내기
+  export_entire_gradebook_e980d946: 전체 성적표 내보내기
+  extended_9a58dcb6: 연장됨
+  grade_for_missing_submissions_56f91c83: 제출되지 않은 과제에 대한 점수 비율
+  late_submission_deduction_5d7fa3cb: 지각 제출 차감 비율
+  deduction_interval_e18bd51: 지각 제출 차감 간격
+  lowest_possible_grade_ae5510be: 최저 점수(지각 차감 하한선)
+  apply_settings_10409ad9: 업데이트
+  hide_assignment_group_totals_f4fb8660: 평가 그룹 합계 비활성화
+  hide_total_column_6911831e: 합계 열 비활성화
+  view_ungraded_as_0_a9e87a54: 미채점을 0점으로 처리
+  status_color_1c4ce650: 상태별 색상
+  change_gradebook_view_d2d9a101: 성적표 보기
+  traditional_gradebook_d90461dc: 기본 성적표
+  individual_gradebook_117281bb: 개별 성적표
+  apply_filters_e98823c0: 필터
+  create_manage_filter_presets_18404c3a: 필터 생성 & 관리
+  start_end_date_4a7a56da: 시작일 & 종료일
+  start_end_dates_aaa00ecf: 시작일 & 종료일
+  has_ungraded_submissions_2bff87df: 미채점 제출물
+  has_ungraded_submissions_b79f5803: 미채점 제출물
+  has_submissions_6c12ef4c: 제출물 있음
+  has_submissions_ea8e609b: 제출물 있음
+  has_no_submissions_2826a7a2: 제출물 없음
+  has_no_submissions_63de50ad: 제출물 없음
+  has_unposted_grades_3567391e: 미공개 성적
+  has_unposted_grades_ba0e02b6: 미공개 성적
+  create_new_group_bf9561d4: 새 성과 그룹 _ Xinics(1)
+  create_new_group_fca5cc73: 새 성과 그룹 _ Xinics(2)
+  enter_new_group_name_b97d5819: 새 성과 그룹명
+  mastery_at_e804b49: 기준 등급 _ Xinics(2)
+  no_evidence_75853352: 점수 없음
+  add_mastery_level_76469d98: 기준 등급 추가
+  mastery_calculation_5fd5f5fe: 계산 방법
+  weighted_average_579c09a: 가중 평균
+  weighted_average_recentint_remainderint_74cdb5b1: 가중 평균 - %{recentInt}%/%{remainderInt}%
+  central_value_in_a_set_of_results_calculated_by_di_19a8c48a: 결과들의 중심 값입니다. 모든 항목 점수의 합을 점수 개수로 나누어 계산합니다.
+  average_is_not_a_good_fit_for_most_outcomes_based__f351ed94: 평균은 대부분의 결과 기반 또는 숙달 기반 학습 사용 사례에 적합하지 않습니다. 학생들이 성과를 숙달하는 데 시간이 필요할 수 있고 초기 낮은 성적이 평균을 떨어뜨릴 수 있습니다.
+  save_mastery_calculation_84fbeb0f: 계산 방법 저장
+  alignments_de5f20d8: 정렬
+  count_outcomes_3ceaa024:
+    one: "%{count}개의 성과"
+    other: "%{count}개의 성과"
+  avg_alignments_per_outcome_4daf75cd: Avg. 성과 기준 정렬
+  count_assessable_artifacts_ed4369fa:
+    one: "%{count}개의 평가물"
+    other: "%{count}개의 평가물"
+  avg_alignments_per_artifact_5573d99c: Avg. 평가물 기준 정렬
+  all_outcomes_9f338636: 전체
+  with_alignments_3ef4a5e: 정렬됨
+  without_alignments_c5193f9a: 정렬 안 됨
+  your_search_returned_no_results_383a30cf: 검색 결과 없음
+  create_outcome_4dac05a0: 성과
+  friendly_description_for_parent_student_display_e608ecf3: 성과 설명
+  enter_your_friendly_description_here_b3c230d3: ' '
+  enter_name_or_code_b4c103f6: 성과 이름
+  friendly_name_601153fb: 이름(선택 사항)
+  create_a_friendly_display_name_c1036ed: ' '
+  add_outcomes_to_course_88ba09be: 과목에 성과 저장
+  pro_tip_30e41fa3: TIP!
+  save_yourself_a_lot_of_time_by_only_adding_the_out_33293248: 과목 콘텐츠에 특정 성과만 추가하여 시간을 절약하실 수 있습니다.
+  publish_module_and_all_items_d263682e: 전체 모듈 및 아이템 공개
+  publish_module_only_bb43f612: 모듈 공개
+  publish_modules_only_c638f88: 모듈 공개
+  unpublish_module_and_all_items_e6dd35e5: 전체 모듈 및 아이템 비공개
+  unpublish_all_modules_and_items_ba0291f4: 전체 모듈 및 아이템 비공개
+  unpublish_module_only_1987d840: 모듈 비공개
+  unpublish_modules_only_934a9ab: 모듈 비공개
+  module_progress_for_name_fbff0ccb: 학생 진행률 *%{name}*
+  course_template_84f504be: 과목 템플릿
+  enable_course_as_a_course_template_5299afb6: 과목 템플릿 활성화
+  changing_the_course_participation_will_republish_a_5715b0d5: 과목 참여 기간을 변경하면 모든 과목 속도가 새로운 날짜로 다시 공개됩니다.
+  restrict_students_from_viewing_course_before_term__3c4924f0: 학기 시작일 이전에 학습자가 과목을 볼 수 없도록 제한
+  restrict_students_from_viewing_course_after_term_e_1f93ccb9: 학기 종료일 이후에 학습자가 과목을 볼 수 없도록 제한
+  this_influences_the_user_interface_for_setting_due_be0f0273: 이는 마감일을 설정하기 위한 사용자 인터페이스에 영향을 미칩니다. 기존 과제의 마감 일시는 변경되지 않습니다.
+  enable_individual_learning_paths_for_students_base_5236d3bb: 성적 평가를 기반으로 학생들의 개별 학습 경로를 활성화합니다.
+  disabling_the_mastery_paths_feature_will_release_c_4b96c86d: 마스터리 경로를 비활성화하면 구성된 과제 및 콘텐츠가 모든 학생에게 해제됩니다. 기능이 다시 활성화되면 이러한 과제의 마스터리 경로를 다시 구성해야합니다.
+  course_pacing_is_in_active_development_348e33cf: 과목 속도 기능을 제공 중입니다.
+  learn_more_about_this_feature_in_the_course_pacing_687ceb39: 이 기능에 대해 자세히 알아보십시오. *과목 속도 사용자 그룹*
+  course_participation_is_limited_to_course_start_an_7315866d: 과목 참여 기간은 *과목* 시작일 및 종료일으로 제한됩니다. 과목에서 생성된 섹션 기간은 과목 참여 기간보다 우선될 수 있습니다.
+  course_participation_is_limited_to_term_start_and__c8974314: 과목 참여 기간은 *학기* 시작일 및 종료일으로 제한됩니다.
+  daily_notifications_will_be_delivered_around_day_t_a2b49202: 일별 알림은 %{day_time}경에 전달됩니다. 주별 알림은 %{start_time}에서 %{end_time} 사이에 전달됩니다.
+  settings_for_e2322172: 설정
+  new_mention_ad04b872: 새 멘션
+  discussion_mention_description: |-
+    토론에서의 새로운 멘션
+
+    *토론 멘션은 토론/공지 재설계 기능이 켜져있는 과목 또는 계정에서만 가능합니다.*
+  reported_reply_8e03db37: 신고된 댓글
+  reported_reply_description: 토론에서 댓글이 새로 신고됨
+  welcome_to_your_courses_to_customize_the_list_of_c_22de652e: 표시되는 과목 목록을 편집하려면 "모든 과목" 을 클릭하고 원하는 과목의 별표를 체크하시기 바랍니다.
+  this_is_a_message_from_canvas_administration_dbd63778: 이 메시지는 *Canvas Administration*에서 보냈습니다.
+  show_all_ae37d610: 모두 보기
+  teacher_to_do_19d00df5: 교수 할 일
+  student_to_do_c018c835: 학생 할 일
+  beginning_of_your_to_do_history_61ef2dce: 할 일 기록 시작하기
+  you_ve_scrolled_back_to_your_very_first_to_do_873510d1: 처음 할 일로 돌아갈 수 있습니다.
+  nothing_planned_yet_8675ffe9: 아직 계획된 것 없음
+  no_more_items_to_show_6a1333c6: 더 이상 표시할 항목 없음
+  input_event_title_b2445e30: 일정 제목
+  input_event_title_1d4c8b10: 일정 제목
+  default_date_will_be_today_s_date_4f85dcdc: 기본 날짜는 오늘 날짜로 입력됩니다.
+  custom_repeating_event_eda6a3df: 일정 반복 상세 설정
+  repeat_every_e653d6d0: '반복 횟수:'
+  calendar_custom_recurring_event_repeat_picker:
+    single_and_plural_days:
+      one: 일간
+      other: 일간
+    single_and_plural_months:
+      one: 월간
+      other: 월간
+    single_and_plural_weeks:
+      one: 주간
+      other: 주간
+    single_and_plural_years:
+      one: 연간
+      other: 연간
+  on_1af5b447: 종료일
+  after_8db0c81c: 종료 횟수
+  occurrences_max_max_3201dec: 반복 후 (최대 %{max})
+  input_event_location_39b0fbf3: 장소 입력
+  create_new_calendar_event_f933f209: 새 일정
+  have_students_sign_up_in_groups_d6cfd4d2: 학생이 그룹에 등록하도록 합니다.
+  send_an_individual_message_to_each_recipient_e9ddaeb8: 각 수신자에게 개별 메시지 보내기
+  insert_or_select_names_a780902c: 수신자를 선택하거나 이름을 입력하세요.
+  insert_subject_9f0d8e49: 제목 입력
+  return_to_conversation_list_86688140: 메시지 목록으로 돌아가기
+  reply_all_b864cd0e: 전체 회신
+  count_more_beba6428: "%{count} 개 더보기 _ Xinics (1)"
+  participantcount_more_50363e55: "%{participantCount} 개 더보기 _ Xinics (2)"
+  manage_labels_98611fe: 라벨 관리
+  show_only_public_courses_517ad255: 공개된 과목만 보기
+  permission_role_filter_8a9a3e68: 과목 역할 필터
+  course_calendar_add_edit_delete_636be6ba: 과목 일정 - 추가 / 수정 / 삭제
+  item_banks_manage_account_e8040580: 문제 은행 - 계정 관리
+  manage_assignments_and_quizzes_170ccaf4: 과제 및 퀴즈 관리
+  add_delete_edit_7dbc9c5b: 추가 / 삭제 / 수정
+  assignments_and_quizzes_add_b1473591: 과제 및 퀴즈 - 추가
+  assignments_and_quizzes_delete_84ecc680: 과제 및 퀴즈 - 삭제
+  assignments_and_quizzes_edit_1c23f658: 과제 및 퀴즈 - 수정
+  manage_course_content_fc5de138: 과목 콘텐츠 관리
+  course_content_add_355fab78: 과목 콘텐츠 - 추가
+  course_content_delete_b6e7cfd9: 과목 콘텐츠 - 삭제
+  course_content_edit_7a3effc3: 과목 콘텐츠 - 수정
+  course_content_add_edit_or_delete_dd57562c: 과목 콘텐츠 - 추가 / 수정 / 또는 삭제
+  manage_course_files_57e07038: 과목 파일 관리
+  course_files_add_2eede390: 과목 파일 - 추가
+  course_files_delete_fae0effe: 과목 파일 - 삭제
+  course_files_edit_d05d4e8b: 과목 파일 - 수정
+  manage_course_sections_f482d1b3: 과목 섹션 관리
+  course_sections_add_c6b5dc1: 과목 섹션 - 추가
+  course_sections_delete_e75e3eeb: 과목 섹션 - 삭제
+  course_sections_edit_bd783e1: 과목 섹션 - 수정
+  manage_courses_abe8335f: 과목 관리
+  conclude_delete_publish_reset_35b64f0f: 종료 / 삭제 / 공개 / 초기화
+  courses_conclude_7bf4ce68: 과목 - 종료
+  courses_delete_20c9beb2: 과목 - 삭제
+  courses_publish_39df53f8: 과목 - 공개
+  courses_reset_211acdd: 과목 - 초기화
+  manage_groups_4b962fa9: 그룹 관리
+  add_delete_manage_d65e235: 추가 / 삭제 / 관리
+  groups_add_4038ae8a: 그룹 - 추가
+  groups_delete_bb79a2b4: 그룹 - 삭제
+  groups_manage_a5197479: 그룹 - 관리
+  manage_lti_8fcdc6ba: LTI 관리
+  lti_add_e3bc0049: LTI - 추가
+  lti_delete_ee5f1bef: LTI - 삭제
+  lti_edit_83a27850: LTI - 수정
+  outcome_mastery_scales_add_edit_171551c: 성과 마스터리 척도 - 추가 / 수정
+  reports_manage_92bc45cb: 보고서 - 관리
+  submission_submit_on_behalf_of_student_f0ed14e4: 제출물 - 학생 대신 제출
+  users_manage_students_in_courses_d6168815: 사용자 - 과목 내 학습자 관리
+  what_it_does_74ec1339: 권한 설명
+  additional_considerations_f3801683: 추가 고려 사항
+  account_calendars_4a4a79b2: 계정 캘린더
+  account_calendar_visibility_350b0475: 계정 캘린더 상태
+  choose_which_calendars_your_users_can_add_in_the_o_b73bbb17: 사용자가 캘린더의 "다른 캘린더" 섹션에 추가할 수 있는 캘린더를 선택합니다. 사용자는 연결된 계정에 대해 활성화된 캘린더만 추가할 수 있습니다. 기본적으로 모든 캘린더는 비활성화되어 있습니다.
+  other_calendars: 다른 캘린더
+  search_calendars_f98d663: 캘린더 검색
+  show_all_967a90f0: 모두 보기
+  show_only_enabled_calendars_8caef0df: 활성화 된 캘린더만 표시
+  show_only_disabled_calendars_cb8e2bdc: 비활성화 된 캘린더만 표시
+  auto_subscribe_a7da0dff: 자동 구독
+  calendar_automatically_appears_in_user_s_other_cal_ed9fc840: 캘린더는 사용자의 “다른 캘린더” 목록에 자동으로 나타납니다.
+  manual_subscribe_5ad37b14: 수동 구독
+  users_can_add_this_calendar_to_their_other_calenda_69daaa69: 사용자는 이 캘린더를 “다른 캘린더” 목록에 추가할 수 있습니다.
+  count_account_calendars_selected_acbd588:
+    one: 1 개의 계정 캘린더가 선택됨
+    other: "%{count} 개의 계정 캘린더가 선택됨"
+    zero: 계정 캘린더가 선택되지 않음"
+  apply_changes_b1dffc70: 업데이트
+  default_due_time_9d0e9140: 기본 마감 기한
+  account_default_time_8c7ab62d: 기본 (%{time})
+  restrict_students_from_viewing_future_courses_in_e_67486caf: 학습자가 수강 목록에서 예정된 과목을 볼 수 없도록 제한
+  allow_observers_to_sign_up_for_appointments_when_e_54f1d9d6: 교수자가 활성화 한 경우 관찰자가 일정에 등록할 수 있도록 허용
+  allow_users_to_submit_an_additional_email_at_regis_75b54a9d: 사용자가 추가 이메일을 등록할 수 있도록 허용
+  canvas_for_elementary_e6f5a06f: 기본 Canvas
+  canvas_for_elementary_font_selection_5d1f2271: Canvas 기본 폰트 선택
+  this_setting_significantly_changes_the_canvas_expe_a9e07674: 이 설정은 학습자와 교수자의 Canvas 경험을 크게 변화시킵니다.
+  to_learn_more_about_canvas_for_elementary_please_r_7fd3af37: 기본 Canvas에 대한 자세한 내용은 *설명서*를 참조하시기 바랍니다.
+  large_balsamiq_font_5fe45fae: 큰 발사미크 폰트
+  regular_lato_font_7f3cf24c: 일반 라토 폰트
+  include_integration_ids_in_the_gradebook_exports_1b48bbdc: 성적 기록 내보내기 시 통합ID를 포함
+  blocked_emojis_9fbaca3a: 이모티콘 사용 차단
+  selected_emojis_will_not_be_available_in_the_emoji_412d8776: 선택된 이모티콘은 학습자 또는 교수를 위한 "이모티콘 선택기"에서 사용할 수 없습니다.
+  course_templates_ddd579e6: 과목 템플릿
+  no_template_selected_f59e797: 템플릿 미선택
+  search_by_name_or_id_3bdab12e: 사용자 이름 또는 ID 검색
+  auto_show_closed_captions_e4cd7aff: 자동 자막 표시
+  automatically_show_closed_captions_in_the_user_s_c_f290a22f: 캔버스 미디어를 재생할 때 사용자의 현재 언어로 자막이 자동으로 표시됩니다. (사용 가능한 경우)
+  microsoft_immersive_reader_30edaaee: Microsoft 몰입형 리더
+  enables_the_microsoft_immersive_reader_button_in_s_ab4af0cd: 캔버스의 지원되는 영역에 Microsoft 몰입형 리더 버튼을 활성화합니다. 계정 관리자가 모든 사용자에게 이 기능을 켰다면, 이 설정과 관계없이 강의에서 버튼을 활성화할 수 있습니다.
+  open_to_do_items_in_a_new_tab_120ea5f4: 할 일 항목을 새 탭에서 열기
+  when_enabled_this_setting_automatically_opens_teac_f93c16f0: 이 설정을 활성화하면, 교수의 할 일 항목이 자동으로 새 탭에서 열립니다.
+  account_branding_for_confetti_db2012a8: 계정 브랜딩을 통한 콘페티
+  applies_account_branding_to_confetti_splashes_c5989dce: 계정 브랜딩을 콘페티 스플래시에 적용합니다.
+  account_level_course_pacing_blackout_dates_ce944dfb: 계정 수준의 과목 속도 블랙아웃 날짜
+  allow_course_pacing_blackout_dates_to_be_set_for_a_d4d597d5: 과목 대신 계정에 대해 과목 속도 블랙아웃 날짜를 설정할 수 있습니다.
+  add_dates_to_gradebook_grading_period_filter_b47b6a14: 성적 채점 기간 필터에 날짜 추가
+  this_feature_adds_the_start_end_and_close_dates_of_221c79cc: 이 기능은 채점 기간 필터에 시작, 종료 및 마감 날짜를 추가합니다.
+  add_speedgrader_links_to_assignments_and_quizzes_i_990a17cd: 과제 및 퀴즈 인덱스 보기에서 SpeedGrader 링크 추가
+  reorders_some_menu_options_for_more_consistency_an_90efff07: 메뉴 옵션을 더 일관성 있게 재정렬하고 SpeedGrader 링크를 추가합니다.
+  allow_observers_to_schedule_appointments_in_the_ca_7f4d0052: 관찰자가 캘린더에서 일정을 예약할 수 있도록 허용
+  when_enabled_teachers_can_choose_to_allow_observer_320b555e: 활성화되면, 교수는 캘린더에서 약속 그룹을 생성할 때 관찰자가 약속을 예약할 수 있도록 선택할 수 있습니다.
+  allow_push_notification_opt_out_827f288b: 푸시 알림 옵트아웃 허용
+  enable_an_account_setting_which_toggles_push_notif_f3ccc7a1: 해당 계정에 대한 푸시 알림을 전환할 수 있는 계정 설정을 활성화합니다.
+  anonymous_grading_with_new_quizzes_ba0391f3: 새 퀴즈에서 익명 채점 허용
+  allows_instructors_to_enable_anonymous_grading_for_b852c884: 교수가 새 퀴즈에서 익명 채점을 활성화할 수 있도록 허용합니다.
+  apollo_caching_185f0b09: Apollo 캐싱
+  allow_for_apollo_to_cache_graphql_queries_on_a_use_bda8210d: 사용자 경험을 향상시키기 위해 Apollo가 사용자의 브라우저에 graphQL 쿼리를 캐시할 수 있도록 허용합니다.
+  archive_outcomes_20b869b6: 결과 아카이브
+  allows_users_to_archive_outcomes_and_outcome_group_313b6b4e: 사용자가 더 이상 사용하지 않는 결과 및 결과 그룹을 아카이브할 수 있도록 합니다.
+  archived_grading_schemes_6d698d0: 아카이브된 채점 방식
+  users_can_now_archive_grading_schemes_preventing_t_48605092: 사용자는 이제 채점 방식을 아카이브하여 과목/과제에 추가되지 않도록 할 수 있습니다. 이전 컨텍스트에서 사용 중인 채점 방식은 계속 사용됩니다.
+  authenticated_iframe_content_a7588e91: 인증된 IFrame 콘텐츠
+  this_flag_changes_the_way_rce_content_is_loaded_in_b72905ec: 이 플래그는 IFrame에서 로드되는 RCE 콘텐츠의 요청을 캔버스를 통해 프록시 처리하도록 변경합니다.
+  bbb_modal_update_e27b10e: BBB 모달 업데이트
+  this_update_offers_enhanced_feature_functionality__c3c4ea51: Big Blue Button 회의를 위한 향상된 기능을 제공합니다. 사용자들은 이제 회의 설정에서 대기실을 활성화할 수 있으며, 회의 내에서 캘린더에 예약된 회의를 추가할 수 있습니다.
+  blueprint_resource_id_support_ae48c0b9: Blueprint 리소스 ID 지원
+  allows_blueprint_courses_to_keep_track_of_assignme_3faaa416: Blueprint 과목이 과제의 리소스 ID 변경 사항을 추적할 수 있도록 합니다.
+  content_migration_asset_map_v2_f0f455f: 콘텐츠 마이그레이션 자산 맵 V2
+  adds_additional_fields_to_the_content_migration_as_192c2d3f: 콘텐츠 마이그레이션 자산 맵에 추가 필드를 추가합니다.
+  course_pacing_redesign_38edfc1c: 과목 속도 리디자인
+  enable_the_redesigned_course_pacing_user_experienc_21618a38: 리디자인된 과목 속도의 사용자 경험을 활성화합니다.
+  custom_status_labels_for_submissions_and_final_gra_2ba56b7a: 제출물 및 최종 성적을 위한 사용자 정의 상태 레이블
+  account_administrators_can_create_custom_status_la_e2a601bf: 계정 관리자는 교수가 성적표에서 사용할 수 있는 사용자 정의 상태 레이블을 생성할 수 있습니다.
+  customizable_default_due_date_a987fbfa: 사용자 정의 가능한 기본 마감일
+  users_can_now_set_the_default_due_date_for_a_cours_875e2615: 사용자는 이제 과목의 기본 마감일을 분 단위로 설정할 수 있습니다.
+  default_grading_scheme_for_accounts_6c9df019: 계정의 기본 채점 방식
+  allow_administrators_to_set_a_default_grading_sche_9b928f00: 관리자가 계정에 대한 기본 채점 방식을 설정할 수 있도록 합니다.
+  deleted_user_tools_26f9e03e: 삭제된 사용자 도구
+  adds_a_new_page_to_the_admin_tools_that_allows_adm_910ea694: 관리자 도구에 새로운 페이지를 추가하여 관리자가 삭제된 사용자를 보고 관리할 수 있도록 합니다.
+  deprioritize_section_overrides_for_nonactive_enrol_9aa72d60: 비활성 등록에 대한 섹션 재정의 우선순위 낮추기
+  if_set_deprioritizes_using_due_dates_lock_dates_an_b7303ae9: 설정 시, 비활성 등록된 학생과 연관된 과제의 섹션 재정의를 우선순위에서 제외합니다.
+  differentiated_modules_5e2377d7: 차별화된 모듈
+  if_enabled_modules_and_module_items_become_assigna_68e5436f: 활성화되면, 모듈 및 모듈 항목을 특정 개인 및 그룹에게 할당할 수 있습니다.
+  discussion_redesign_discussion_entry_version_histo_f1878f4f: 토론 리디자인 - 토론 항목 버전 기록
+  will_display_the_version_history_for_edited_discus_bbb7dfa: 리디자인 UI 내에서 편집된 토론 항목의 버전 기록을 표시합니다.
+  discussion_redesign_grading_view_467bf307: 토론 리디자인 채점 뷰
+  will_allow_for_graders_to_grade_assigned_discussio_85a64ed2: 점자가 토론 페이지를 떠나지 않고 할당된 토론을 채점할 수 있도록 합니다.
+  draft_discussion_entries_98d93a9d: 토론 항목 초안 저장
+  will_allow_for_saving_drafts_as_students_type_thei_aa08586: 학생들이 토론 주제에 대한 답글을 작성할 때 초안을 저장할 수 있도록 합니다.
+  enable_labels_on_the_new_inbox_page_485ce65a: 새로운 메시지함 페이지에 레이블 사용
+  this_will_allow_the_user_to_manage_their_labels_ad_a8870396: 사용자가 레이블을 관리하고, 대화에 레이블을 추가하며, 대화를 레이블별로 필터링할 수 있도록 합니다.
+  enable_sending_oauth_consumer_key_5bb4bc5d: OAuth 소비자 키 전송 활성화
+  when_enabled_lti_1_3_launches_that_would_be_associ_bfec33fb: 활성화되면, LTI 1.1 도구와 연관된 LTI 1.3 시작이 oauth_consumer_key 및 oauth_consumer_key_sign 속성을 포함합니다.
+  enhanced_docviewer_url_security_72e9baa9: 향상된 DocViewer URL 보안
+  docviewer_will_be_launched_more_securely_using_a_j_61fd8b51: DocViewer가 JWT와 JTI 클레임을 사용하여 더 안전하게 시작됩니다.
+  explicit_latex_typesetting_c1c569c9: 명시적 LaTex 조판
+  instead_of_typesetting_latex_anywhere_only_typeset_76601794: LaTex를 모든 곳에서 조판하는 대신, 명시적으로 활성화된 곳에서만 조판합니다.
+  external_tools_in_assignment_enhancements_18841855: 과제 향상 기능의 외부 도구
+  allow_for_assignment_enhancements_to_be_used_for_e_6f6f95ea: 제 향상 기능에 외부 LTI 도구를 사용할 수 있도록 합니다.
+  faculty_journal_deprecation_1f18f7ab: 교수 저널 사용 중지
+  enable_the_deprecation_of_the_faculty_journal_func_78b3344d: 교수 저널 기능의 사용 중지를 활성화합니다.
+  fix_missing_policy_applicator_gradebook_history_f3e62bc1: 성적표 이력의 누락된 정책 적용기 수정
+  fixes_the_missing_policy_applicator_to_insert_reco_dedabe12: 각 제출물에 대해 누락된 것으로 표시된 항목을 성적표 이력에 삽입하도록 누락된 정책 적용기를 수정합니다.
+  hide_zero_point_new_quizzes_from_the_student_and_t_b4c22d88: 학생 및 교수 성적표에서 0점 새로운 퀴즈 숨기기
+  when_set_an_option_to_not_display_a_new_quiz_with__3bd930bf: 설정 시, 0점 가능한 새로운 퀴즈를 성적표에서 표시하지 않도록 선택할 수 있는 옵션이 제공됩니다.
+  improve_letter_grading_scheme_usability_808b12ba: 문자 채점 방식 사용성 향상
+  teachers_and_account_managers_will_be_able_to_more_f0b4474f: 교수와 계정 관리자가 계정, 과목 및 과제에 대해 문자 채점 방식을 더 쉽게 관리할 수 있습니다.
+  jobs_v2_b20a83f7: Jobs v2
+  new_and_improved_jobs_control_panel_f8571c9a: 새롭고 개선된 작업 제어판입니다.
+  keyboard_shortcut_for_missing_assignment_848aa9cd: 누락된 과제에 대한 키보드 단축키
+  allows_graders_to_type_mi_in_the_gradebook_or_spee_a9bb3577: 성적표나 SpeedGrader에서 채점자가 MI를 입력하여 과제를 수동으로 누락으로 태그할 수 있도록 합니다.
+  menu_option_for_outcome_details_page_2dcd13d6: 결과 세부 페이지에 대한 메뉴 옵션
+  adds_menu_option_for_accessing_alignments_at_the_o_6d3bce6: 향상된 결과 관리와 함께 결과 수준에서 정렬을 접근할 수 있는 메뉴 옵션을 추가합니다.
+  message_observers_of_students_who_6cc6b796: 학생들의 관찰자에게 메시지 보내기
+  enables_a_redesigned_message_students_who_dialog_t_956bcf62: 학생들뿐만 아니라 관찰자에게도 메시지를 보낼 수 있는 재설계된 "학생들에게 메시지 보내기" 대화 상자를 활성화합니다.
+  multi_select_gradebook_filters_95dbb4fc: 성적표 다중 선택 필터
+  this_feature_enables_multi_select_filters_in_the_g_c7904e35: 성적표에서 다중 선택 필터를 활성화합니다.
+  new_quiz_deleted_user_restore_pending_review_state_a117d744: 등록 시 삭제된 사용자 복구 대기 상태 새 퀴즈
+  when_set_determines_if_the_workflow_state_of_a_new_1470e23e: 설정 시, 사용자가 새로 등록되었을 때 이전에 대기 중인 새 퀴즈가 평가된 상태인지 대기 중인지 결정합니다.
+  new_quizzes_account_and_course_level_item_banks_9152fb1: 새 퀴즈 계정 및 과목 수준 문제 은행
+  if_new_quizzes_is_enabled_this_allows_for_the_crea_87343d6f: 새 퀴즈가 활성화된 경우, 특정 과목 및 루트 계정에 의해 소유된 문제 은행을 생성하고 관리할 수 있도록 합니다.
+  new_quizzes_assignment_build_button_72b6531a: 새 퀴즈 과제 생성 버튼
+  add_a_build_button_on_the_assignment_edit_page_for_6b895561: 새 퀴즈 과제를 위한 과제 편집 페이지에 생성 버튼을 추가합니다.
+  new_quizzes_banks_migrations_9ab4de4a: 새 퀴즈 은행 마이그레이션
+  enable_migrating_item_banks_to_new_quizzes_during__af6ca020: 과목 가져오기/복사 중 새 퀴즈로 문제 은행을 마이그레이션할 수 있도록 합니다.
+  new_quizzes_common_cartridge_support_250780be: 새 퀴즈 공통 카트리지 지원
+  if_enabled_canvas_will_be_able_to_export_new_quizz_504132df: 활성화되면, Canvas는 새 퀴즈를 Common Cartridge 내보내기 패키지의 일부로 내보낼 수 있습니다.
+  new_quizzes_export_support_b0a6a625: 새 퀴즈 내보내기 지원
+  support_exporting_new_quizzes_in_qti_format_ba09b465: 새 퀴즈를 QTI 형식으로 내보낼 수 있도록 지원합니다.
+  new_quizzes_migrate_without_content_rewrite_1aec2ce8: 콘텐츠 재작성 없이 새 퀴즈 마이그레이션
+  migrating_a_single_classic_quiz_will_leave_html_ri_91795a20: 단일 클래식 퀴즈를 마이그레이션하면 HTML 리치 콘텐츠 필드가 그대로 유지됩니다.
+  new_quizzes_public_api_18d95321: 새 퀴즈 공개 API
+  enables_access_to_the_new_quizzes_public_api_throu_abc70e4d: Canvas를 통해 새 퀴즈 공개 API에 접근할 수 있도록 합니다.
+  new_quizzes_service_jwt_refresh_ca28ca8: 새 퀴즈 서비스 JWT 새로 고침
+  enable_new_quizzes_to_refresh_service_jwts_used_by_af54fd97: 새 퀴즈가 RCE에서 사용되는 서비스 JWT를 새로 고칠 수 있도록 합니다.
+  originality_reports_with_assignment_enhancements_9b2870ff: 과제 향상 기능을 포함한 원본성 보고서
+  if_set_displays_originality_reports_with_assignmen_c5d0276f: 설정 시, 과제 향상 기능과 함께 원본성 보고서를 표시합니다.
+  outcomes_friendly_description_9792b2f3: 결과 친화적인 설명
+  allows_users_to_add_a_friendly_description_to_outc_7acf6286: 학생 학습 숙달 성적표에서 학생과 학부모에게 친화적인 설명을 결과에 추가할 수 있도록 합니다.
+  per_student_course_paces_159026d2: 학생별 과목 속도
+  enable_unique_course_paces_for_students_7beac4f3: 학생별 고유한 과목 속도를 활성화합니다.
+  permanent_page_links_c8b26ba8: 영구 페이지 링크
+  when_the_title_to_a_page_is_changed_old_links_to_t_9a2737b7: 페이지 제목이 변경될 때, 해당 페이지로의 기존 링크가 올바른 페이지로 연결되도록 합니다.
+  precise_link_replacement_on_content_migrations_51976596: 콘텐츠 마이그레이션 시 정밀 링크 대체
+  apply_link_replacement_logic_to_a_select_list_of_e_7fadfdd7: 모든 텍스트가 아닌 선택된 요소 목록에 링크 대체 논리를 적용합니다.
+  prevent_deletion_of_outcomes_with_alignments_in_os_65020476: OS에서 정렬된 결과 삭제 방지
+  this_ff_is_for_development_purposes_only_and_shoul_f77938ba: 개발 목적의 플래그로, 제품 및 엔지니어링과 상의 없이 조정해서는 안 됩니다. 이 플래그는 정렬된 결과가 있는 결과를 삭제하는 것을 방지합니다.
+  quizzes_next_grade_by_question_in_speedgrader_c565bb5f: SpeedGrader에서 Quizzes.Next의 문제별 채점
+  adds_the_option_to_grade_by_question_in_speedgrade_5eac06f3: Quizzes.Next 퀴즈에 대해 SpeedGrader에서 문제별로 채점할 수 있는 옵션을 추가합니다.
+  render_both_to_do_lists_for_teachers_with_student__6fc0fdda: 학생 등록이 있는 교수를 위한 두 가지 할 일 목록 렌더링
+  renders_both_to_do_lists_on_the_dashboard_sidebar__c7d38ae: 학생 등록이 있는 교수의 대시보드 사이드바에 두 가지 할 일 목록을 렌더링합니다.
+  rubric_enhancements_73bf351c: 루브릭 향상
+  this_feature_provides_visual_and_functional_enhanc_e5e57a21: Canvas 전역의 루브릭에 시각적 및 기능적 향상을 제공합니다.
+  separate_columns_for_first_last_names_in_gradebook_419126c3: 성적표에서 이름/성 별도 열
+  show_account_setting_to_allow_viewing_and_exportin_8f51281f: 계정 설정을 통해 성적표에서 학생의 이름과 성을 별도의 열로 볼 수 있도록 하고, 내보낼 수 있도록 합니다.
+  show_lti_tools_from_federated_parent_accounts_47135c98: 연합된 상위 계정의 LTI 도구 표시
+  if_enabled_lti_tools_installed_in_federated_parent_a2d3afe8: 활성화되면, 연합된 상위 계정에 설치된 LTI 도구가 자식 계정에서 사용할 수 있습니다.
+  show_quartiles_for_grades_and_use_them_for_box_and_e9be0a23: 성적에 대한 사분위수 표시 및 박스 플롯에 사용
+  updates_the_student_facing_assignment_statistics_t_e1c9aecb: 학생이 보는 과제 통계에 사분위수를 포함하도록 업데이트하고, 박스 플롯을 올바른 박스 플롯으로 만듭니다.
+  single_quizzes_next_session_in_speedgrader_c71915f8: SpeedGrader에서 단일 Quizzes.Next 세션
+  if_set_quizzes_next_will_operate_using_a_single_la_1adc9c47: 설정 시, Quizzes.Next는 SpeedGrader에서 단일 시작 세션을 사용하여 작동합니다.
+  site_admin_service_authentication_8f424551: 사이트 관리자 서비스 인증
+  when_enabled_site_admin_account_ui_will_allow_asso_9d04a1d8: 활성화되면, 사이트 관리자 계정 UI에서 서비스 사용자와 개발자 키를 연관시키고, client_credentials 부여 유형을 사용하는 키/사용자를 사용할 수 있습니다.
+  speedgrader_2_steel_thread_ee5814b5: 'SpeedGrader 2: Steel Thread'
+  this_feature_provides_a_new_speedgrader_platform_e_e7d740bd: 새로운 SpeedGrader 플랫폼 경험을 제공합니다.
+  submit_on_behalf_of_student_af674b95: 학생을 대신하여 제출
+  allows_teachers_with_the_proper_permissions_to_sub_6dc94b17: 적절한 권한을 가진 교수가 학생을 대신하여 파일 업로드 과제를 제출할 수 있도록 허용합니다.
+  support_all_lti_postmessages_from_within_active_rc_8954bc83: 활성 RCE 내에서 모든 LTI postMessages 지원
+  respond_to_all_lti_postmessages_sent_from_tools_la_51029001: 활성 RCE 창 내에서 iframes에서 시작된 도구의 모든 LTI postMessages에 응답합니다.
+  test_feature_flag_980151e0: 테스트 기능 플래그
+  this_flag_is_a_no_op_and_is_only_intended_for_test_e969f9c: 이 플래그는 테스트 목적이며, 실제 기능이 없습니다.
+  update_grade_summary_table_to_use_a_modern_framewo_b4cccf7: 최신 프레임워크를 사용하여 성적 요약 테이블 업데이트
+  this_refactor_will_make_this_page_more_maintainabl_8ba354cf: 이 리팩토링은 페이지를 더 유지보수 가능하게 만듭니다.
+  updated_mastery_connect_icon_70b6a9b9: 업데이트된 Mastery Connect 아이콘
+  if_set_displays_updated_mastery_connect_icon_b6a93002: 설정 시, 업데이트된 Mastery Connect 아이콘을 표시합니다.
+  updates_to_json_api_auth_error_http_code_and_json__5936d452: JSON API 인증 오류 HTTP 코드 및 JSON 상태 필드 업데이트
+  if_enabled_an_unauthorized_response_from_the_json__bfa846d9: 활성화되면, JSON API의 "unauthorized" 응답이 403(Forbidden)을 반환합니다.
+  use_a_new_endpoint_for_fetching_course_creation_ac_712382c2: 과목 생성 계정을 가져오기 위한 새 엔드포인트 사용
+  use_new_improved_logic_to_fetch_all_accounts_a_use_ad988281: 사용자가 과목을 생성할 수 있는 모든 계정을 가져오기 위해 새로운 개선된 로직을 사용합니다.
+  use_attachment_ids_in_media_links_7bfb3422: 미디어 링크에서 첨부 파일 ID 사용
+  use_attachment_ids_in_media_links_so_that_users_ar_1ba7845a: 미디어 링크에서 첨부 파일 ID를 사용하여 사용자가 항상 올바른 미디어 인스턴스를 가리키도록 합니다.
+  use_instui_for_the_course_import_page_1906ef55: 과목 가져오기 페이지에 InstUI 사용
+  if_enabled_the_course_import_page_will_use_instui__84bad313: 활성화되면, 과목 가져오기 페이지에 InstUI 컴포넌트를 사용합니다.
+  use_window_parent_in_deep_linking_response_8fe5f845: 딥 링크 응답에서 window.parent 사용
+  if_enabled_the_deep_linking_response_js_will_send__35b98a81: 활성화되면, 딥 링크 응답 JS는 window.parent에 postMessages를 보냅니다.
+  account_and_course_level_outcome_mastery_scales_5bfe7a3b: 계정 및 과목 수준 결과 숙달 척도
+  allows_setting_account_course_level_mastery_scales_1939e0fd: 계정 및 과목 수준의 숙달 척도와 계산 방법을 설정할 수 있으며, 결과별 기준 등급 및 계산 방법을 대체합니다.
+  admin_analytics_eacba735: 관리자 분석
+  admin_analytics_description: 계정 수준에서 분석 기능을 활성화합니다. 관리자 분석 대시보드는 Canvas 사용, 과목 성공, 학생 참여에 대한 세부 정보를 제공합니다.
+  admin_analytics_view_admin_analytics_permission_cc7d46db: 관리자 분석 보기 권한
+  admin_analytics_view_permission_description: 새로운 관리자 분석 권한을 표시합니다.
+  advanced_analytics_course_readiness_and_students_i_6b3c439f: 고급 분석 - 과목 준비 상태 및 주의가 필요한 학생들
+  k20_beta_description: 클로즈드 베타 고객을 위한 과목 준비 상태 및 주의가 필요한 학생들 대시보드를 활성화합니다.
+  advanced_analytics_course_readiness_closed_alpha_13c8aaf: 고급 분석 - 과목 준비 상태 클로즈드 알파
+  k20_course_readiness_description: 알파 테스터를 위한 고급 분석 과목 준비 대시보드를 활성화합니다.
+  allow_multiple_file_ags_submissions_to_count_as_on_6e24aa34: 다중 파일 AGS 제출을 하나의 제출로 계산 허용
+  this_feature_makes_it_so_that_when_multiple_files__1973ed91: 서드 파티 도구를 통해 다중 파일이 함께 제출되면, 여러 개의 개별 제출물을 만드는 대신 하나의 제출로 그룹화됩니다.
+  allow_sub_account_selection_when_users_manually_cr_d0a6e2e6: 사용자가 수동으로 과목을 생성할 때 하위 계정 선택 허용
+  rather_than_automatically_placing_manually_created_35195e72: 수동으로 생성된 과목을 "수동 생성된 과목" 하위 계정에 자동으로 배치하는 대신, 사용자가 등록된 하위 계정으로 과목을 배치할 수 있도록 합니다.
+  allow_unconfirmed_e_mail_addresses_when_adding_use_47b7d5a2: 사용자를 추가할 때 확인되지 않은 이메일 주소 허용
+  this_is_technicaly_a_security_vulnerability_but_so_2a2dc89: 기술적으로는 보안 취약점이지만, 일부 학교는 워크플로우를 유지해야 합니다.
+  apply_score_to_ungraded_afd025d0: 채점되지 않은 항목에 점수 적용
+  allows_instructors_to_apply_scores_to_ungraded_sub_999e34dd: 교수가 성적표의 평가 그룹 및 총점 컬럼 메뉴에서 채점되지 않은 제출물에 점수를 대량으로 적용할 수 있습니다.
+  better_lti_ags_response_codes_for_concluded_course_3f31c313: 종료된 과목에 대한 더 나은 LTI AGS 응답 코드
+  if_enabled_the_ags_api_will_return_a_more_helpful__7c140c60: 활성화되면, AGS API가 종료된 과목에서 데이터를 접근하거나 수정하려고 할 때 더 유용한 응답 코드를 반환합니다. 일반적인 404 Not Found 대신, 도구가 종료된 과목에 접근할 수 없음을 나타내는 422와 유용한 메시지를 반환합니다.
+  block_editor_2e266d9c: 블록 편집기
+  enable_the_new_block_editor_for_the_rich_content_e_6a0d0031: 리치 콘텐츠 편집기에 새로운 블록 편집기를 활성화합니다.
+  check_permissions_when_masquerading_as_course_admi_ded7106c: 과목 관리자 역할로 가장할 때 권한 확인
+  when_masquerading_as_course_admin_roles_teacher_ta_e3e3c0a9: 과목 관리자 역할(교수/조교/디자이너 기본 역할)로 가장할 때, 가장하는 사용자가 대상 사용자와 동일하거나 더 많은 권한을 갖도록 합니다.
+  comment_library_84735835: 댓글 라이브러리
+  allows_users_to_save_and_search_frequently_used_fe_806f8999: 사용자가 SpeedGrader에서 사용하기 위해 자주 사용하는 피드백을 라이브러리에 저장하고 검색할 수 있습니다.
+  consistent_lti_ags_ids_based_on_account_s_principa_b93fa45: 계정의 주 도메인을 기반으로 한 일관된 LTI AGS ID
+  if_enabled_ags_will_use_the_account_s_principal_do_97ab2fd2: 활성화되면, AGS는 LTI 시작 도메인이나 API 접근 도메인에 관계없이 AGS API와 LTI 시작 전반에 걸쳐 계정의 주 도메인을 Line Items ID에 사용합니다. 여러 도메인을 사용하는 학교에서는 Line Item ID의 일관성을 보장합니다.
+  course_copy_alignments_clone_e437e813: 과목 복사 후 정렬 복제
+  allow_to_clone_alignments_after_the_course_copy_pr_2f3a6421: 과목 복사 프로세스 후 정렬을 복제할 수 있습니다.
+  course_pacing_40c14b61: 과목 속도 조절
+  course_paces_description: Canvas에서 순차 등록을 지원하며, 교수가 정의한 속도에 따라 시작 날짜가 다른 학생들에게 마감일을 자동으로 배분합니다. 더 알아보고 피드백을 제공하려면 과목 속도 조절 사용자 그룹에 가입하세요.
+  enables_the_course_templates_feature_globally_79d5302f: 과목 템플릿 기능을 전역적으로 활성화합니다.
+  adds_an_account_course_setting_for_a_default_due_t_9903738a: 새 과제에 대한 기본 마감일을 설정할 수 있는 계정/과목 설정을 추가합니다.
+  disable_oembed_retrieve_endpoint_56c050c8: oembed_retrieve 엔드포인트 비활성화
+  if_enabled_the_deprecated_oembed_retrieve_endpoint_ac2701be: 활성화되면, 사용 중지된 oembed_retrieve 엔드포인트를 사용할 수 없게 됩니다. 이 엔드포인트를 완전히 제거하기 전에 잠재적 사용자를 전환하기 위한 조치입니다.
+  discussion_checkpoints_f40122e8: 토론 체크포인트
+  enables_checkpoints_for_graded_discussions_checkpo_a886ec31: 평가된 토론에 체크포인트를 활성화합니다. 체크포인트는 교수가 초기 응답과 답글에 대한 별도의 마감일을 생성할 수 있도록 합니다. 초기 응답과 답글은 별도로 평가되며, 그 점수가 합쳐져 최종 토론 점수가 됩니다.
+  discussion_create_edit_page_react_update_66fffbd6: 토론 생성/편집 페이지 React 업데이트
+  this_feature_flag_enables_the_use_of_the_updated_d_b78aa2b8: 이 플래그는 업데이트된 토론 생성/편집 페이지를 사용하도록 합니다.
+  embedded_release_notes_72d79b9b: 내장 릴리즈 노트
+  show_instructure_provided_release_notes_filtered_b_f3c285c9: 사용자 역할에 따라 필터링된 Instructure 제공 릴리즈 노트를 도움말 메뉴에 표시합니다. 관리자, 교수, 관찰자 역할을 가진 사용자에게 제공됩니다. 학생 역할에 대한 적용 가능한 기능은 관찰자 노트에 포함됩니다.
+  granular_permissions_for_add_remove_roles_from_cou_b0a34301: 과목에서 역할 추가/제거에 대한 세분화된 권한
+  adds_granular_permissions_for_adding_and_removing__e1e484a3: 각 역할을 추가 및 제거하는 세분화된 권한과 기타 과목 관리자 작업에 대한 별도의 권한을 추가합니다.
+  granular_permissions_for_assignments_and_quizzes_6b3bddc6: 과제 및 퀴즈에 대한 세분화된 권한
+  separate_out_granular_add_and_delete_permissions_f_c63d37b6: 기존의 모든 과제를 관리하는 권한에서 과제 및 퀴즈 추가 및 삭제 권한을 분리합니다.
+  granular_permissions_for_managing_course_content_91375668: 과목 콘텐츠 관리에 대한 세분화된 권한
+  add_granularity_to_permissions_around_managing_all_129149da: 모든 다른 과목 콘텐츠를 관리하는 권한에 대한 세분화를 추가합니다.
+  granular_permissions_for_managing_courses_a71be71d: 과목 관리에 대한 세분화된 권한
+  add_granularity_to_permissions_around_managing_cou_e18d7f97: 과목을 관리하는 권한에 세분화를 추가합니다. 예시) 추가 / 공개 / 종료 / 삭제
+  granular_permissions_for_managing_groups_in_accoun_b71b4b7: 계정 또는 과목 컨텍스트에서 그룹 관리에 대한 세분화된 권한
+  add_granularity_to_permissions_around_managing_gro_ef410a72: 계정 또는 과목 컨텍스트에서 그룹을 관리하는 권한에 세분화를 추가합니다.
+  granular_permissions_for_managing_lti_tools_in_acc_7a42917e: 계정 또는 과목 컨텍스트에서 LTI 도구 관리에 대한 세분화된 권한
+  add_granularity_to_permissions_around_managing_lti_bd8a5671: 계정 또는 과목 컨텍스트에서 LTI 도구를 관리하는 권한에 세분화를 추가합니다.
+  ignore_unposted_anonymous_assignments_in_grade_cal_3f68c87f: 성적 계산에서 공개되지 않은 익명 과제 무시
+  if_set_the_grade_calculator_will_ignore_unposted_a_2f4abd00: 설정된 경우, 성적 계산 시 공개되지 않은 익명 과제를 무시합니다.
+  individual_gradebook_enhancements_de33aa3d: 개인 성적표 향상
+  this_feature_introduces_performance_and_maintenanc_50c325aa: 개인 성적표에 대한 성능 및 유지 보수 개선 사항을 도입합니다.
+  k20_course_readiness_alpha_testing_f45597b6: K20 - 과목 준비 상태 알파 테스트
+  k20_course_readiness_alpha_testing_description: 이 플래그는 고급 분석 알파 테스트에 참여하는 기관을 위한 것입니다. 이 플래그는 해당 기관을 위한 과목 준비 대시보드를 활성화합니다.
+  learner_passport_prototype_1c3446b3: 학습자 여권 프로토타입
+  an_in_progress_working_prototype_of_the_learner_pa_aa79f239: 학습자 여권 기능의 진행 중인 작업 프로토타입입니다.
+  log_lti_launches_ff06c5fe: LTI 시작 기록
+  when_enabled_sends_data_for_all_lti_launches_to_th_2c76d174: 활성화되면 모든 LTI 시작에 대한 데이터를 PandataEvents 시스템으로 전송하여 쿼리 및 시각화를 할 수 있습니다.
+  lti_deep_linking_for_module_index_menu_881feeee: 모듈 인덱스 메뉴를 위한 LTI 딥 링크
+  if_enabled_allows_deep_linking_from_the_module_ind_632bb221: 활성화되면 모듈 인덱스에서 모달을 통해 딥 링크를 허용합니다.
+  lti_deep_linking_line_items_5e0079f7: LTI 딥 링크 라인 아이템
+  if_enabled_creates_assignments_from_lineitems_in_d_90089a84: 활성화되면 딥 링크 메시지의 라인 아이템에서 과제를 생성합니다.
+  lti_deep_linking_line_items_on_assignment_create_e_30ccfc99: 과제 생성/편집 페이지의 LTI 딥 링크 라인 아이템
+  if_enabled_prefills_the_assignment_form_with_value_edb8ebda: 활성화되면 딥 링크 메시지의 값을 사용하여 과제 생성/편집 페이지의 과제 양식을 미리 채웁니다.
+  lti_dynamic_registration_8592edb0: LTI 동적 등록
+  enables_administrators_to_register_lti_tools_with__b16d560f: 관리자에게 동적 등록을 통해 LTI 도구를 등록할 수 있도록 합니다.
+  lti_multiple_assignment_deep_linking_b7d641d7: LTI 다중 과제 딥 링크
+  if_enabled_allows_multiple_deep_link_support_for_a_5d2498ab: 활성화되면 과제와 모듈에 대해 다중 딥 링크 지원을 허용합니다.
+  make_speedgrader_lti_submission_launches_use_assig_724f8e1e: SpeedGrader LTI 제출 시작 시 할당(도구가 아닌) resource_link_id 사용
+  when_enabled_lti_1_1_speedgrader_launches_will_set_47dcded1: 활성화되면, LTI 1.1 SpeedGrader 시작은 assignment 불투명 식별자와 assignment 제목을 참조하도록 resource_link_id와 resource_link_title을 설정합니다. 플래그가 비활성화된 경우, SpeedGrader 시작에서 resource_link_id와 resource_link_title은 도구(과제가 아닌)를 참조합니다.
+  microsoft_group_enrollment_syncing_854b5ea2: Microsoft 그룹 등록 동기화
+  if_enabled_syncing_course_enrollments_to_microsoft_6f4f2bf9: 활성화되면, Microsoft 그룹으로의 과목 등록 동기화가 가능합니다. 계정 관리자는 계정 설정에서 이를 활성화할 수 있습니다.
+  mobile_offline_mode_7eaff590: 모바일 오프라인 모드
+  allow_students_to_sync_their_course_content_in_the_b6fd9169: 학생들이 모바일 앱에서 과목 콘텐츠를 동기화하고 오프라인 상태에서도 볼 수 있도록 허용합니다.
+  new_instui_navbar_72a69783: 새로운 InstUI 내비게이션 바
+  this_is_a_new_navbar_being_implemented_with_react__5342e82a: React 라우터를 염두에 두고 구현된 새로운 내비게이션 바입니다.
+  discussions_announcements_redesign_901c5528: 토론/공지 사항 리디자인
+  discussion_redesign_description: 이 기능은 캔버스의 토론 및 공지 사항 경험을 향상시킵니다. 이 플래그를 활성화하면, 매 릴리즈마다 진행 중인 개선 사항을 조기에 확인할 수 있습니다. 자세한 내용은 캔버스 커뮤니티의 토론/공지 사항 리디자인 사용자 그룹을 참조하세요.
+  emojis_in_submission_comments_72720afc: 제출 댓글에 이모지 추가
+  adds_an_emoji_picker_that_allows_students_and_teac_cf517b1b: 학생과 교수가 제출 댓글에 이모지를 추가할 수 있는 이모지 선택기를 추가합니다.
+  enhanced_gradebook_filters_a3be5e7d: 향상된 성적표 필터
+  enhanced_gradebook_filters_description: 이 기능은 캔버스 성적표에서 향상된 필터링 옵션을 제공합니다. 이 플래그를 활성화하면, 매 릴리즈마다 진행 중인 개선 사항을 조기에 확인할 수 있습니다. 자세한 내용은 캔버스 커뮤니티의 성적표 필터 사용자 그룹을 참조하세요.
+  new_quizzes_included_on_outcome_alignment_summary__4547b0ad: 결과 정렬 요약 탭에 포함된 새로운 퀴즈
+  new_quizzes_outcome_alignments_are_included_on_the_83447268: 새로운 퀴즈의 결과 정렬이 과목의 각 결과에 대한 정렬 목록을 제공하는 결과 정렬 요약 탭에 포함됩니다.
+  outcome_service_results_to_canvas_reporting_749667bc: 캔버스 보고서에 결과 서비스 결과 포함
+  allows_result_data_stored_in_the_outcomes_service__69c12c18: 결과 서비스에 저장된 결과 데이터를 캔버스 보고서(LMGB, sLMGB 및 결과 관련 관리자 보고서)에 표시할 수 있습니다.
+  peer_review_support_in_assignment_enhancements_b1df2b76: 과제 향상에서의 피어 리뷰 지원
+  students_will_be_able_to_provide_feedback_on_anoth_b43209db: 학생들이 향상된 과제 뷰를 사용하여 다른 학생의 과제 제출물에 대해 피드백을 제공할 수 있습니다.
+  smart_search_fd7cd4: 스마트 검색
+  ai_driven_smart_search_feature_597dbd4f: AI 기반의 스마트 검색 기능입니다.
+  submission_stickers_c8b3002b: 제출물 스티커
+  allows_teachers_to_attach_stickers_to_student_subm_efb006c4: 교수가 학생 제출물에 스티커를 붙일 수 있도록 허용합니다.
