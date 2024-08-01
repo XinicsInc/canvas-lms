@@ -206,7 +206,7 @@ high_contrast:
   applies_to: User
 include_byte_order_mark_in_gradebook_exports:
   type: setting
-  state: allowed
+  state: on
   display_name: Include Byte-Order Mark in compatible spreadsheet exports
   description: Optionally include a byte-order mark in compatible spreadsheet exports
     so they can be imported into Excel for users in some locales.
