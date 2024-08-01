@@ -4,3 +4,7 @@ production:
       canvas_security:
         encryption_secret: <%= ENV['CANVAS_SECURITY_ENCRYPTION_SECRET'] %>
         signing_secret: <%= ENV['CANVAS_SECURITY_SIGNING_SECRET'] %>
+      # 이전에 sns.yml에서 설정하던 내용이 이곳으로 이동되었다.
+      sns_creds:
+        access_key_id: <%= ENV['AWS_SNS_KEY_ID'] %>
+        secret_access_key: <%= ENV['AWS_SNS_SECRET_ACCESS_KEY'] %>

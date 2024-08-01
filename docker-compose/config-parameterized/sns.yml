@@ -1,4 +1,0 @@
-production:
-  region: <%= ENV['AWS_SNS_REGION'] %>
-  access_key_id: <%= ENV['AWS_SNS_KEY_ID'] %>
-  secret_access_key: <%= ENV['AWS_SNS_SECRET_ACCESS_KEY'] %>
