@@ -1078,7 +1078,6 @@ ja:
       round_mode: default
 ko:
   bigeasy_locale: ko_KR
-  crowdsourced: true
   date:
     datepicker:
       column_headings:
