@@ -1834,6 +1834,9 @@ const lockedItems = lockManager.isChildContent() ? lockManager.getItemLocks() : 
         }
 
         data['quiz[title]'] = quiz_title;
+
+        data['quiz[points_possible'] = parseFloat($("input[name='quiz[points_possible]']").val());
+
         if (!lockedItems.content) {
           data['quiz[description]'] = RichContentEditor.callOnRCE($('#quiz_description'), 'get_code');
         }
