@@ -5,11 +5,11 @@ development:
 
 production:
   session_store: encrypted_cookie_store
-  expire_after: 86400 # 1 day in seconds
+  expire_after: 7200 # 2 hours in seconds
   # uncomment this option if your canvas install is over HTTPS, and the cookies
   # will be SSL-only
   #
-  # secure: true
+  secure: true
   #
   # change the time that "stay logged in" tokens are valid for, defaults to 1 month
   #
