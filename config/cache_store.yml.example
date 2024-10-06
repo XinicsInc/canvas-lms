@@ -1,6 +1,6 @@
 # Configure the cache_store by environment. Should be a hash at top level, one
 # key per environment, with configuration hashes as values.
-development:
+#development:
   # cache_store: redis_cache_store
   #
   # # normally you'll want to define your redis servers in config/redis.yml and
