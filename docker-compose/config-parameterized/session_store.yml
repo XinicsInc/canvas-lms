@@ -4,7 +4,9 @@ development:
 
 production:
   session_store: encrypted_cookie_store
-  expire_after: 86400 # 1 day in seconds
+  #expire_after: 86400 # 1 day in seconds
+  # default value of xinics is 2 hours (7200 seconds)
+  expire_after: <%= ENV['SESSION_EXPIRE_AFTER'] || '7200' %>
   # uncomment this option if your canvas install is over HTTPS, and the cookies
   # will be SSL-only
   #
