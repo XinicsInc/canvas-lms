@@ -4,7 +4,7 @@
 # it whenever a call for consul data is issued. Data should be
 # shaped like the example below, one key for the related set of data,
 # and a hash of key/value pairs (no nesting)
-development:
+production:
   # tree
   config:
     # service
@@ -27,6 +27,7 @@ development:
           https:\/\/[\w-]+\.webex\.com\/\w+\/j\.php(\?[\w\/\-=%]*)?
           https:\/\/meet\.google\.com\/[\w\/\-=%]+(\?[\w\/\-=%]*)?
           https?:\/\/.*\/conferences\/\d+\/join
+      # another services
       datadog-rum:
         application_id: "27627d1e-8a4f-4645-b390-bb396fc83c81"
         client_token: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r"
@@ -58,9 +59,11 @@ development:
         url: 'https://cbbsk4vb5k.execute-api.us-east-1.amazonaws.com/prod/pandata-event' # dev PandataEvents environment
       rich-content-service:
         # if you're running canvas-rce-api on its own
-        app-host: "rce.canvas.docker"
+        # app-host: "rce.canvas.docker"
         # if you're running canvas-rce-api with docker-compose/rce-api.override.yml in .env
-        app-host: "http://rce.canvas.docker:3000"
+        # app-host: "http://rce.canvas.docker:3000"
+        #
+        app-host: "rce.canvas.docker"
       common_cartridge_viewer:
         base_url: "http://localhost:3300"
     # another service
