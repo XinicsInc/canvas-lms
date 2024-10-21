@@ -5,6 +5,22 @@
 # and it will return it when a call for vault data is issued. Data should be
 # shaped like the example below.  Each environment can get a hash,
 # there's a key for each read path, and a hash for the returned data
+production:
+  "app-canvas/data/secrets":
+    data:
+      # 이전에 dynamic_settings.yml에서 설정하던 내용이 이곳으로 이동되었다.
+      canvas_security:
+        # encryption_secret: <%= ENV['CANVAS_SECURITY_ENCRYPTION_SECRET'] %>
+        # signing_secret: <%= ENV['CANVAS_SECURITY_SIGNING_SECRET'] %>
+        encryption_secret: ""
+        signing_secret: ""
+      # 이전에 sns.yml에서 설정하던 내용이 이곳으로 이동되었다.
+      sns_creds:
+        # access_key_id: <%= ENV['AWS_SNS_KEY_ID'] %>
+        # secret_access_key: <%= ENV['AWS_SNS_SECRET_ACCESS_KEY'] %>
+        access_key_id: ""
+        secret_access_key: ""
+
 development:
   'sts/testaccount/sts/canvas-shards-lookupper-dev':
     access_key: 'fake-access-key'
