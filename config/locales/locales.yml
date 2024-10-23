@@ -1120,7 +1120,7 @@ ko:
     event: "%{date} %{time}"
     formats:
       tiny: "%P %l:%M"
-      tiny_on_the_hour: "%l%P"
+      tiny_on_the_hour: "%P %l시"
   proper_noun_singular_genitive: "%{noun}"
   number:
     format:

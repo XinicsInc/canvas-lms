@@ -25651,7 +25651,7 @@ ko:
   learn_more_about_this_feature_in_the_course_pacing_687ceb39: 이 기능에 대해 자세히 알아보십시오. *학습 페이스 관리 사용자 그룹*
   course_participation_is_limited_to_course_start_an_7315866d: 과목 참여 기간은 *과목* 시작일 및 종료일으로 제한됩니다. 과목에서 생성된 섹션 기간은 과목 참여 기간보다 우선될 수 있습니다.
   course_participation_is_limited_to_term_start_and__c8974314: 과목 참여 기간은 *학기* 시작일 및 종료일으로 제한됩니다.
-  daily_notifications_will_be_delivered_around_day_t_a2b49202: 일별 알림은 %{day_time}경에 전달됩니다. 주별 알림은 %{start_time}에서 %{end_time} 사이에 전달됩니다.
+  daily_notifications_will_be_delivered_around_day_t_a2b49202: 일별 알림은 %{day_time}경에 전달됩니다. 주별 알림은 %{weekday} %{start_time}에서 %{end_time} 사이에 전달됩니다.
   settings_for_e2322172: 설정
   new_mention_ad04b872: 새 멘션
   reported_reply_8e03db37: 신고된 댓글
