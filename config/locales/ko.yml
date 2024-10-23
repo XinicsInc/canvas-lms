@@ -20906,7 +20906,7 @@ ko:
       buttons:
         accept: 수락
         decline: 거부
-      invitation_text: '[%{course}](%{link_to_course})에 %{enrollment_type_with_indefinite_article}으로 참여하도록 초대를 받았습니다'
+      invitation_text: '[%{course}](%{link_to_course})에 %{role_name}으로 참여하도록 초대를 받았습니다'
     enrollment:
       enrolled_as_designer: 디자이너로 등록
       enrolled_as_limited_designer: 섹션만 액세스하는 디자이너로 등록
