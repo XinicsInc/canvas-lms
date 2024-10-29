@@ -27,6 +27,9 @@ services:
       - translations:/usr/src/app/public/javascripts/translations
       - yardoc:/usr/src/app/.yardoc
       - yarn-cache:/home/docker/.cache/yarn
+      # rootless mode 사용을 위한 nginx 설정 파일을 볼륨으로 마운트한다.
+      - ./config/docker-compose.override-nginx.conf.example:/usr/src/nginx/nginx.conf
+      - ./config/docker-compose.override-nginx.conf.erb.example:/usr/src/nginx/nginx.conf.erb
     environment: &BASE-ENV
       ENCRYPTION_KEY: facdd3a131ddd8988b14f6e4e01039c93cfa0160
       RAILS_ENV: development

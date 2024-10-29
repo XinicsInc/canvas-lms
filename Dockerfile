@@ -2,6 +2,8 @@
 # To update this file please edit the relevant template and run the generation
 # task `build/dockerfile_writer.rb --env development --compose-file docker-compose.yml,docker-compose.override.yml --in build/Dockerfile.template --out Dockerfile`
 
+# 수정하지 말라는 파일을 수정해 둔 것이라서, 나중에 파일 변경되면 잘 대응하자.
+
 ARG RUBY=3.1
 
 FROM instructure/ruby-passenger:$RUBY
@@ -33,8 +35,12 @@ USER root
 ARG USER_ID
 # This step allows docker to write files to a host-mounted volume with the correct user permissions.
 # Without it, some linux distributions are unable to write at all to the host mounted volume.
-RUN if [ -n "$USER_ID" ]; then usermod -u "${USER_ID}" docker \
-        && chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
+# docker 를 rootless mode 로 설정해서 실행할 때에는 컨테이너 내부는 그냥 root 로 실행하는게
+# 일반적이다.
+# 그래서 사용자를 docker 로 지정하는 부분은 모두 주석처리한다.
+# 여기 말고 nginx 설정 등도 마찬가지다.
+# RUN if [ -n "$USER_ID" ]; then usermod -u "${USER_ID}" docker \
+#         && chown --from=9999 docker /usr/src/nginx /usr/src/app -R; fi
 
 RUN mkdir -p /etc/apt/keyrings \
   && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
@@ -64,11 +70,14 @@ RUN mkdir -p /etc/apt/keyrings \
   && rm -rf /var/lib/apt/lists/* \
   && mkdir -p /home/docker/.gem/ruby/$RUBY_MAJOR.0
 
-RUN gem install bundler --no-document -v 2.5.6 \
-  && find $GEM_HOME ! -user docker | xargs chown docker:docker
+# 여기도, 사용자를 docker 로 지정하는 부분은 모두 주석처리한다.
+# RUN gem install bundler --no-document -v 2.5.6 \
+#   && find $GEM_HOME ! -user docker | xargs chown docker:docker
+RUN gem install bundler --no-document -v 2.5.6
 RUN npm install -g npm@9.8.1 && npm cache clean --force
 
-USER docker
+# 여기도, 사용자를 docker 로 지정하는 부분은 모두 주석처리한다.
+# USER docker
 
 RUN set -eux; \
   mkdir -p \
