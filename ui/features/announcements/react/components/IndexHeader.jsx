@@ -37,7 +37,7 @@ import {PresentationContent, ScreenReaderContent} from '@instructure/ui-a11y-con
 import {TextInput} from '@instructure/ui-text-input'
 
 import actions from '../actions'
-import ExternalFeedsTray from './ExternalFeedsTray'
+//import ExternalFeedsTray from './ExternalFeedsTray'
 import propTypes from '../propTypes'
 import select from '@canvas/obj-select'
 import {showConfirmDelete} from './ConfirmDeleteModal'
@@ -212,10 +212,10 @@ export default class IndexHeader extends Component {
             </Flex.Item>
           </Flex>
         </View>
-        <ExternalFeedsTray
+        {/* <ExternalFeedsTray
           atomFeedUrl={this.props.atomFeedUrl}
           permissions={this.props.permissions}
-        />
+        /> */}
       </View>
     )
   }
