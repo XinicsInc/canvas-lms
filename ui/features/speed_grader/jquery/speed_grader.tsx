@@ -2883,7 +2883,7 @@ EG = {
         })
       )
     } else if (!INST?.disableGooglePreviews && isPreviewable(attachment.content_type)) {
-      $no_annotation_warning.show()
+      // $no_annotation_warning.show()
 
       const currentStudentIDAsOfAjaxCall = this.currentStudent[anonymizableId]
       previewOptions = $.extend(previewOptions, {
