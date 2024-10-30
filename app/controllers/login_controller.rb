@@ -108,11 +108,27 @@ class LoginController < ApplicationController
     logout_current_user
 
     flash[:logged_out] = true
-    redirect_to redirect
+
+    # LearningX 에서 Canvas 를 로그아웃 시킬 때 discovery url 로 이동되지 않게 하기 위함.
+    # 통합 로그인 모듈을 사용하여 자동 로그인 연동을 하는 경우
+    # 로그아웃 되지마자 다시 자동 로그인이 되는 문제가 발생하기 때문임.
+    if params[:not_move]
+      render :plain => ""
+    else
+      redirect_to redirect
+    end
   end
 
   # GET /logout
   def logout_landing
+    # GET 요청으로 로그아웃을 할 수 있도록 함.
+    # 이는 통합 로그아웃을 하는 사이트에서 로그아웃 URL 을 
+    # script 태그의 src 에 넣어서 처리하는 케이스에 대응하기 위함이다.
+    if @current_user && params[:force_logout]
+      logout_current_user
+      return
+    end
+
     # logged in; ask them to log out
     return render :logout_confirm if @current_user
 
