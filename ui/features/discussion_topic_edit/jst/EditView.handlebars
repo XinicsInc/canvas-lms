@@ -191,6 +191,7 @@
           {{/if}}
           {{#if canModerate}}
           {{#unless homeroomCourse}}
+          {{!-- 피드 옵션은 표시되지 않도록 한다.
           <div><label class="checkbox short-label" for="podcast_enabled">
               {{checkbox "podcast_enabled"
               checked=podcast_url
@@ -207,6 +208,7 @@
               {{#t "include_replies_in_podcast_feed"}}Include student replies in podcast feed{{/t}}
             </label></div>
           {{/if}}
+          --}}
           {{/unless}}
           {{/if}}
           {{#if showAssignment}}
