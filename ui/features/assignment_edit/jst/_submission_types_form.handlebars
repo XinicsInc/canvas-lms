@@ -79,6 +79,7 @@
           {{#t "labels.allow_media_recordings"}}Media Recordings{{/t}}
         </label>
         {{/if}}
+        {{!--
         <label class="checkbox" for="assignment_annotated_document">
           {{checkbox "acceptsAnnotatedDocument"
           id="assignment_annotated_document"
@@ -88,6 +89,7 @@
           disabled=submissionTypesFrozen}}
           {{#t "labels.allows_annotated_document"}}Student Annotation{{/t}}
         </label>
+        --}}
         <div id="assignment_annotated_document_info" style="{{hiddenUnless acceptsAnnotatedDocument}}">
           {{#t}}Consider selecting multiple submission types to accommodate students who may not be able to create
           annotations.{{/t}}
