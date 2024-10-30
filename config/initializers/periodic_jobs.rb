@@ -115,8 +115,9 @@ Rails.configuration.after_initialize do
 
   persistence_token_expire_after = (ConfigFile.load("session_store") || {})[:expire_remember_me_after]
   persistence_token_expire_after ||= 1.month
-  Delayed::Periodic.cron "SessionPersistenceToken.delete_all", "35 11 * * *" do
-    with_each_shard_by_database(SessionPersistenceToken, :delete_expired, persistence_token_expire_after, local_offset: true)
+  # UTC 기준 한국시간 새벽 1시 35분, 매일.
+  Delayed::Periodic.cron "SessionPersistenceToken.delete_all", "35 16 * * *" do
+    with_each_shard_by_database(SessionPersistenceToken, :delete_expired, persistence_token_expire_after, local_offset: false)
   end
 
   Delayed::Periodic.cron "ExternalFeedAggregator.process", "*/30 * * * *" do
@@ -133,11 +134,13 @@ Rails.configuration.after_initialize do
     end
   end
 
-  Delayed::Periodic.cron "Reporting::CountsReport.process", "0 11 * * 0" do
+  # UTC 기준 한국시간 새벽 2시, 월요일
+  Delayed::Periodic.cron "Reporting::CountsReport.process", "0 17 * * 0" do
     with_each_shard_by_database(Reporting::CountsReport, :process_shard)
   end
 
-  Delayed::Periodic.cron "Account.update_all_update_account_associations", "0 10 * * 0" do
+  # UTC 기준 한국시간 새벽 1시, 월요일
+  Delayed::Periodic.cron "Account.update_all_update_account_associations", "0 16 * * 0" do
     with_each_shard_by_database(Account, :update_all_update_account_associations)
   end
 
@@ -158,23 +161,25 @@ Rails.configuration.after_initialize do
     IncomingMailProcessor::Instrumentation.process
   end
 
-  Delayed::Periodic.cron "ErrorReport.destroy_error_reports", "2-59/5 * * * *" do
+  # UTC 기준 한국시간 새벽 4시, 매일.
+  Delayed::Periodic.cron "ErrorReport.destroy_error_reports", "0 19 * * *" do
     cutoff = 3.months
     if cutoff > 0
       with_each_shard_by_database(ErrorReport, :destroy_error_reports, cutoff.seconds.ago)
     end
   end
 
-  Delayed::Periodic.cron "Delayed::Job::Failed.cleanup_old_jobs", "0 * * * *" do
+  # UTC 기준 한국시간 새벽 3시 10분, 매일.
+  Delayed::Periodic.cron "Delayed::Job::Failed.cleanup_old_jobs", "10 18 * * *" do
     cutoff = 3.months
     if cutoff > 0
       with_each_job_cluster(Delayed::Job::Failed, :cleanup_old_jobs, cutoff.seconds.ago)
     end
   end
 
-  # Process at 5:30 am local time
-  Delayed::Periodic.cron "Alerts::DelayedAlertSender.process", "30 5 * * *", priority: Delayed::LOW_PRIORITY do
-    with_each_shard_by_database(Alerts::DelayedAlertSender, :process, local_offset: true)
+  # UTC 기준 한국시간 새벽 4시 30분, 매일.
+  Delayed::Periodic.cron "Alerts::DelayedAlertSender.process", "30 19 * * *", priority: Delayed::LOW_PRIORITY do
+    with_each_shard_by_database(Alerts::DelayedAlertSender, :process, local_offset: false)
   end
 
   Delayed::Periodic.cron "Attachment.do_notifications", "*/10 * * * *", priority: Delayed::LOW_PRIORITY do
@@ -182,25 +187,30 @@ Rails.configuration.after_initialize do
   end
 
   unless ApplicationController.test_cluster?
-    Delayed::Periodic.cron "Attachment::GarbageCollector::ContentExportAndMigrationContextType.delete_content", "37 1 * * *" do
-      with_each_shard_by_database(Attachment::GarbageCollector::ContentExportAndMigrationContextType, :delete_content, jitter: 30.minutes, local_offset: true)
+    # UTC 기준 한국시간 새벽 1시 37분, 매일.
+    Delayed::Periodic.cron "Attachment::GarbageCollector::ContentExportAndMigrationContextType.delete_content", "37 16 * * *" do
+      with_each_shard_by_database(Attachment::GarbageCollector::ContentExportAndMigrationContextType, :delete_content, jitter: 30.minutes, local_offset: false)
     end
 
-    Delayed::Periodic.cron "Attachment::GarbageCollector::ContentExportContextType.delete_content", "37 3 * * *" do
-      with_each_shard_by_database(Attachment::GarbageCollector::ContentExportContextType, :delete_content, jitter: 30.minutes, local_offset: true)
+    # UTC 기준 한국시간 새벽 3시 37분, 매일.
+    Delayed::Periodic.cron "Attachment::GarbageCollector::ContentExportContextType.delete_content", "37 18 * * *" do
+      with_each_shard_by_database(Attachment::GarbageCollector::ContentExportContextType, :delete_content, jitter: 30.minutes, local_offset: false)
     end
   end
 
-  Delayed::Periodic.cron "Ignore.cleanup", "45 23 * * *" do
-    with_each_shard_by_database(Ignore, :cleanup, local_offset: true)
+  # UTC 기준 한국시간 오후 11시 45분, 매일
+  Delayed::Periodic.cron "Ignore.cleanup", "45 14 * * *" do
+    with_each_shard_by_database(Ignore, :cleanup, local_offset: false)
   end
 
-  Delayed::Periodic.cron "DelayedMessageScrubber.scrub_all", "0 1 * * *" do
-    with_each_shard_by_database(DelayedMessageScrubber, :scrub, local_offset: true)
+  # UTC 기준 한국시간 새벽 1시, 매일
+  Delayed::Periodic.cron "DelayedMessageScrubber.scrub_all", "0 16 * * *" do
+    with_each_shard_by_database(DelayedMessageScrubber, :scrub, local_offset: false)
   end
 
-  Delayed::Periodic.cron "ConversationBatchScrubber.scrub_all", "0 2 * * *" do
-    with_each_shard_by_database(ConversationBatchScrubber, :scrub, local_offset: true)
+  # UTC 기준 한국시간 새벽 2시, 매일
+  Delayed::Periodic.cron "ConversationBatchScrubber.scrub_all", "0 17 * * *" do
+    with_each_shard_by_database(ConversationBatchScrubber, :scrub, local_offset: false)
   end
 
   Delayed::Periodic.cron "BounceNotificationProcessor.process", "*/5 * * * *" do
@@ -223,53 +233,61 @@ Rails.configuration.after_initialize do
   # Partitioner jobs
   # process and/or create once a day at midnight
   # prune every Saturday, but only after the first Thursday of the month
-  Delayed::Periodic.cron "Auditors::ActiveRecord::Partitioner.process", "0 0 * * *" do
-    with_each_shard_by_database(Auditors::ActiveRecord::Partitioner, :process, jitter: 30.minutes, local_offset: true)
+  # UTC 기준 한국시간 새벽 2시, 매일
+  Delayed::Periodic.cron "Auditors::ActiveRecord::Partitioner.process", "0 17 * * *" do
+    with_each_shard_by_database(Auditors::ActiveRecord::Partitioner, :process, jitter: 30.minutes, local_offset: false)
   end
 
-  Delayed::Periodic.cron "Auditors::ActiveRecord::Partitioner.prune", "0 0 * * 6" do
+  # UTC 기준 한국시간 새벽 2시, 매주 일요일
+  Delayed::Periodic.cron "Auditors::ActiveRecord::Partitioner.prune", "0 17 * * 6" do
     if Time.now.day >= 3
       with_each_shard_by_database(
-        Auditors::ActiveRecord::Partitioner, :prune, jitter: 30.minutes, local_offset: true
+        Auditors::ActiveRecord::Partitioner, :prune, jitter: 30.minutes, local_offset: false
       )
     end
   end
 
-  Delayed::Periodic.cron "Quizzes::QuizSubmissionEventPartitioner.process", "0 0 * * *" do
-    with_each_shard_by_database(Quizzes::QuizSubmissionEventPartitioner, :process, jitter: 30.minutes, local_offset: true)
+  # UTC 기준 한국시간 새벽 1시, 매일
+  Delayed::Periodic.cron "Quizzes::QuizSubmissionEventPartitioner.process", "0 16 * * *" do
+    with_each_shard_by_database(Quizzes::QuizSubmissionEventPartitioner, :process, jitter: 30.minutes, local_offset: false)
   end
 
-  Delayed::Periodic.cron "Quizzes::QuizSubmissionEventPartitioner.prune", "0 0 * * 6" do
+  # UTC 기준 한국시간 새벽 1시, 매주 일요일
+  Delayed::Periodic.cron "Quizzes::QuizSubmissionEventPartitioner.prune", "0 16 * * 6" do
     if Time.now.day >= 3
       with_each_shard_by_database(
-        Quizzes::QuizSubmissionEventPartitioner, :prune, jitter: 30.minutes, local_offset: true
+        Quizzes::QuizSubmissionEventPartitioner, :prune, jitter: 30.minutes, local_offset: false
       )
     end
   end
 
-  Delayed::Periodic.cron "Messages::Partitioner.process", "0 0 * * *" do
-    with_each_shard_by_database(Messages::Partitioner, :process, jitter: 30.minutes, local_offset: true)
+  # UTC 기준 한국시간 새벽 3시, 매일
+  Delayed::Periodic.cron "Messages::Partitioner.process", "0 18 * * *" do
+    with_each_shard_by_database(Messages::Partitioner, :process, jitter: 30.minutes, local_offset: false)
   end
 
-  Delayed::Periodic.cron "Messages::Partitioner.prune", "0 0 * * 6" do
+  # UTC 기준 한국시간 오전 7시, 매주 일요일
+  Delayed::Periodic.cron "Messages::Partitioner.prune", "0 22 * * 6" do
     if Time.now.day >= 3
       with_each_shard_by_database(
-        Messages::Partitioner, :prune, jitter: 30.minutes, local_offset: true
+        Messages::Partitioner, :prune, jitter: 30.minutes, local_offset: false
       )
     end
   end
 
   Delayed::Periodic.cron "SimplyVersioned::Partitioner.process", "0 0 * * *" do
-    with_each_shard_by_database(SimplyVersioned::Partitioner, :process, jitter: 30.minutes, local_offset: true)
+    with_each_shard_by_database(SimplyVersioned::Partitioner, :process, jitter: 30.minutes, local_offset: false)
   end
 
   if AuthenticationProvider::SAML.enabled?
-    Delayed::Periodic.cron "AuthenticationProvider::SAML::MetadataRefresher.refresh_providers", "15 0 * * *" do
-      with_each_shard_by_database(AuthenticationProvider::SAML::MetadataRefresher, :refresh_providers, local_offset: true)
+    # UTC 기준 한국시간 오전 7시 15분, 매일
+    Delayed::Periodic.cron "AuthenticationProvider::SAML::MetadataRefresher.refresh_providers", "15 22 * * *" do
+      with_each_shard_by_database(AuthenticationProvider::SAML::MetadataRefresher, :refresh_providers, local_offset: false)
     end
 
     AuthenticationProvider::SAML::Federation.descendants.each do |federation|
-      Delayed::Periodic.cron "AuthenticationProvider::SAML::#{federation.class_name}.refresh_providers", "45 0 * * *" do
+      # UTC 기준 한국시간 0시 45분, 매일
+      Delayed::Periodic.cron "AuthenticationProvider::SAML::#{federation.class_name}.refresh_providers", "45 15 * * *" do
         DatabaseServer.send_in_each_region(federation,
                                            :refresh_providers,
                                            { singleton: "AuthenticationProvider::SAML::#{federation.class_name}.refresh_providers" })
@@ -277,8 +295,9 @@ Rails.configuration.after_initialize do
     end
   end
 
-  Delayed::Periodic.cron "AuthenticationProvider::LDAP.ensure_tls_cert_validity", "30 0 * * *" do
-    with_each_shard_by_database(AuthenticationProvider::LDAP, :ensure_tls_cert_validity, local_offset: true)
+  # UTC 기준 한국시간 0시 30분, 매일
+  Delayed::Periodic.cron "AuthenticationProvider::LDAP.ensure_tls_cert_validity", "30 15 * * *" do
+    with_each_shard_by_database(AuthenticationProvider::LDAP, :ensure_tls_cert_validity, local_offset: false)
   end
 
   Delayed::Periodic.cron "SisBatchError.cleanup_old_errors", "*/15 * * * *", priority: Delayed::LOW_PRIORITY do
@@ -325,20 +344,21 @@ Rails.configuration.after_initialize do
     with_each_shard_by_database(ObserverAlert, :create_assignment_missing_alerts)
   end
 
-  Delayed::Periodic.cron "Lti::KeyStorage.rotate_keys", "0 0 1 * *", priority: Delayed::LOW_PRIORITY do
+  # UTC 기준 한국시간 0시 정각, 매월 1일
+  Delayed::Periodic.cron "Lti::KeyStorage.rotate_keys", "0 15 1 * *", priority: Delayed::LOW_PRIORITY do
     Lti::KeyStorage.rotate_keys
   end
 
-  Delayed::Periodic.cron "Canvas::OAuth::KeyStorage.rotate_keys", "0 0 1 * *", priority: Delayed::LOW_PRIORITY do
+  Delayed::Periodic.cron "Canvas::OAuth::KeyStorage.rotate_keys", "0 15 1 * *", priority: Delayed::LOW_PRIORITY do
     Canvas::OAuth::KeyStorage.rotate_keys
   end
 
-  Delayed::Periodic.cron "CanvasSecurity::ServicesJwt::KeyStorage.rotate_keys", "0 0 1 * *", priority: Delayed::LOW_PRIORITY do
+  Delayed::Periodic.cron "CanvasSecurity::ServicesJwt::KeyStorage.rotate_keys", "0 15 1 * *", priority: Delayed::LOW_PRIORITY do
     CanvasSecurity::ServicesJwt::KeyStorage.rotate_keys
   end
 
-  Delayed::Periodic.cron "Purgatory.expire_old_purgatories", "0 0 * * *", priority: Delayed::LOWER_PRIORITY do
-    with_each_shard_by_database(Purgatory, :expire_old_purgatories, local_offset: true)
+  Delayed::Periodic.cron "Purgatory.expire_old_purgatories", "0 15 * * *", priority: Delayed::LOWER_PRIORITY do
+    with_each_shard_by_database(Purgatory, :expire_old_purgatories, local_offset: false)
   end
 
   Delayed::Periodic.cron "Feature.remove_obsolete_flags", "0 8 * * 0", priority: Delayed::LOWER_PRIORITY do
