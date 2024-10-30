@@ -259,7 +259,8 @@
             </div>
           <% end %>
 
-          <% if @topic.podcast_enabled %>
+          <%# 피드 옵션은 표시되지 않도록 한다. %>
+          <% if false && @topic.podcast_enabled %>
             <% if @context_enrollment %>
               <div class="discussion-fyi">
                 <a class="icon-rss" href="<%= feeds_topic_format_path(@topic.id, @context_enrollment.feed_code, :rss) %>"><%= t :topic_podcast_feed_link, "Topic Podcast Feed" %></a>
