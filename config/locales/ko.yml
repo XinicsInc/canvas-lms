@@ -8706,7 +8706,8 @@ ko:
     confirm_delete_discussion_topic: 이 토론 주제를 삭제하시겠습니까?
     delete: 삭제
     deleted_entry:
-      deleted: '%{edited_at}에 * %{editor.display_name} *에 의해 삭제됨'
+      # TI-5304
+      deleted: '%{edited_at}에 * %{editor_name} *에 의해 삭제됨'
     discussion_participant: 토론 참가자
     discussions: 토론
     edit_settings: 토론 설정 편집
