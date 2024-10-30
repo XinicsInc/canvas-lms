@@ -1,6 +1,6 @@
-#240812 허채원
-#ko_xinics.yml 로컬라이징 4차
-#240812 - 240816까지 진행 https://xinics.atlassian.net/browse/TI-5302 반영
+#고객서비스기획팀 허채원
+#Canvas2024 로컬라이징
+#240823 - 241023 진행 https://xinics.atlassian.net/browse/TI-5388 반영
 
 ko:
   1_item_scores_5512cd03: 1- 항목 점수
@@ -3143,11 +3143,12 @@ ko:
   assignment_grading_type:
     grading_type_options:
       letter_grade: 알파벳 성적
-      not_graded: 평가 안 됨
+      not_graded: 평가 없음(제출물 받지 않음)
       pass_fail: 완료/미완료
       percent: 퍼센트
-      points: 배점
+      points: 점수
     titles:
+      gpa_scale_explainer: "GPA 등급이란 무엇입니까?"
       grading_scheme_info: 평가 기준표 보기/편집
   assignment_group:
     default_name: 과제
@@ -3457,22 +3458,22 @@ ko:
     grading_type_selector:
       display_grade_as: 성적 표시 방법
       gpa_scale_explainer: GPA 등급은 모든 과제에 4.0 등급 (또는 5.0 / 6.0)을 사용하는 학교를 위해 설계되었습니다.
-        이 등급 체계는 Letter Grade 디스플레이와 유사하지만 몇 가지 중요한 차이점이 있습니다.
+        이 등급 체계는 알파벳 성적 표시와 유사하지만 몇 가지 중요한 차이점이 있습니다.
       gpa_scale_input_explainer: 점수는 4.0 척도로 입력됩니다. 예를 들어 과제가 100 점 만점 인 경우 4.0을 입력하면
-        100 %, 3.0을 입력하면 87 %가됩니다.
+        100%, 3.0을 입력하면 87%가 됩니다.
       gpa_scale_letters_explainer: 숫자 등급 외에도 문자 등급을 사용할 수 있습니다.
       gpa_scale_percentage_explainer: 점수는 직접 입력 할 수 없지만 백분율은 입력 할 수 있습니다. 예를 들어 과제가
-        50 점을 넘으면 "40"입력은 작동하지 않지만 "80 %"는 작동합니다.
-      gpa_scale_recommendation: 학교에서 등급을 매기기 위해 4.0 척도 (또는 5.0 / 6.0)를 사용하지 않는 한 Canvas는
-        성적을 Letter Grade로 표시 할 것을 권장합니다.
-      gpa_scale_scores_explainer: 허용되는 유일한 점수는 채점 체계에 미리 정의되어 있습니다.
+        50 점을 넘으면 "40"입력은 작동하지 않지만 "80%"는 작동합니다.
+      gpa_scale_recommendation: 학교에서 등급을 매기기 위해 4.0 척도 (또는 5.0 / 6.0)를 사용하지 않는다면 Canvas는
+        성적을 알파벳 성적으로 표시할 것을 권장합니다.
+      gpa_scale_scores_explainer: 성적 체계에 정의된 점수만 사용 가능합니다.
       gpa_scale_title: '"GPA 등급이란 무엇입니까?"'
       grading_type_options:
         letter_grade: 알파벳 성적
         not_graded: 평가 없음(제출물 받지 않음)
         pass_fail: 완료/미완료
         percent: 퍼센트
-        points: 배점
+        points: 점수
       view_grading_scheme: 성적 체계보기
     group_category_selector:
       grade_group_students_individually: 그룹 구성원에게 개별 성적 부여
@@ -24091,7 +24092,7 @@ ko:
   unpublished_courses_title: 비공개 과목
   unpublished_dfd8801: 비공개
   unread_c14cb06f: 읽지 않은 메시지,
-  unread_e9c1b19c: 읽지 않은 메시지
+  unread_e9c1b19c: 읽지 않음
   unreadcount_unread_replies_509e167f: 읽지 않은 댓글 %{unreadCount} 개
   unregister_service_985238e9: 서비스 등록 취소
   unreserved_e86b7425: 제한 없는
@@ -26504,3 +26505,19 @@ ko:
   student_annotation_f6810b5c: 학생 주석
   student_annotation_b9dc088c: 학생 주석
   online_submission_type_student_annotation_733641b5: 제출물 유형 - 학생 주석
+  enhanced_individual_gradebook:
+    invalid_group_warning:
+      one: "참고: 배점이 없으므로 '%{list_of_group_names}' 그룹의 제출물은 성적에 포함되지 않습니다."
+      other: "참고: 배점이 없으므로 '%{list_of_group_names}' 그룹의 제출물은 성적에 포함되지 않습니다."
+  not_specified_24a60319: 설정 안 됨
+  please_try_another_search_term_8f7b5d69: 다른 검색어를 사용해 보십시오
+  count_weeks_ago_9393928c:
+    one: 1주 전
+    other: "%{count}주 전"
+  search_within_grouptitle_4d38272f: '%{groupTitle} 내 검색'
+  all_grouptitle_outcomes_dcc565d1: '%{groupTitle} 성과'
+  count_outcomes_3af5e3e:
+    one: "%{count} 성과"
+    other: "%{count} 성과"
+  the_search_returned_no_results_c2e4d13c: 검색 결과가 없습니다.
+  new_analytics_description: New Analytics에서 과목 및 사용자 정보를 보여줍니다. 이 기능 플래그를 ON으로 설정한 후 New Analytics에 데이터가 표시되기까지 최대 24시간이 걸릴 수 있습니다. 자세한 내용은 Canvas 커뮤니티의 *New Analytics 사용자 그룹*을 참조하세요.
