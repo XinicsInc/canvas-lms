@@ -29,6 +29,12 @@ class Login::CanvasController < ApplicationController
   protect_from_forgery except: :create, with: :exception
 
   def new
+    if @current_user &&
+        params[:check_login]
+      redirect_to dashboard_url
+      return
+    end
+
     @allow_robot_indexing = true unless @domain_root_account&.disable_login_search_indexing?
     @pseudonym_session = PseudonymSession.new
     @headers = false
