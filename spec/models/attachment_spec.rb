@@ -3282,4 +3282,73 @@ describe Attachment do
       expect(@attachment.media_object_by_media_id).to eq @media_object
     end
   end
+
+  describe "custom preview" do
+    before do
+      Setting.set('xn_custom_preview_base_url', '/lx/synap/preview?url=')
+      Setting.set('xn_custom_previewable_mime_types', %w[application/hwp])
+      @original_mobile_device = $mobile_device  # 원래 값 저장
+    end
+
+    after do
+      $mobile_device = @original_mobile_device  # 원래 값으로 복원
+    end
+
+    context "#custom_previewable?" do
+      it "returns false when on mobile device" do
+        $mobile_device = true
+        attachment = attachment_model(content_type: 'application/hwp')
+        expect(attachment.custom_previewable?).to be false
+      end
+
+      it "returns false when base url is not set" do
+        Setting.set('xn_custom_preview_base_url', nil)
+        attachment = attachment_model(content_type: 'application/hwp')
+        expect(attachment.custom_previewable?).to be false
+      end
+
+      it "returns false for non-previewable mime types" do
+        attachment = attachment_model(content_type: 'image/png')
+        expect(attachment.custom_previewable?).to be false
+      end
+
+      it "returns true for previewable mime types when not on mobile" do
+        $mobile_device = false
+        attachment = attachment_model(content_type: 'application/hwp')
+        expect(attachment.custom_previewable?).to be true
+      end
+    end
+
+    describe "#custom_preview_url" do
+      it "returns nil when not custom_previewable" do
+        attachment = attachment_model(content_type: 'image/png')
+        expect(attachment.custom_preview_url).to be_nil
+      end
+
+      it "returns preview url when custom_previewable" do
+        $mobile_device = false
+        attachment = attachment_model(content_type: 'application/hwp')
+        allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
+        expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
+        expect(attachment.custom_preview_url).to eq expected_url
+      end
+    end
+
+    describe "#canvadoc_url" do
+      it "returns custom preview url when custom_previewable" do
+        $mobile_device = false
+        attachment = attachment_model(content_type: 'application/hwp')
+        allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
+        expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
+        expect(attachment.canvadoc_url(nil)).to eq expected_url
+      end
+
+      it "returns regular canvadoc url when not custom_previewable" do
+        attachment = attachment_model(content_type: 'image/png')
+        allow(attachment).to receive(:canvadocable?).and_return(true)
+        allow(attachment).to receive(:preview_params).and_return('foo=bar')
+        expect(attachment.canvadoc_url(nil)).to eq "/api/v1/canvadoc_session?foo=bar"
+      end
+    end
+  end
 end
