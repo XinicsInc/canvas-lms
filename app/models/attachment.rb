@@ -2037,6 +2037,23 @@ class Attachment < ActiveRecord::Base
     Canvadocs.enabled? && canvadocable_mime_types.include?(content_type_with_text_match)
   end
 
+  def custom_previewable?
+    !$mobile_device && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
+  end
+
+  def custom_preview_base_url
+    Setting.get('xn_custom_preview_base_url', nil)
+  end
+
+  def custom_previewable_mime_types
+    JSON.parse Setting.get('xn_custom_previewable_mime_types', '[]')
+  end
+
+  def custom_preview_url
+    return unless custom_previewable?
+    custom_preview_base_url + ERB::Util.url_encode(public_download_url)
+  end
+
   def self.submit_to_canvadocs(ids)
     Attachment.where(id: ids).find_each(&:submit_to_canvadocs)
   end
@@ -2397,6 +2414,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def canvadoc_url(user, opts = {})
+    return custom_preview_url if custom_previewable?
     return unless canvadocable?
 
     "/api/v1/canvadoc_session?#{preview_params(user, "canvadoc", opts)}"
