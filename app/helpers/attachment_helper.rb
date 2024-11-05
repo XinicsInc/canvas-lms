@@ -35,7 +35,7 @@ module AttachmentHelper
       rescue => e
         Canvas::Errors.capture_exception(:crocodoc, e)
       end
-    elsif attachment.canvadocable?
+    elsif attachment.custom_previewable? || attachment.canvadocable?
       attrs[:canvadoc_session_url] = attachment.canvadoc_url(@current_user, url_opts)
     end
     attrs[:attachment_id] = attachment.id
