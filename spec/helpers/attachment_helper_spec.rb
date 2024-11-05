@@ -120,4 +120,45 @@ describe AttachmentHelper do
       end
     end
   end
+
+  describe "#doc_preview_attributes" do
+    context "when attachment is custom_previewable" do
+      before do
+        @current_user = @student
+        allow(@att).to receive(:custom_previewable?).and_return(true)
+        allow(@att).to receive(:canvadocable?).and_return(false)
+
+        # custom_preview_base_url must be exist when custom_previewable? is true
+        Setting.set('xn_custom_preview_base_url', '/lx/synap/preview?url=')
+      end
+
+      it "returns canvadoc session url" do
+        attrs = doc_preview_attributes(@att)
+
+        puts "\n=== Debug Output ==="
+        puts "attrs value: #{attrs}"
+        puts "===================="
+
+        expect(attrs).to match(/canvadoc_session/)
+        expect(attrs).to match(/#{@current_user.id}/)
+        expect(attrs).to match(/#{@att.id}/)
+
+        # check string inclusion, not regex. because of query string
+        expect(attrs).to include(@att.custom_preview_base_url)
+      end
+    end
+
+    context "when attachment is neither custom_previewable nor canvadocable" do
+      before do
+        @current_user = @student
+        allow(@att).to receive(:custom_previewable?).and_return(false)
+        allow(@att).to receive(:canvadocable?).and_return(false)
+      end
+
+      it "does not return canvadoc session url" do
+        attrs = doc_preview_attributes(@att)
+        expect(attrs).not_to match(/canvadoc_session/)
+      end
+    end
+  end
 end
