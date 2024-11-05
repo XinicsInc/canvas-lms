@@ -35,10 +35,6 @@ class GradebooksController < ApplicationController
   before_action :require_context
   before_action :require_user, only: %i[speed_grader speed_grader_settings grade_summary grading_rubrics update_final_grade_overrides]
 
-  before_action only: [:speed_grader] do
-    $mobile_device = mobile_device?.freeze
-  end
-
   include K5Mode
 
   batch_jobs_in_actions only: :update_submission, batch: { priority: Delayed::LOW_PRIORITY }

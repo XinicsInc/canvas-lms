@@ -2038,7 +2038,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def custom_previewable?
-    !$mobile_device && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
+    !$mobile_app && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
   end
 
   def custom_preview_base_url
