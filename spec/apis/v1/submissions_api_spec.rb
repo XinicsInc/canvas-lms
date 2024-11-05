@@ -7136,4 +7136,57 @@ describe "Submissions API", type: :request do
       end
     end
   end
+
+  describe "mobile app detection" do
+    before :once do
+      course_with_teacher(active_all: true)
+      @student = user_factory(active_all: true)
+      @course.enroll_student(@student).accept!
+      @assignment = @course.assignments.create!(title: "assignment1")
+    end
+
+    def call_api_with_user_agent(user_agent)
+      api_call(:get,
+               "/api/v1/courses/#{@course.id}/assignments/#{@assignment.id}/submissions",
+               { controller: "submissions_api",
+                 action: "index",
+                 format: "json",
+                 course_id: @course.id.to_s,
+                 assignment_id: @assignment.id.to_s },
+               {},
+               { "HTTP_USER_AGENT" => user_agent })
+    end
+
+    it "detects mobile apps from user agent" do
+      mobile_user_agents = [
+        "iosTeacher",
+        "LearningX Teacher",
+        "LearningX%20Teacher",
+        "iCanvas",
+        "LearningX Student",
+        "LearningX%20Student",
+        "androidTeacher",
+        "candroid"
+      ]
+
+      mobile_user_agents.each do |user_agent|
+        call_api_with_user_agent(user_agent)
+        expect($mobile_app).to be true
+        $mobile_app = nil # Reset for next iteration
+      end
+    end
+
+    it "does not detect non-mobile apps from user agent" do
+      non_mobile_user_agents = [
+        "Mozilla/5.0",
+        "Chrome/91.0",
+        "Safari/537.36"
+      ]
+
+      non_mobile_user_agents.each do |user_agent|
+        call_api_with_user_agent(user_agent)
+        expect($mobile_app).to be_nil
+      end
+    end
+  end
 end

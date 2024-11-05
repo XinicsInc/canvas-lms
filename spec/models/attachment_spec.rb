@@ -3287,16 +3287,16 @@ describe Attachment do
     before do
       Setting.set('xn_custom_preview_base_url', '/lx/synap/preview?url=')
       Setting.set('xn_custom_previewable_mime_types', %w[application/hwp])
-      @original_mobile_device = $mobile_device  # 원래 값 저장
+      @original_mobile_app = $mobile_app # 원래 값 저장
     end
 
     after do
-      $mobile_device = @original_mobile_device  # 원래 값으로 복원
+      $mobile_app = @original_mobile_app # 원래 값으로 복원
     end
 
     context "#custom_previewable?" do
-      it "returns false when on mobile device" do
-        $mobile_device = true
+      it "returns false when on mobile app" do
+        $mobile_app = true
         attachment = attachment_model(content_type: 'application/hwp')
         expect(attachment.custom_previewable?).to be false
       end
@@ -3312,8 +3312,8 @@ describe Attachment do
         expect(attachment.custom_previewable?).to be false
       end
 
-      it "returns true for previewable mime types when not on mobile" do
-        $mobile_device = false
+      it "returns true for previewable mime types when not on mobile app" do
+        $mobile_app = false
         attachment = attachment_model(content_type: 'application/hwp')
         expect(attachment.custom_previewable?).to be true
       end
@@ -3326,7 +3326,7 @@ describe Attachment do
       end
 
       it "returns preview url when custom_previewable" do
-        $mobile_device = false
+        $mobile_app = false
         attachment = attachment_model(content_type: 'application/hwp')
         allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
         expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
@@ -3336,7 +3336,7 @@ describe Attachment do
 
     describe "#canvadoc_url" do
       it "returns custom preview url when custom_previewable" do
-        $mobile_device = false
+        $mobile_app = false
         attachment = attachment_model(content_type: 'application/hwp')
         allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
         expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
