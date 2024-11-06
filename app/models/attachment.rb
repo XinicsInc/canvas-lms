@@ -2054,6 +2054,77 @@ class Attachment < ActiveRecord::Base
     custom_preview_base_url + ERB::Util.url_encode(public_download_url)
   end
 
+  def pdf_comment_editorable?(request_fullpath)
+    return !$mobile_app && pdf_comment_editor_base_url.present? && request_fullpath.present? && pdf_comment_editor_mime_types.include?(content_type) && !pdf_comment_editor_exclude_paths.any? { |url_reg_exp| request_fullpath.match(url_reg_exp) }
+  end
+
+  def pdf_comment_editor_mime_types
+    JSON.parse Setting.get('xn_pdf_comment_editor_mime_types', '[]')
+  end
+
+  def pdf_comment_editor_exclude_paths
+    return JSON.parse Setting.get('xn_pdf_comment_editor_exclude_paths', '[]')
+  end
+
+  def pdf_comment_editor_launch_token(user, opts={})
+    payload = {
+        iat: Time.now.to_i,
+        locale: pdf_comment_editor_locale,
+        course_id: opts[:course_id],
+        attachment_id: id,
+        file_url: public_download_url,
+        file_name: display_name,
+        user_name: user.name,
+        user_email: user.email,
+        user_role: enrollment_type_to_pdf_comment_editor_role(opts[:enrollment_type]),
+        readonly: opts[:enable_annotations].nil? || opts[:enable_annotations] === false
+    }
+    token = JWT.encode(payload, pdf_comment_editor_jwt_secret, 'HS256', { typ: 'JWT' })
+    return token
+  end
+
+  def pdf_comment_editor_locale
+    case I18n.locale
+    when :ko
+        return 'ko-KR'
+    when :en
+        return 'en-US'
+    when :ja
+        return 'ja-JP'
+    else
+        return 'en-US'
+    end
+  end
+
+  def enrollment_type_to_pdf_comment_editor_role(enrollment_type)
+    case enrollment_type
+    when 'student'
+        return 0
+    when 'teacher'
+        return 1
+    when 'ta'
+        return 2
+    when 'designer'
+        return 3
+    when 'observer'
+        return 4
+    else
+        return 0
+    end
+  end
+
+  def pdf_comment_editor_jwt_secret
+    return Setting.get('xn_pdf_comment_editor_jwt_secret', nil)
+  end
+
+  def pdf_comment_editor_url(user, opts={})
+    return pdf_comment_editor_base_url + pdf_comment_editor_launch_token(user, opts)
+  end
+
+  def pdf_comment_editor_base_url
+    return Setting.get('xn_pdf_comment_editor_base_url', nil)
+  end
+
   def self.submit_to_canvadocs(ids)
     Attachment.where(id: ids).find_each(&:submit_to_canvadocs)
   end
@@ -2414,6 +2485,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def canvadoc_url(user, opts = {})
+    return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts[:request_fullpath])
     return custom_preview_url if custom_previewable?
     return unless canvadocable?
 
