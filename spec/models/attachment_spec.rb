@@ -3284,14 +3284,22 @@ describe Attachment do
   end
 
   describe "custom preview" do
+    custom_preview_base_url = '/lx/synap/preview?url='
+    pdf_comment_editor_base_url = '/pdf-comment-editor/launch?token='
+
     before do
-      Setting.set('xn_custom_preview_base_url', '/lx/synap/preview?url=')
-      Setting.set('xn_custom_previewable_mime_types', %w[application/hwp])
-      @original_mobile_app = $mobile_app # 원래 값 저장
+      Setting.set('xn_custom_preview_base_url', custom_preview_base_url)
+      Setting.set('xn_custom_previewable_mime_types', %w[application/pdf application/hwp])
+
+      Setting.set('xn_pdf_comment_editor_base_url', pdf_comment_editor_base_url)
+      Setting.set('xn_pdf_comment_editor_mime_types', %w[application/pdf])
+      Setting.set('xn_pdf_comment_editor_exclude_paths', [])
+
+      @original_mobile_app = $mobile_app # keep the original value
     end
 
     after do
-      $mobile_app = @original_mobile_app # 원래 값으로 복원
+      $mobile_app = @original_mobile_app # restore the original value
     end
 
     context "#custom_previewable?" do
@@ -3329,21 +3337,53 @@ describe Attachment do
         $mobile_app = false
         attachment = attachment_model(content_type: 'application/hwp')
         allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
-        expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
         expect(attachment.custom_preview_url).to eq expected_url
       end
     end
 
+    context "#pdf_comment_editorable?" do
+      it "returns false when mime type is not in pdf_comment_editor_mime_types" do
+        attachment = attachment_model(content_type: 'image/png')
+        expect(attachment.pdf_comment_editorable?(nil)).to be false
+      end
+
+      it "returns true when mime type is in pdf_comment_editor_mime_types" do
+        attachment = attachment_model(content_type: 'application/pdf')
+        expect(attachment.pdf_comment_editorable?('/courses/1/assignments/2')).to be true
+      end
+
+      it "returns false when request_fullpath is not present" do
+        attachment = attachment_model(content_type: 'application/pdf')
+        expect(attachment.pdf_comment_editorable?(nil)).to be false
+      end
+
+      it "returns false when request_fullpath matches any of the exclude_paths" do
+        Setting.set('xn_pdf_comment_editor_exclude_paths', ['/courses/1/assignments/2'])
+
+        attachment = attachment_model(content_type: 'application/pdf')
+        expect(attachment.pdf_comment_editorable?('/courses/1/assignments/2')).to be false
+      end
+    end
+
     describe "#canvadoc_url" do
+      it "returns pdf comment editor url when pdf_comment_editorable" do
+        $mobile_app = false
+        attachment = attachment_model(content_type: 'application/pdf')
+        allow(attachment).to receive(:pdf_comment_editor_launch_token).and_return('token123')
+        expect(attachment.canvadoc_url(nil, request_fullpath: '/courses/1/assignments/2')).to \
+         eq "#{pdf_comment_editor_base_url}token123"
+      end
+
       it "returns custom preview url when custom_previewable" do
         $mobile_app = false
         attachment = attachment_model(content_type: 'application/hwp')
         allow(attachment).to receive(:public_download_url).and_return('http://example.com/file.hwp')
-        expected_url = '/lx/synap/preview?url=http%3A%2F%2Fexample.com%2Ffile.hwp'
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
         expect(attachment.canvadoc_url(nil)).to eq expected_url
       end
 
-      it "returns regular canvadoc url when not custom_previewable" do
+      it "returns regular canvadoc url when not custom_previewable or pdf_comment_editorable" do
         attachment = attachment_model(content_type: 'image/png')
         allow(attachment).to receive(:canvadocable?).and_return(true)
         allow(attachment).to receive(:preview_params).and_return('foo=bar')

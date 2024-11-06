@@ -3385,6 +3385,22 @@ describe GradebooksController do
         end
       end
     end
+
+    describe "json format" do
+      before do
+        user_session(@teacher)
+      end
+
+      it "passes request.fullpath to assignment.json() method" do
+        expect(SpeedGrader::Assignment).to receive(:new).and_wrap_original do |original, *args|
+          assignment = original.call(*args)
+          expect(assignment).to receive(:json).with(request_fullpath: "/courses/#{@course.id}/gradebook/speed_grader.json?assignment_id=#{@assignment.id}")
+          assignment
+        end
+
+        get :speed_grader, params: { course_id: @course.id, assignment_id: @assignment.id }, format: :json
+      end
+    end
   end
 
   describe "POST 'speed_grader_settings'" do
