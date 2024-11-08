@@ -784,6 +784,52 @@ describe FilesController do
         get "api_create_success", params: { id: attachment.id, uuid: attachment.uuid }, format: "json"
         expect(json_parse["canvadoc_session_url"]).to be_present
       end
+
+      describe "synap docviewer over pdf comment editor - file show" do
+        custom_preview_base_url = "/lx/synap/preview?url="
+        pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
+
+        # actions we are testing here need to rendered view response
+        # without this, response will be empty
+        render_views
+
+        before do
+          allow(Canvadocs).to receive(:enabled?).and_return false
+
+          # settings about custom preview and pdf comment editor
+          Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+          Setting.set("xn_custom_previewable_mime_types", %w[application/pdf])
+          Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+          Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+          # should not use pdf comment editor for preview files in module item view
+          Setting.set("xn_pdf_comment_editor_exclude_paths", %w[\/courses\/\d+\/files\/\d+])
+
+          @file = attachment_model(context: @course, uploaded_data: stub_file_data("test.pdf", "dummydata", "application/pdf"))
+          file_in_a_module
+          @module.completion_requirements = {}
+          @module.save!
+        end
+
+        it "canvadoc url should be custom preview url. because request url is matched pattern of xn_pdf_comment_editor_exclude_paths" do
+          get "show", params: { course_id: @course.id, id: @file.id, module_item_id: @tag.id }
+          expect(response).to be_successful
+
+          doc = Nokogiri::HTML(response.body)
+          canvadoc_session_url = doc.css("#doc_preview").attr("data-canvadoc_session_url").value
+          expect(canvadoc_session_url).to include(custom_preview_base_url)
+        end
+
+        it "canvadoc url should be pdf comment editor url. because request url is not matched pattern of xn_pdf_comment_editor_exclude_paths" do
+          Setting.set("xn_pdf_comment_editor_exclude_paths", [])
+
+          get "show", params: { course_id: @course.id, id: @file.id, module_item_id: @tag.id }
+          expect(response).to be_successful
+
+          doc = Nokogiri::HTML(response.body)
+          canvadoc_session_url = doc.css("#doc_preview").attr("data-canvadoc_session_url").value
+          expect(canvadoc_session_url).to include(pdf_comment_editor_base_url)
+        end
+      end
     end
   end
 

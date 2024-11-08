@@ -135,10 +135,6 @@ describe AttachmentHelper do
       it "returns canvadoc session url" do
         attrs = doc_preview_attributes(@att)
 
-        puts "\n=== Debug Output ==="
-        puts "attrs value: #{attrs}"
-        puts "===================="
-
         expect(attrs).to match(/canvadoc_session/)
         expect(attrs).to match(/#{@current_user.id}/)
         expect(attrs).to match(/#{@att.id}/)

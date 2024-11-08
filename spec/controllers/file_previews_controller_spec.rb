@@ -159,7 +159,7 @@ describe FilePreviewsController do
     expect(response).to be_successful
   end
 
-  describe "synap docviewer over pdf comment editor" do
+  describe "synap docviewer over pdf comment editor - file preview" do
     custom_preview_base_url = "/lx/synap/preview?url="
     pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
 
