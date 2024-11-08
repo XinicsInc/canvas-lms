@@ -3293,7 +3293,10 @@ describe Attachment do
 
       Setting.set('xn_pdf_comment_editor_base_url', pdf_comment_editor_base_url)
       Setting.set('xn_pdf_comment_editor_mime_types', %w[application/pdf])
-      Setting.set('xn_pdf_comment_editor_exclude_paths', [])
+      Setting.set('xn_pdf_comment_editor_use_paths', %w[
+        \/courses\/\d+\/gradebook\/speed_grader.json
+        \/api\/v1\/files\/\d+
+      ].to_json)
 
       @original_mobile_app = $mobile_app # keep the original value
     end
@@ -3345,12 +3348,12 @@ describe Attachment do
     context "#pdf_comment_editorable?" do
       it "returns false when mime type is not in pdf_comment_editor_mime_types" do
         attachment = attachment_model(content_type: 'image/png')
-        expect(attachment.pdf_comment_editorable?(nil)).to be false
+        expect(attachment.pdf_comment_editorable?("/courses/1/gradebook/speed_grader.json")).to be false
       end
 
       it "returns true when mime type is in pdf_comment_editor_mime_types" do
         attachment = attachment_model(content_type: 'application/pdf')
-        expect(attachment.pdf_comment_editorable?('/courses/1/assignments/2')).to be true
+        expect(attachment.pdf_comment_editorable?('/courses/1/gradebook/speed_grader.json')).to be true
       end
 
       it "returns false when request_fullpath is not present" do
@@ -3358,9 +3361,7 @@ describe Attachment do
         expect(attachment.pdf_comment_editorable?(nil)).to be false
       end
 
-      it "returns false when request_fullpath matches any of the exclude_paths" do
-        Setting.set('xn_pdf_comment_editor_exclude_paths', ['/courses/1/assignments/2'])
-
+      it "returns false when request_fullpath does not match any of the use_paths" do
         attachment = attachment_model(content_type: 'application/pdf')
         expect(attachment.pdf_comment_editorable?('/courses/1/assignments/2')).to be false
       end
@@ -3371,8 +3372,8 @@ describe Attachment do
         $mobile_app = false
         attachment = attachment_model(content_type: 'application/pdf')
         allow(attachment).to receive(:pdf_comment_editor_launch_token).and_return('token123')
-        expect(attachment.canvadoc_url(nil, request_fullpath: '/courses/1/assignments/2')).to \
-         eq "#{pdf_comment_editor_base_url}token123"
+        expect(attachment.canvadoc_url(nil, request_fullpath: '/courses/1/gradebook/speed_grader.json')).to \
+          eq "#{pdf_comment_editor_base_url}token123"
       end
 
       it "returns custom preview url when custom_previewable" do
