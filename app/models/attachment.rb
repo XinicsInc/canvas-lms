@@ -2055,15 +2055,19 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editorable?(request_fullpath)
-    return !$mobile_app && pdf_comment_editor_base_url.present? && request_fullpath.present? && pdf_comment_editor_mime_types.include?(content_type) && !pdf_comment_editor_exclude_paths.any? { |url_reg_exp| request_fullpath.match(url_reg_exp) }
+    return !$mobile_app &&
+        request_fullpath.present? &&
+        pdf_comment_editor_base_url.present? &&
+        pdf_comment_editor_mime_types.include?(content_type) &&
+        pdf_comment_editor_use_paths.any? { |url_reg_exp| request_fullpath.match(url_reg_exp) }
   end
 
   def pdf_comment_editor_mime_types
     JSON.parse Setting.get('xn_pdf_comment_editor_mime_types', '[]')
   end
 
-  def pdf_comment_editor_exclude_paths
-    return JSON.parse Setting.get('xn_pdf_comment_editor_exclude_paths', '[]')
+  def pdf_comment_editor_use_paths
+    JSON.parse Setting.get('xn_pdf_comment_editor_use_paths', '[]')
   end
 
   def pdf_comment_editor_launch_token(user, opts={})
