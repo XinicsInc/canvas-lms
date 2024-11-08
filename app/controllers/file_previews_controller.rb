@@ -46,7 +46,7 @@ class FilePreviewsController < ApplicationController
 
       # for custom preview
       url_opts = {
-        enable_annotations: params[:annotate].to_i != 0,
+        enable_annotations: false,
         course_id: params[:course_id],
         request_fullpath: request.fullpath
       }
