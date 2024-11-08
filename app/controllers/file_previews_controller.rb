@@ -19,6 +19,7 @@
 
 class FilePreviewsController < ApplicationController
   include AttachmentHelper
+  include CanvadocsHelper
 
   before_action :get_context
 
@@ -42,11 +43,23 @@ class FilePreviewsController < ApplicationController
       # mark item seen for module progression purposes
       @file.context_module_action(@current_user, :read) if @current_user
       log_asset_access(@file, "files", "files")
+
+      # for custom preview
+      url_opts = {
+        enable_annotations: params[:annotate].to_i != 0,
+        course_id: params[:course_id],
+        request_fullpath: request.fullpath
+      }
+      if url_opts[:enable_annotations]
+        course = Course.find_by(id: params[:course_id].to_i)
+        url_opts[:enrollment_type] = canvadocs_user_role(course, @current_user)
+      end
+
       # redirect to or render content for the file according to its type
       # crocodocs (if annotation requested)
       # and canvadocs
       if (Canvas::Plugin.value_to_boolean(params[:annotate]) && (url = @file.crocodoc_url(@current_user))) ||
-         (url = @file.canvadoc_url(@current_user))
+         (url = @file.canvadoc_url(@current_user, url_opts))
         redirect_to url
       # google docs
       elsif GoogleDocsPreview.previewable?(@domain_root_account, @file)
