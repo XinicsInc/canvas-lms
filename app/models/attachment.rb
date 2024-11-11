@@ -2054,12 +2054,13 @@ class Attachment < ActiveRecord::Base
     custom_preview_base_url + ERB::Util.url_encode(public_download_url)
   end
 
-  def pdf_comment_editorable?(request_fullpath)
+  def pdf_comment_editorable?(opts = {})
     return !$mobile_app &&
-        request_fullpath.present? &&
-        pdf_comment_editor_base_url.present? &&
-        pdf_comment_editor_mime_types.include?(content_type) &&
-        pdf_comment_editor_use_paths.any? { |url_reg_exp| request_fullpath.match(url_reg_exp) }
+      opts[:course_id].present? &&
+      opts[:request_fullpath].present? &&
+      pdf_comment_editor_base_url.present? &&
+      pdf_comment_editor_mime_types.include?(content_type) &&
+      pdf_comment_editor_use_paths.any? { |url_reg_exp| opts[:request_fullpath].match(url_reg_exp) }
   end
 
   def pdf_comment_editor_mime_types
@@ -2489,7 +2490,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def canvadoc_url(user, opts = {})
-    return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts[:request_fullpath])
+    return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts)
     return custom_preview_url if custom_previewable?
     return unless canvadocable?
 
