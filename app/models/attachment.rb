@@ -2042,20 +2042,21 @@ class Attachment < ActiveRecord::Base
   end
 
   def custom_preview_base_url
-    Setting.get('xn_custom_preview_base_url', nil)
+    Setting.get("xn_custom_preview_base_url", nil)
   end
 
   def custom_previewable_mime_types
-    JSON.parse Setting.get('xn_custom_previewable_mime_types', '[]')
+    JSON.parse Setting.get("xn_custom_previewable_mime_types", "[]")
   end
 
   def custom_preview_url
     return unless custom_previewable?
+
     custom_preview_base_url + ERB::Util.url_encode(public_download_url)
   end
 
   def pdf_comment_editorable?(opts = {})
-    return !$mobile_app &&
+    !$mobile_app &&
       opts[:course_id].present? &&
       opts[:request_fullpath].present? &&
       pdf_comment_editor_base_url.present? &&
@@ -2064,70 +2065,69 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editor_mime_types
-    JSON.parse Setting.get('xn_pdf_comment_editor_mime_types', '[]')
+    JSON.parse Setting.get("xn_pdf_comment_editor_mime_types", "[]")
   end
 
   def pdf_comment_editor_use_paths
-    JSON.parse Setting.get('xn_pdf_comment_editor_use_paths', '[]')
+    JSON.parse Setting.get("xn_pdf_comment_editor_use_paths", "[]")
   end
 
-  def pdf_comment_editor_launch_token(user, opts={})
+  def pdf_comment_editor_launch_token(user, opts = {})
     payload = {
-        iat: Time.now.to_i,
-        locale: pdf_comment_editor_locale,
-        course_id: opts[:course_id],
-        attachment_id: id,
-        file_url: public_download_url,
-        file_name: display_name,
-        user_name: user.name,
-        user_email: user.email,
-        user_role: enrollment_type_to_pdf_comment_editor_role(opts[:enrollment_type]),
-        readonly: opts[:enable_annotations].nil? || opts[:enable_annotations] === false
+      iat: Time.now.to_i,
+      locale: pdf_comment_editor_locale,
+      course_id: opts[:course_id],
+      attachment_id: id,
+      file_url: public_download_url,
+      file_name: display_name,
+      user_name: user.name,
+      user_email: user.email,
+      user_role: enrollment_type_to_pdf_comment_editor_role(opts[:enrollment_type]),
+      readonly: opts[:enable_annotations].nil? || opts[:enable_annotations] === false
     }
-    token = JWT.encode(payload, pdf_comment_editor_jwt_secret, 'HS256', { typ: 'JWT' })
-    return token
+    JWT.encode(payload, pdf_comment_editor_jwt_secret, "HS256", { typ: "JWT" })
   end
 
   def pdf_comment_editor_locale
     case I18n.locale
     when :ko
-        return 'ko-KR'
+      "ko-KR"
     when :en
-        return 'en-US'
+      "en-US"
     when :ja
-        return 'ja-JP'
+      "ja-JP"
     else
-        return 'en-US'
+      "en-US"
     end
   end
 
   def enrollment_type_to_pdf_comment_editor_role(enrollment_type)
     case enrollment_type
-    when 'student'
-        return 0
-    when 'teacher'
-        return 1
-    when 'ta'
-        return 2
-    when 'designer'
-        return 3
-    when 'observer'
-        return 4
+    when "student"
+      0
+    when "teacher"
+      1
+    when "ta"
+      2
+    when "designer"
+      3
+    when "observer"
+      4
     else
-        return 0
+      0
     end
   end
 
   def pdf_comment_editor_jwt_secret
-    return Setting.get('xn_pdf_comment_editor_jwt_secret', nil)
+    Setting.get("xn_pdf_comment_editor_jwt_secret", nil)
   end
 
-  def pdf_comment_editor_url(user, opts={})
-    return pdf_comment_editor_base_url + pdf_comment_editor_launch_token(user, opts)
+  def pdf_comment_editor_url(user, opts = {})
+    pdf_comment_editor_base_url + pdf_comment_editor_launch_token(user, opts)
   end
 
   def pdf_comment_editor_base_url
-    return Setting.get('xn_pdf_comment_editor_base_url', nil)
+    Setting.get("xn_pdf_comment_editor_base_url", nil)
   end
 
   def self.submit_to_canvadocs(ids)
