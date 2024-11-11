@@ -2041,6 +2041,8 @@ class Attachment < ActiveRecord::Base
     !$mobile_app && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
   end
 
+  # canvas2020의 커밋 c5e2d7f0526b6d85e5bf3531c6bd4349d0f54f19 에서 Setting.skip_cache를 사용했으나,
+  # 그것은 PTT3-414 의 원인을 잘못 파악한 것이었으므로, canvas2024 작업에서는 반영하지 않았다.
   def custom_preview_base_url
     Setting.get("xn_custom_preview_base_url", nil)
   end
@@ -2066,6 +2068,8 @@ class Attachment < ActiveRecord::Base
       pdf_comment_editor_use_paths.any? { |url_reg_exp| opts[:request_fullpath].match(url_reg_exp) }
   end
 
+  # canvas2020의 커밋 c5e2d7f0526b6d85e5bf3531c6bd4349d0f54f19 에서 Setting.skip_cache를 사용했으나,
+  # 그것은 PTT3-414 의 원인을 잘못 파악한 것이었으므로, canvas2024 작업에서는 반영하지 않았다.
   def pdf_comment_editor_mime_types
     JSON.parse Setting.get("xn_pdf_comment_editor_mime_types", "[]")
   end
