@@ -2056,6 +2056,8 @@ class Attachment < ActiveRecord::Base
   end
 
   def pdf_comment_editorable?(opts = {})
+    opts ||= {}
+
     !$mobile_app &&
       opts[:course_id].present? &&
       opts[:request_fullpath].present? &&
