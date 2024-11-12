@@ -3386,19 +3386,52 @@ describe GradebooksController do
       end
     end
 
-    describe "json format" do
+    describe "json format for custom preview/pdf comment editor" do
       before do
         user_session(@teacher)
       end
 
-      it "passes request.fullpath to assignment.json() method" do
+      it "passes request.fullpath and mobile_app(false) to assignment.json() method" do
         expect(SpeedGrader::Assignment).to receive(:new).and_wrap_original do |original, *args|
           assignment = original.call(*args)
-          expect(assignment).to receive(:json).with(request_fullpath: "/courses/#{@course.id}/gradebook/speed_grader.json?assignment_id=#{@assignment.id}")
+          expect(assignment).to receive(:json).with(
+            request_fullpath: "/courses/#{@course.id}/gradebook/speed_grader.json?assignment_id=#{@assignment.id}",
+            mobile_app: false
+          )
           assignment
         end
 
         get :speed_grader, params: { course_id: @course.id, assignment_id: @assignment.id }, format: :json
+      end
+
+      context "when request comes from mobile app" do
+        mobile_user_agents = [
+          "iosTeacher",
+          "LearningX Teacher",
+          "LearningX%20Teacher",
+          "iCanvas",
+          "LearningX Student",
+          "LearningX%20Student",
+          "androidTeacher",
+          "candroid"
+        ]
+
+        mobile_user_agents.each do |user_agent|
+          it "passes mobile_app(true) when user agent is #{user_agent}" do
+            request.user_agent = user_agent
+
+            expect(SpeedGrader::Assignment).to receive(:new).and_wrap_original do |original, *args|
+              assignment = original.call(*args)
+              expect(assignment).to receive(:json).with(
+                request_fullpath: "/courses/#{@course.id}/gradebook/speed_grader.json?assignment_id=#{@assignment.id}",
+                mobile_app: true
+              )
+              assignment
+            end
+
+            get :speed_grader, params: { course_id: @course.id, assignment_id: @assignment.id }, format: :json
+          end
+        end
       end
     end
   end

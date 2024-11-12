@@ -3297,36 +3297,32 @@ describe Attachment do
         \/courses\/\d+\/gradebook\/speed_grader.json
         \/api\/v1\/files\/\d+
       ].to_json)
-
-      @original_mobile_app = $mobile_app # keep the original value
-    end
-
-    after do
-      $mobile_app = @original_mobile_app # restore the original value
     end
 
     context "#custom_previewable?" do
       it "returns false when on mobile app" do
-        $mobile_app = true
         attachment = attachment_model(content_type: "application/hwp")
-        expect(attachment.custom_previewable?).to be false
+        opts = { mobile_app: true }
+        expect(attachment.custom_previewable?(opts)).to be false
       end
 
       it "returns false when base url is not set" do
         Setting.set("xn_custom_preview_base_url", nil)
         attachment = attachment_model(content_type: "application/hwp")
-        expect(attachment.custom_previewable?).to be false
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be false
       end
 
       it "returns false for non-previewable mime types" do
         attachment = attachment_model(content_type: "image/png")
-        expect(attachment.custom_previewable?).to be false
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be false
       end
 
       it "returns true for previewable mime types when not on mobile app" do
-        $mobile_app = false
         attachment = attachment_model(content_type: "application/hwp")
-        expect(attachment.custom_previewable?).to be true
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be true
       end
     end
 
@@ -3337,7 +3333,6 @@ describe Attachment do
       end
 
       it "returns preview url when custom_previewable" do
-        $mobile_app = false
         attachment = attachment_model(content_type: "application/hwp")
         allow(attachment).to receive(:public_download_url).and_return("http://example.com/file.hwp")
         expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
@@ -3375,25 +3370,28 @@ describe Attachment do
 
     describe "#canvadoc_url" do
       it "returns pdf comment editor url when pdf_comment_editorable" do
-        $mobile_app = false
         attachment = attachment_model(content_type: "application/pdf")
         allow(attachment).to receive_messages(pdf_comment_editorable?: true, pdf_comment_editor_launch_token: "token123")
-        opts = { request_fullpath: "/courses/1/gradebook/speed_grader.json" }
+        opts = {
+          request_fullpath: "/courses/1/gradebook/speed_grader.json",
+          mobile_app: false
+        }
         expect(attachment.canvadoc_url(nil, opts)).to eq "#{pdf_comment_editor_base_url}token123"
       end
 
       it "returns custom preview url when custom_previewable" do
-        $mobile_app = false
         attachment = attachment_model(content_type: "application/hwp")
         allow(attachment).to receive(:public_download_url).and_return("http://example.com/file.hwp")
+        opts = { mobile_app: false }
         expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
-        expect(attachment.canvadoc_url(nil)).to eq expected_url
+        expect(attachment.canvadoc_url(nil, opts)).to eq expected_url
       end
 
       it "returns regular canvadoc url when not custom_previewable or pdf_comment_editorable" do
         attachment = attachment_model(content_type: "image/png")
         allow(attachment).to receive_messages(canvadocable?: true, preview_params: "foo=bar")
-        expect(attachment.canvadoc_url(nil)).to eq "/api/v1/canvadoc_session?foo=bar"
+        opts = { mobile_app: false }
+        expect(attachment.canvadoc_url(nil, opts)).to eq "/api/v1/canvadoc_session?foo=bar"
       end
     end
   end
