@@ -2037,8 +2037,8 @@ class Attachment < ActiveRecord::Base
     Canvadocs.enabled? && canvadocable_mime_types.include?(content_type_with_text_match)
   end
 
-  def custom_previewable?
-    !$mobile_app && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
+  def custom_previewable?(opts = {})
+    !opts[:mobile_app] && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
   end
 
   # canvas2020의 커밋 c5e2d7f0526b6d85e5bf3531c6bd4349d0f54f19 에서 Setting.skip_cache를 사용했으나,
@@ -2060,7 +2060,7 @@ class Attachment < ActiveRecord::Base
   def pdf_comment_editorable?(opts = {})
     opts ||= {}
 
-    !$mobile_app &&
+    !opts[:mobile_app] &&
       opts[:course_id].present? &&
       opts[:request_fullpath].present? &&
       pdf_comment_editor_base_url.present? &&
@@ -2497,7 +2497,7 @@ class Attachment < ActiveRecord::Base
 
   def canvadoc_url(user, opts = {})
     return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts)
-    return custom_preview_url if custom_previewable?
+    return custom_preview_url if custom_previewable?(opts)
     return unless canvadocable?
 
     "/api/v1/canvadoc_session?#{preview_params(user, "canvadoc", opts)}"
