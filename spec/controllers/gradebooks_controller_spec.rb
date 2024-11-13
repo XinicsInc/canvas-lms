@@ -3407,6 +3407,8 @@ describe GradebooksController do
       context "when request comes from mobile app" do
         mobile_user_agents = [
           "iosTeacher",
+          "iosTeacher2/1.26.0 (21165) iPhone/iOS 18.1",
+          "iosStudent2/7.4.0 (4) iPhone/iOS 18.1",
           "LearningX Teacher",
           "LearningX%20Teacher",
           "iCanvas",
