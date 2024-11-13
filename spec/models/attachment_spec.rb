@@ -3327,9 +3327,11 @@ describe Attachment do
     end
 
     describe "#custom_preview_url" do
-      it "returns nil when not custom_previewable" do
+      it "returns preview url even when custom_previewable? is false" do
         attachment = attachment_model(content_type: "image/png")
-        expect(attachment.custom_preview_url).to be_nil
+        allow(attachment).to receive(:public_download_url).and_return("http://example.com/image.png")
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Fimage.png"
+        expect(attachment.custom_preview_url).to eq expected_url
       end
 
       it "returns preview url when custom_previewable" do
