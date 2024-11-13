@@ -565,19 +565,13 @@ class FilesController < ApplicationController
           course = Course.find_by(id: course_id)
         end
       when "User"
-        submission = Submission.where(
-          "attachment_ids = :attachment_id OR attachment_ids LIKE :attachment_ids1 OR attachment_ids LIKE :attachment_ids2 OR attachment_ids LIKE :attachment_ids3",
-          {
-            attachment_id: @attachment.id.to_s,
-            attachment_ids1: "#{@attachment.id},%",
-            attachment_ids2: "%,#{@attachment.id},%",
-            attachment_ids3: "%,#{@attachment.id}"
-          }
-        ).first
-        unless submission.nil?
-          course_id = submission.course_id
-          unless course_id.nil?
-            course = Course.find_by(id: course_id)
+        if @attachment.associated_with_submission?
+          submission = @attachment.attachment_associations.where(context_type: "Submission").first.submission
+          unless submission.nil?
+            course_id = submission.course_id
+            unless course_id.nil?
+              course = Course.find_by(id: course_id)
+            end
           end
         end
       end
