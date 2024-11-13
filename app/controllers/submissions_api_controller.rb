@@ -283,9 +283,15 @@ class SubmissionsApiController < ApplicationController
                                           polymorphic_url([:api_v1, @section || @context, @assignment, :submissions]))
                bulk_load_attachments_and_previews(submissions)
 
+               # iOS Teacher > 과제 및 평가 > 과제 선택 > 제출물에 접속하면 여기로 들어온다.
+               # 모바일앱이 원래 가지고 있는 뷰어가 열리지 않는 것(모바일에선 사이냅뷰어가 안보인다)을 방지하기 위해 모바일 여부를 여기서 확인하고 인자로 canvadoc_url까지 전달한다.
+               # canvadoc_url은 lib/api/v1/attachment.rb#attachment_json에서 호출된다.
+               opts = {
+                 mobile_app: !!(request.user_agent.to_s =~ /iosTeacher|LearningX( |%20)Teacher|iCanvas|LearningX( |%20)Student|androidTeacher|candroid/i)
+               }
                submissions.map do |s|
                  s.visible_to_user = true
-                 submission_json(s, @assignment, @current_user, session, @context, includes, params)
+                 submission_json(s, @assignment, @current_user, session, @context, includes, params, false, opts)
                end
              end
 
