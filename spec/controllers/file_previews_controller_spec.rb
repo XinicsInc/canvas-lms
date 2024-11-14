@@ -158,4 +158,38 @@ describe FilePreviewsController do
     get :show, params: { course_id: @course.id, file_id: @attachment.id }
     expect(response).to be_successful
   end
+
+  # Test the custom file preview function in the course file menu.
+  # e.g.) https://canvas.docker/courses/1/files/1/file_preview?annotate=0
+  describe "synap docviewer over pdf comment editor - file preview" do
+    custom_preview_base_url = "/lx/synap/preview?url="
+    pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
+
+    before do
+      # settings about custom preview and pdf comment editor
+      Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+      Setting.set("xn_custom_previewable_mime_types", %w[application/pdf])
+      Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+      Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+      Setting.set("xn_pdf_comment_editor_use_paths", %w[
+        \/courses\/\d+\/gradebook\/speed_grader.json
+        \/api\/v1\/files\/\d+
+      ].to_json)
+
+      allow_any_instance_of(Attachment).to receive(:crocodoc_url).and_return(nil)
+    end
+
+    it "redirects to synap preview url when pdf comment editor use_paths is empty" do
+      Setting.set("xn_pdf_comment_editor_use_paths", [])
+      attachment_model content_type: "application/pdf"
+      get :show, params: { course_id: @course.id, file_id: @attachment.id, annotate: 0 }
+      expect(response.redirect_url).to include(custom_preview_base_url)
+    end
+
+    it "redirects to synap preview url when file_preview, because of file_preview url is not contained in xn_pdf_comment_editor_use_paths" do
+      attachment_model content_type: "application/pdf"
+      get :show, params: { course_id: @course.id, file_id: @attachment.id, annotate: 0 }
+      expect(response.redirect_url).to include(custom_preview_base_url)
+    end
+  end
 end

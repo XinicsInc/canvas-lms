@@ -37,10 +37,11 @@ module Api::V1::Submission
     context = nil,
     includes = [],
     params = {},
-    avatars = false
+    avatars = false,
+    opts = {}
   )
     context ||= assignment.context
-    hash = submission_attempt_json(submission, assignment, current_user, session, context, params)
+    hash = submission_attempt_json(submission, assignment, current_user, session, context, params, nil, opts)
 
     # The "body" attribute is intended to store the contents of text-entry
     # submissions, but for quizzes it contains a string that includes grading
@@ -76,7 +77,7 @@ module Api::V1::Submission
         hash["submission_history"] =
           histories.map do |ver|
             ver.without_versioned_attachments do
-              submission_attempt_json(ver, assignment, current_user, session, context, params)
+              submission_attempt_json(ver, assignment, current_user, session, context, params, nil, opts)
             end
           end
       end
@@ -212,7 +213,8 @@ module Api::V1::Submission
     session,
     context = nil,
     params = {},
-    quiz_submission_version = nil
+    quiz_submission_version = nil,
+    opts = {}
   )
     context ||= assignment.context
     includes = Array.wrap(params[:include])
@@ -301,7 +303,8 @@ module Api::V1::Submission
               include: includes,
               moderated_grading_allow_list: attempt.moderated_grading_allow_list(user),
               skip_permission_checks: true,
-              submission_id: attempt.id
+              submission_id: attempt.id,
+              mobile_app: opts[:mobile_app]
             }
 
             attachment_json(attachment, user, {}, options)
@@ -368,7 +371,7 @@ module Api::V1::Submission
     { id: attempt.group_id, name: attempt.group.try(:name) }
   end
 
-  def quiz_submission_attempt_json(attempt, assignment, user, session, context = nil, params)
+  def quiz_submission_attempt_json(attempt, assignment, user, session, context = nil, params = {}, opts = {})
     hash =
       submission_attempt_json(
         attempt.submission,
@@ -377,7 +380,8 @@ module Api::V1::Submission
         session,
         context,
         params,
-        attempt.version_number
+        attempt.version_number,
+        opts
       )
     hash.each_key { |k| hash[k] = attempt[k] if attempt[k] }
     hash[:submission_data] = attempt[:submission_data]

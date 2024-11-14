@@ -37,7 +37,7 @@ class CanvasLogger < ActiveSupport::Logger
     # Ensures that the original message is not mutated.
     unless @skip_thread_context
       context = Thread.current[:context] || {}
-      message = "[#{context[:session_id] || "-"} #{context[:request_id] || "-"}] #{message}"
+      message = "[#{Time.now}] [#{context[:session_id] || "-"} #{context[:request_id] || "-"}] #{message}"
     end
 
     super(severity, message, progname)

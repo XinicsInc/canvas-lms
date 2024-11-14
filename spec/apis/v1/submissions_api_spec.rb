@@ -6869,6 +6869,58 @@ describe "Submissions API", type: :request do
         end
       end
     end
+
+    describe "custom preview" do
+      custom_preview_base_url = "/lx/synap/preview?url="
+      pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
+
+      before do
+        Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+        Setting.set("xn_custom_previewable_mime_types", %w[application/pdf application/hwp])
+
+        Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+        Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+        Setting.set("xn_pdf_comment_editor_use_paths", %w[
+          \/courses\/\d+\/gradebook\/speed_grader.json
+          \/api\/v1\/files\/\d+
+        ].to_json)
+      end
+
+      before do
+        course_with_teacher(active_all: true)
+        @student = student_in_course(active_all: true).user
+        @assignment = @course.assignments.create!(
+          title: "assignment",
+          submission_types: "online_upload"
+        )
+        @path = "/api/v1/courses/#{@course.id}/assignments/#{@assignment.id}/submissions"
+        @params = {
+          controller: "submissions_api",
+          action: "index",
+          format: "json",
+          course_id: @course.id.to_s,
+          assignment_id: @assignment.id.to_s,
+          include: %w[submission_history submission_comments rubric_assessment]
+        }
+        @attachment = attachment_model(context: @student, content_type: "application/pdf")
+
+        @assignment.submit_homework(@student, attachments: [@attachment])
+      end
+
+      it "returns nil preview_url for mobile app request" do
+        allow_any_instance_of(ActionDispatch::Request).to receive(:user_agent).and_return("iosTeacher2/1.26.0 (21165) iPhone/iOS 18.1")
+        json = api_call_as_user(@teacher, :get, @path, @params)
+
+        expect(json.first["attachments"].first["preview_url"]).to be_nil
+      end
+
+      it "returns custom preview url for non-mobile app request" do
+        allow_any_instance_of(ActionDispatch::Request).to receive(:user_agent).and_return("Mozilla/5.0")
+        json = api_call_as_user(@teacher, :get, @path, @params)
+
+        expect(json.first["attachments"].first["preview_url"]).to include(custom_preview_base_url)
+      end
+    end
   end
 
   describe "#submission_summary" do

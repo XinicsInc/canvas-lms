@@ -2037,6 +2037,103 @@ class Attachment < ActiveRecord::Base
     Canvadocs.enabled? && canvadocable_mime_types.include?(content_type_with_text_match)
   end
 
+  def custom_previewable?(opts = {})
+    !opts[:mobile_app] && custom_preview_base_url.present? && custom_previewable_mime_types.include?(content_type)
+  end
+
+  # canvas2020의 커밋 c5e2d7f0526b6d85e5bf3531c6bd4349d0f54f19 에서 Setting.skip_cache를 사용했으나,
+  # 그것은 PTT3-414 의 원인을 잘못 파악한 것이었으므로, canvas2024 작업에서는 반영하지 않았다.
+  def custom_preview_base_url
+    Setting.get("xn_custom_preview_base_url", nil)
+  end
+
+  def custom_previewable_mime_types
+    JSON.parse Setting.get("xn_custom_previewable_mime_types", "[]")
+  end
+
+  def custom_preview_url
+    custom_preview_base_url + ERB::Util.url_encode(public_download_url)
+  end
+
+  def pdf_comment_editorable?(opts = {})
+    opts ||= {}
+
+    !opts[:mobile_app] &&
+      opts[:course_id].present? &&
+      opts[:request_fullpath].present? &&
+      pdf_comment_editor_base_url.present? &&
+      pdf_comment_editor_mime_types.include?(content_type) &&
+      pdf_comment_editor_use_paths.any? { |url_reg_exp| opts[:request_fullpath].match(url_reg_exp) }
+  end
+
+  # canvas2020의 커밋 c5e2d7f0526b6d85e5bf3531c6bd4349d0f54f19 에서 Setting.skip_cache를 사용했으나,
+  # 그것은 PTT3-414 의 원인을 잘못 파악한 것이었으므로, canvas2024 작업에서는 반영하지 않았다.
+  def pdf_comment_editor_mime_types
+    JSON.parse Setting.get("xn_pdf_comment_editor_mime_types", "[]")
+  end
+
+  def pdf_comment_editor_use_paths
+    JSON.parse Setting.get("xn_pdf_comment_editor_use_paths", "[]")
+  end
+
+  def pdf_comment_editor_launch_token(user, opts = {})
+    payload = {
+      iat: Time.now.to_i,
+      locale: pdf_comment_editor_locale,
+      course_id: opts[:course_id],
+      attachment_id: id,
+      file_url: public_download_url,
+      file_name: display_name,
+      user_name: user.name,
+      user_email: user.email,
+      user_role: enrollment_type_to_pdf_comment_editor_role(opts[:enrollment_type]),
+      readonly: opts[:enable_annotations].nil? || opts[:enable_annotations] === false
+    }
+    JWT.encode(payload, pdf_comment_editor_jwt_secret, "HS256", { typ: "JWT" })
+  end
+
+  def pdf_comment_editor_locale
+    case I18n.locale
+    when :ko
+      "ko-KR"
+    when :en
+      "en-US"
+    when :ja
+      "ja-JP"
+    else
+      "en-US"
+    end
+  end
+
+  def enrollment_type_to_pdf_comment_editor_role(enrollment_type)
+    case enrollment_type
+    when "student"
+      0
+    when "teacher"
+      1
+    when "ta"
+      2
+    when "designer"
+      3
+    when "observer"
+      4
+    else
+      0
+    end
+  end
+
+  def pdf_comment_editor_jwt_secret
+    Setting.get("xn_pdf_comment_editor_jwt_secret", nil)
+  end
+
+  def pdf_comment_editor_url(user, opts = {})
+    pdf_comment_editor_base_url + pdf_comment_editor_launch_token(user, opts)
+  end
+
+  def pdf_comment_editor_base_url
+    Setting.get("xn_pdf_comment_editor_base_url", nil)
+  end
+
   def self.submit_to_canvadocs(ids)
     Attachment.where(id: ids).find_each(&:submit_to_canvadocs)
   end
@@ -2397,6 +2494,8 @@ class Attachment < ActiveRecord::Base
   end
 
   def canvadoc_url(user, opts = {})
+    return pdf_comment_editor_url(user, opts) if pdf_comment_editorable?(opts)
+    return custom_preview_url if custom_previewable?(opts)
     return unless canvadocable?
 
     "/api/v1/canvadoc_session?#{preview_params(user, "canvadoc", opts)}"

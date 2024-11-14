@@ -68,6 +68,11 @@ describe "A valid file path" do
 
     expect(File.mime_type?(@file_path)).to eq("application/zip")
   end
+
+  it "has hwpx mime type" do
+    @file_path = "#{Dir.pwd} + /hancom.hwpx"
+    expect(File.mime_type?(@file_path)).to eq("application/vnd.hancom.hwpx")
+  end
 end
 
 describe "An unknown extension" do

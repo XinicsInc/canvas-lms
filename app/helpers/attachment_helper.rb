@@ -29,13 +29,17 @@ module AttachmentHelper
     }
     url_opts[:enrollment_type] = attrs.delete(:enrollment_type) if url_opts[:enable_annotations]
 
+    # 테스트에서는 request 형식으로 접근하지 않는 케이스가 많아서 없는 경우에는 nil로 설정
+    url_opts[:course_id] = params[:course_id].to_i if params[:course_id]
+    url_opts[:request_fullpath] = request.fullpath if request.fullpath
+
     if attachment.crocodoc_available?
       begin
         attrs[:crocodoc_session_url] = attachment.crocodoc_url(@current_user, url_opts)
       rescue => e
         Canvas::Errors.capture_exception(:crocodoc, e)
       end
-    elsif attachment.canvadocable?
+    elsif attachment.custom_previewable? || attachment.canvadocable?
       attrs[:canvadoc_session_url] = attachment.canvadoc_url(@current_user, url_opts)
     end
     attrs[:attachment_id] = attachment.id

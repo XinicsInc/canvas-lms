@@ -33,7 +33,7 @@ module SpeedGrader
       @grading_role = grading_role
     end
 
-    def json
+    def json(request_fullpath: "", mobile_app: false)
       Attachment.skip_thumbnails = true
       submission_json_fields = %i[
         id
@@ -341,7 +341,10 @@ module SpeedGrader
                 current_user,
                 loaded_attachments: attachments_for_submission[sub]
               ),
-            submission_id: sub.id
+            submission_id: sub.id,
+            course_id: course.id,
+            request_fullpath:,
+            mobile_app:
           }
 
           if url_opts[:enable_annotations]

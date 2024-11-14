@@ -3282,4 +3282,119 @@ describe Attachment do
       expect(@attachment.media_object_by_media_id).to eq @media_object
     end
   end
+
+  describe "custom preview" do
+    custom_preview_base_url = "/lx/synap/preview?url="
+    pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
+
+    before do
+      Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+      Setting.set("xn_custom_previewable_mime_types", %w[application/pdf application/hwp])
+
+      Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+      Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+      Setting.set("xn_pdf_comment_editor_use_paths", %w[
+        \/courses\/\d+\/gradebook\/speed_grader.json
+        \/api\/v1\/files\/\d+
+      ].to_json)
+    end
+
+    context "#custom_previewable?" do
+      it "returns false when on mobile app" do
+        attachment = attachment_model(content_type: "application/hwp")
+        opts = { mobile_app: true }
+        expect(attachment.custom_previewable?(opts)).to be false
+      end
+
+      it "returns false when base url is not set" do
+        Setting.set("xn_custom_preview_base_url", nil)
+        attachment = attachment_model(content_type: "application/hwp")
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be false
+      end
+
+      it "returns false for non-previewable mime types" do
+        attachment = attachment_model(content_type: "image/png")
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be false
+      end
+
+      it "returns true for previewable mime types when not on mobile app" do
+        attachment = attachment_model(content_type: "application/hwp")
+        opts = { mobile_app: false }
+        expect(attachment.custom_previewable?(opts)).to be true
+      end
+    end
+
+    describe "#custom_preview_url" do
+      it "returns preview url even when custom_previewable? is false" do
+        attachment = attachment_model(content_type: "image/png")
+        allow(attachment).to receive(:public_download_url).and_return("http://example.com/image.png")
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Fimage.png"
+        expect(attachment.custom_preview_url).to eq expected_url
+      end
+
+      it "returns preview url when custom_previewable" do
+        attachment = attachment_model(content_type: "application/hwp")
+        allow(attachment).to receive(:public_download_url).and_return("http://example.com/file.hwp")
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
+        expect(attachment.custom_preview_url).to eq expected_url
+      end
+    end
+
+    context "#pdf_comment_editorable?" do
+      it "returns false when mime type is not in pdf_comment_editor_mime_types" do
+        attachment = attachment_model(content_type: "image/png")
+        opts = { request_fullpath: "/courses/1/gradebook/speed_grader.json" }
+        expect(attachment.pdf_comment_editorable?(opts)).to be false
+      end
+
+      it "returns true when mime type is in pdf_comment_editor_mime_types" do
+        attachment = attachment_model(content_type: "application/pdf")
+        opts = {
+          course_id: 1,
+          request_fullpath: "/courses/1/gradebook/speed_grader.json"
+        }
+        expect(attachment.pdf_comment_editorable?(opts)).to be true
+      end
+
+      it "returns false when request_fullpath is not present" do
+        attachment = attachment_model(content_type: "application/pdf")
+        expect(attachment.pdf_comment_editorable?(nil)).to be false
+      end
+
+      it "returns false when request_fullpath does not match any of the use_paths" do
+        attachment = attachment_model(content_type: "application/pdf")
+        opts = { request_fullpath: "/courses/1/assignments/2" }
+        expect(attachment.pdf_comment_editorable?(opts)).to be false
+      end
+    end
+
+    describe "#canvadoc_url" do
+      it "returns pdf comment editor url when pdf_comment_editorable" do
+        attachment = attachment_model(content_type: "application/pdf")
+        allow(attachment).to receive_messages(pdf_comment_editorable?: true, pdf_comment_editor_launch_token: "token123")
+        opts = {
+          request_fullpath: "/courses/1/gradebook/speed_grader.json",
+          mobile_app: false
+        }
+        expect(attachment.canvadoc_url(nil, opts)).to eq "#{pdf_comment_editor_base_url}token123"
+      end
+
+      it "returns custom preview url when custom_previewable" do
+        attachment = attachment_model(content_type: "application/hwp")
+        allow(attachment).to receive(:public_download_url).and_return("http://example.com/file.hwp")
+        opts = { mobile_app: false }
+        expected_url = "#{custom_preview_base_url}http%3A%2F%2Fexample.com%2Ffile.hwp"
+        expect(attachment.canvadoc_url(nil, opts)).to eq expected_url
+      end
+
+      it "returns regular canvadoc url when not custom_previewable or pdf_comment_editorable" do
+        attachment = attachment_model(content_type: "image/png")
+        allow(attachment).to receive_messages(canvadocable?: true, preview_params: "foo=bar")
+        opts = { mobile_app: false }
+        expect(attachment.canvadoc_url(nil, opts)).to eq "/api/v1/canvadoc_session?foo=bar"
+      end
+    end
+  end
 end

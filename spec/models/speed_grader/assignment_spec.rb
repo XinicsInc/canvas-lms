@@ -459,6 +459,81 @@ describe SpeedGrader::Assignment do
           expect(canvadoc_url).to include "disable_annotation_notifications%22:false"
         end
       end
+
+      describe "custom preview" do
+        custom_preview_base_url = "/lx/synap/preview?url="
+        pdf_comment_editor_base_url = "/pdf-comment-editor/launch?token="
+
+        before do
+          allow(Canvadocs).to receive(:enabled?).and_return(false)
+
+          Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+          Setting.set("xn_custom_previewable_mime_types", %w[application/pdf application/hwp])
+
+          Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+          Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+          Setting.set("xn_pdf_comment_editor_use_paths", %w[
+            \/courses\/\d+\/gradebook\/speed_grader.json
+            \/api\/v1\/files\/\d+
+          ].to_json)
+
+          # submission_type과 content_type을 새로 만들지 않고 업데이트한다. 이렇게 하면
+          # context "DocViewer"에 정의된 let(:canvadoc_url) 체인을 그대로 사용할 수 있다.
+          assignment.update!(submission_types: "online_upload")
+        end
+
+        let(:json) do
+          SpeedGrader::Assignment.new(assignment, @teacher).json(
+            request_fullpath: "/courses/1/gradebook/speed_grader.json",
+            mobile_app: @mobile_app
+          )
+        end
+        let(:sub) do
+          json[:submissions].find do |submission|
+            submission[:id] == @submission.id.to_s
+          end
+        end
+        let(:versioned_attachments) { sub[:submission_history][0][:submission][:versioned_attachments] }
+        let(:canvadoc_url) { versioned_attachments.first.dig(:attachment, :canvadoc_url) }
+
+        context "when custom_previewable speed_grader.json request" do
+          before do
+            attachment.update!(content_type: "application/hwp")
+            @submission = assignment.submit_homework(@student, attachments: [attachment])
+          end
+
+          it "returns custom preview url when not mobile app" do
+            @mobile_app = false
+
+            expect(canvadoc_url).to include custom_preview_base_url
+          end
+
+          it "returns nill when mobile app" do
+            @mobile_app = true
+
+            expect(canvadoc_url).to be_nil
+          end
+        end
+
+        context "when pdf_comment_editorable speed_grader.json request" do
+          before do
+            attachment.update!(content_type: "application/pdf")
+            @submission = assignment.submit_homework(@student, attachments: [attachment])
+          end
+
+          it "returns pdf comment editor url when not mobile app" do
+            @mobile_app = false
+
+            expect(canvadoc_url).to include pdf_comment_editor_base_url
+          end
+
+          it "returns nil when mobile app" do
+            @mobile_app = true
+
+            expect(canvadoc_url).to be_nil
+          end
+        end
+      end
     end
 
     it "includes submission missing status in each submission history version" do

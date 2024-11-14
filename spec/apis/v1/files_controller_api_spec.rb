@@ -1395,6 +1395,49 @@ describe "Files API", type: :request do
                                             "license_name" => "CC Attribution Share Alike"
                                           })
     end
+
+    context "when previewing submitted assignment file as student, for pdf comment editor" do
+      let(:custom_preview_base_url) { "/lx/synap/preview?url=" }
+      let(:pdf_comment_editor_base_url) { "/pdf-comment-editor/launch?token=" }
+
+      before do
+        course_with_student(course: @course)
+        user_session(@student)
+
+        # Create assignment and submission
+        @assignment = @course.assignments.create!(title: "upload_assignment", submission_types: "online_upload")
+        @file = attachment_model(
+          context: @student,
+          uploaded_data: stub_file_data("test.pdf", "pdf content", "application/pdf")
+        )
+        @submission = @assignment.submit_homework(@student, attachments: [@file])
+
+        # Configure preview settings
+        Setting.set("xn_custom_preview_base_url", custom_preview_base_url)
+        Setting.set("xn_custom_previewable_mime_types", %w[application/pdf])
+        Setting.set("xn_pdf_comment_editor_base_url", pdf_comment_editor_base_url)
+        Setting.set("xn_pdf_comment_editor_mime_types", %w[application/pdf])
+        Setting.set("xn_pdf_comment_editor_use_paths", %w[
+          \/courses\/\d+\/gradebook\/speed_grader.json
+          \/api\/v1\/files\/\d+
+        ].to_json)
+      end
+
+      # This test verifies the API response used to display
+      # the PDF comment editor in the student submission details screen
+      # e.g.) GET https://canvas.knu.ac.kr/api/v1/files/2897752?include[]=preview_url
+      it "returns appropriate preview urls for submitted pdf file" do
+        json = api_call(
+          :get,
+          "/api/v1/files/#{@file.id}",
+          { controller: "files", action: "api_show", format: "json", id: @file.id.to_param },
+          { include: ["preview_url"] }
+        )
+
+        expect(json["preview_url"]).to include(pdf_comment_editor_base_url)
+        expect(json["canvadoc_session_url"]).to include(custom_preview_base_url)
+      end
+    end
   end
 
   describe "#file_ref" do

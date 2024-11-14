@@ -145,7 +145,10 @@ module Api::V1::Attachment
         enable_annotations: options[:enable_annotations],
         enrollment_type: options[:enrollment_type],
         anonymous_instructor_annotations: options[:anonymous_instructor_annotations],
-        submission_id: options[:submission_id]
+        submission_id: options[:submission_id],
+        course_id: options[:course_id],
+        request_fullpath: options[:request_fullpath],
+        mobile_app: options[:mobile_app]
       }
       hash["preview_url"] = attachment.crocodoc_url(user, url_opts) ||
                             attachment.canvadoc_url(user, url_opts)

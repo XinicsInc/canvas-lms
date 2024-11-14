@@ -175,6 +175,7 @@ class FilesController < ApplicationController
   include AttachmentHelper
   include FilesHelper
   include K5Mode
+  include CanvadocsHelper
 
   before_action { |c| c.active_tab = "files" }
 
@@ -556,6 +557,30 @@ class FilesController < ApplicationController
         options[:context] = @context || @folder&.context || @attachment.context
         options[:can_view_hidden_files] = can_view_hidden_files?(options[:context], @current_user, session)
       end
+
+      case @attachment.context_type
+      when "Course"
+        course_id = @attachment.context_id
+        unless course_id.nil?
+          course = Course.find_by(id: course_id)
+        end
+      when "User"
+        if @attachment.associated_with_submission?
+          submission = @attachment.attachment_associations.where(context_type: "Submission").first.submission
+          unless submission.nil?
+            course_id = submission.course_id
+            unless course_id.nil?
+              course = Course.find_by(id: course_id)
+            end
+          end
+        end
+      end
+      enrollment_type = canvadocs_user_role(course, @current_user) unless course.nil?
+      options[:enrollment_type] = enrollment_type
+      options[:enable_annotations] = course_id.present?
+      options[:course_id] = course_id
+      options[:request_fullpath] = request.fullpath
+
       json = attachment_json(@attachment, @current_user, {}, options)
 
       # Add canvadoc session URL if the file is unlocked

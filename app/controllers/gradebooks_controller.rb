@@ -1176,7 +1176,10 @@ class GradebooksController < ApplicationController
           @current_user,
           avatars: service_enabled?(:avatars),
           grading_role: grading_role(assignment: @assignment)
-        ).json
+        ).json(
+          request_fullpath: request.fullpath,
+          mobile_app: !!(request.user_agent.to_s =~ /iosTeacher|iosStudent|LearningX( |%20)Teacher|iCanvas|LearningX( |%20)Student|androidTeacher|candroid/i)
+        )
       end
     end
   end
