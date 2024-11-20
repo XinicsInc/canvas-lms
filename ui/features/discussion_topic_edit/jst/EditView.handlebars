@@ -370,16 +370,24 @@
     {{#t}}Cancel{{/t}}
   </button>
   {{#if canPublish}}
-  <button type="button" data-text-while-loading="{{#t " saving"}}Saving...{{/t}}"
-    class="btn btn-default save_and_publish">
-    {{#t "buttons.save_and_publish"}}Save & Publish{{/t}}
-  </button>
-  {{/if}}
-  {{#ifAll isAnnouncement willPublish}}
-  <button type="submit" data-text-while-loading="{{#t " publishing"}}Publishing...{{/t}}" class="btn btn-primary submit_button">{{#t
-    "publish"}}Publish{{/t}}</button>
+    <button type="button" data-text-while-loading="{{#t " saving"}}Saving...{{/t}}"
+      class="btn btn-primary save_and_publish">
+      {{#t "buttons.save_and_publish"}}Save & Publish{{/t}}
+    </button>
+    {{#ifAll isAnnouncement willPublish}}
+      <button type="submit" data-text-while-loading="{{#t " publishing"}}Publishing...{{/t}}" class="btn btn-default submit_button">{{#t
+        "publish"}}Publish{{/t}}</button>
+    {{else}}
+      <button type="submit" data-text-while-loading="{{#t " saving"}}Saving...{{/t}}" class="btn btn-default submit_button">{{#t
+        "save"}}Save{{/t}}</button>
+    {{/ifAll}}
   {{else}}
-  <button type="submit" data-text-while-loading="{{#t " saving"}}Saving...{{/t}}" class="btn btn-primary submit_button">{{#t
-    "save"}}Save{{/t}}</button>
-  {{/ifAll}}
+    {{#ifAll isAnnouncement willPublish}}
+    <button type="submit" data-text-while-loading="{{#t " publishing"}}Publishing...{{/t}}" class="btn btn-primary submit_button">{{#t
+      "publish"}}Publish{{/t}}</button>
+    {{else}}
+    <button type="submit" data-text-while-loading="{{#t " saving"}}Saving...{{/t}}" class="btn btn-primary submit_button">{{#t
+      "save"}}Save{{/t}}</button>
+    {{/ifAll}}
+  {{/if}}
 </div>

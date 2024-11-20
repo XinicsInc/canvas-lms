@@ -28,10 +28,12 @@
       <%= link_to (clean_return_to(params[:return_to]) || context_url(@context, :context_quiz_url, @quiz)), :role => 'button', :class => 'btn', :id => 'cancel_button' do %>
         <%= t("Cancel") %>
       <% end %>
-      <% unless @quiz.published %>
-        <button type="submit" class="save_and_publish btn btn-publish"><%= t("Save & Publish") %></button>
+      <% if @quiz.published %>
+        <button type="submit" class="save_and_publish btn btn-primary"><%= t("Save & Publish") %></button>
+      <% else %>
+        <button type="submit" class="save_and_publish btn btn-primary"><%= t("Save & Publish") %></button>
+        <button type="submit" class="save_quiz_button btn btn-publish"><%= t("Save") %></button>
       <% end %>
-      <button type="submit" class="save_quiz_button btn btn-primary"><%= t("Save") %></button>
     </div>
   </div>
 </div>

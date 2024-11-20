@@ -291,22 +291,35 @@
     <button type="button" class="btn cancel_button">
       {{#t "#buttons.cancel"}}Cancel{{/t}}
     </button>
-    {{#unless published}}
-      <button type="button" class="btn btn-default save_and_publish">
+    {{#if published}}
+      {{#if showBuildButton}}
+        <button type="button" class="btn btn-default save_button">
+          {{#t "buttons.save"}}Save{{/t}}
+        </button>
+        <button type="submit" class="btn btn-primary build_button">
+          {{#t "buttons.build"}}Build{{/t}}
+        </button>
+      {{else}}
+        <button type="submit" class="btn btn-primary">
+          {{#t "buttons.save"}}Save{{/t}}
+        </button>
+      {{/if}}
+    {{else}}
+      <button type="button" class="btn btn-primary save_and_publish">
         {{#t "buttons.save_and_publish"}}Save & Publish{{/t}}
       </button>
-    {{/unless}}
-    {{#if showBuildButton}}
-      <button type="button" class="btn btn-default save_button">
-        {{#t "buttons.save"}}Save{{/t}}
-      </button>
-      <button type="submit" class="btn btn-primary build_button">
-        {{#t "buttons.build"}}Build{{/t}}
-      </button>
-    {{else}}
-      <button type="submit" class="btn btn-primary">
-        {{#t "buttons.save"}}Save{{/t}}
-      </button>
+      {{#if showBuildButton}}
+        <button type="button" class="btn btn-default save_button">
+          {{#t "buttons.save"}}Save{{/t}}
+        </button>
+        <button type="submit" class="btn btn-primary build_button">
+          {{#t "buttons.build"}}Build{{/t}}
+        </button>
+      {{else}}
+        <button type="submit" class="btn btn-default">
+          {{#t "buttons.save"}}Save{{/t}}
+        </button>
+      {{/if}}
     {{/if}}
   </div>
 </div>
