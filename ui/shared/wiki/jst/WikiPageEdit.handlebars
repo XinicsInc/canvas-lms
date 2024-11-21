@@ -85,9 +85,11 @@
     <div class="page-edit__action_buttons">
       <button class="btn cancel">{{#t "buttons.cancel"}}Cancel{{/t}}</button>
       {{#if CAN.PUBLISH_NOW}}
-        <button class="btn btn-default save_and_publish">{{#t "buttons.save_and_publish"}}Save & Publish{{/t}}</button>
+        <button class="btn btn-primary save_and_publish">{{#t "buttons.save_and_publish"}}Save & Publish{{/t}}</button>
+        <button class="btn btn-default submit">{{#t "buttons.save"}}Save{{/t}}</button>
+      {{else}}
+        <button class="btn btn-primary submit">{{#t "buttons.save"}}Save{{/t}}</button>
       {{/if}}
-      <button class="btn btn-primary submit">{{#t "buttons.save"}}Save{{/t}}</button>
     </div>
   </div>
 </div>

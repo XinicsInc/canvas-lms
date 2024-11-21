@@ -156,16 +156,22 @@
     class="cancel_button btn dialog_closer"
     type="button"
   >{{#t "cancel"}}Cancel{{/t}}</button>
-  {{#unless published}}
+  {{#if published}}
     <button
-      class="btn btn-default save_and_publish"
+      class="create_assignment btn btn-primary"
+      data-text-while-loading='{{#t "saving"}}Saving...{{/t}}'
+      type="submit"
+    >{{#t "save"}}Save{{/t}}</button>
+  {{else}}
+    <button
+      class="btn btn-primary save_and_publish"
       data-text-while-loading='{{#t "saving"}}Saving...{{/t}}'
       type="button"
     >{{#t "buttons.save_and_publish"}}Save & Publish{{/t}}</button>
-  {{/unless}}
-  <button
-    class="create_assignment btn btn-primary"
-    data-text-while-loading='{{#t "saving"}}Saving...{{/t}}'
-    type="submit"
-  >{{#t "save"}}Save{{/t}}</button>
+    <button
+      class="create_assignment btn btn-default"
+      data-text-while-loading='{{#t "saving"}}Saving...{{/t}}'
+      type="submit"
+    >{{#t "save"}}Save{{/t}}</button>
+  {{/if}}
 </div>
