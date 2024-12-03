@@ -1178,6 +1178,16 @@ class FilesController < ApplicationController
   end
 
   def api_create_success
+
+    # TI-3226
+    # 현재 iOS/Android 앱에서 naver object storage 적용 시 쿼리스트링 잘못 붙는 문제 수정 시도
+    # uuid가 dF7NLOezfowW4XZbmitOXKQwqX743XhzjFlpDjjq?bucket=xinics-test 이런 식으로 되는 문제.
+    if params[:uuid].include?("?")
+      uuidParam = params[:uuid]
+      uuidParam = uuidParam.split("?").first
+      params[:uuid] = uuidParam
+    end
+
     @attachment = Attachment.where(id: params[:id], uuid: params[:uuid]).first
     return head :bad_request unless @attachment.try(:file_state) == "deleted"
     return unless validate_on_duplicate(params)
