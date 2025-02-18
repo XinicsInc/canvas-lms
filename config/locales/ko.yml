@@ -1,6 +1,6 @@
 #고객서비스기획팀 허채원
 #Canvas2024 로컬라이징
-#240823 - 241030 진행 https://xinics.atlassian.net/browse/TI-5388 반영
+#24.11.04 - 진행 https://xinics.atlassian.net/browse/TI-5889 반영
 
 ko:
   1_item_scores_5512cd03: 1- 항목 점수
@@ -5807,7 +5807,7 @@ ko:
   content_for_section_2_e7c6e2a3: 섹션 2의 내용
   content_for_section_3_90c1d235: 섹션 3의 내용
   content_import_files_cannot_be_downloaded_after_en_7e3a2099: 가져오기 한 콘텐츠 파일은  %{ENV.CONTENT_MIGRATIONS_EXPIRE_DA}
-    일이 지나간 후에는 다운로드할 수 없습니다.
+    일 이후 다운로드할 수 없습니다.
   content_imports:
     errors:
       import_failed: '마이그레이션 가져오기 중 오류가 발생했습니다.  시스템 관리자에게 알리고 다음 코드를 제공하십시오: "%{code}"'
@@ -6464,7 +6464,7 @@ ko:
     archive: 메시지 저장하기
     autocomplete_result:
       group_people: '사용자: %{people}'
-      no_results: 파일(콘텐츠)이 없습니다
+      no_results: 검색 결과가 없습니다.
     back: 이전으로
     cannot_add_to_private: 사적인 대화에 참여자를 추가할 수 없습니다.
     cannot_be_empty: 메시지 내용이 있어야 함
@@ -12165,7 +12165,7 @@ ko:
   incomplete_da3c2ea2: 미완료
   incompleteregistration:
     get_started: 시작하기
-    welcome_to_canvas: Canvas에 오신 것을 환영합니다!
+    welcome_to_canvas: 환영합니다!
   incorrect_answer_7c17e63b: 오답
   incorrect_username_and_or_password_2de73abb: 유효하지 않은 사용자 이름이나 암호
   increase_indent_6af90f7c: 목록 수준 늘임
@@ -19768,7 +19768,7 @@ ko:
       labels:
         email: 이메일
         name: 이름
-    welcome_to_canvas: Canvas에 오신 것을 환영합니다!
+    welcome_to_canvas: 환영합니다!
   registration_url_60e0eaaa: 등록 URL
   regular_style_checkbox_ee3d71c1: 일반 스타일 체크 박스
   reinforce_student_understanding_304d18a6: 학생 이해 강화
@@ -24723,7 +24723,7 @@ ko:
         탐색에서 볼 수 있습니다. 그 동안 다른 과목에 등록하거나
 
         프로필을 설정하십시오.'
-      welcome_to_happiness: Canvas에 오신 것을 환영합니다!
+      welcome_to_happiness: 환영합니다!
   users_act_as_d922940: 사용자-역할
   users_add_remove_observers_d1273d9: 사용자-관찰자 추가 / 제거
   users_add_remove_students_in_courses_efe7e748: 사용자-과목에서 학생 추가 / 제거
