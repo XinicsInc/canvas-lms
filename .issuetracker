@@ -1,0 +1,7 @@
+# Integration with Issue Tracker
+#
+# (note that '\' need to be escaped).
+
+[issuetracker "JIRA"]
+  regex = "([A-Z][A-Z0-9]{1,})-(\\d+)"
+  url = "https://xinics.atlassian.net/browse/$1-$2"
