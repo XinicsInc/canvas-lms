@@ -13892,7 +13892,7 @@ ko:
   you_can_fac644aa: 당신은 할 수 있습니다
   reply_to_this_message_in_canvas_2542e450: Canvas에서이 메시지에 회신하십시오.
   you_just_sent_a_message_in_canvas_86b4945c: Canvas에서 방금 메시지를 보냈습니다.
-  user_name_just_sent_you_a_message_in_canvas_a2cb3bf4: '%{user_name} 님, 메시지가 수신되었습니다.'
+  user_name_just_sent_you_a_message_in_canvas_a2cb3bf4: '%{user_name} 님이 메시지를 보냈습니다.'
   user_name_just_sent_you_a_message_in_canvas_do_not_16b13cf2: '%{user_name} 님이 Canvas에서 메시지를 보냈습니다-답장하지 마세요'
   new_canvas_message_from_user_name_94cc720: '%{user_name}의 새 Canvas 메시지'
   user_just_accepted_their_invitation_to_participate_7a4b2ce4: '%{user}이 (가) [%{course}] 참여 초대를 수락했습니다. 과목 역할 : %{role_type}'
