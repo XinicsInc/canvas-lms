@@ -51,7 +51,16 @@ const previewableMimeTypes = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [1, 1],
   'application/postscript': [1, 1],
   'application/pdf': [1, 1],
-  'application/vnd.ms-powerpoint': [1, 1]
+  'application/vnd.ms-powerpoint': [1, 1],
+  'application/haansoftdoc': [1, 1],
+  'application/haansoftdocx': [1, 1],
+  'application/haansoftppt': [1, 1],
+  'application/haansoftpptx': [1, 1],
+  'application/haansoftxls': [1, 1],
+  'application/haansoftxlsx': [1, 1],
+  'application/haansoftodp': [1, 1],
+  'application/haansoftods': [1, 1],
+  'application/haansoftpdf': [1, 1]
 }
 
 $.filePreviewsEnabled = function() {
