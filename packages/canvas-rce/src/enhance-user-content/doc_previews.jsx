@@ -46,6 +46,15 @@ export const previewableMimeTypes = [
   'application/postscript',
   'application/pdf',
   'application/vnd.ms-powerpoint',
+  'application/haansoftdoc',
+  'application/haansoftdocx',
+  'application/haansoftppt',
+  'application/haansoftpptx',
+  'application/haansoftxls',
+  'application/haansoftxlsx',
+  'application/haansoftodp',
+  'application/haansoftods',
+  'application/haansoftpdf',
 ]
 
 // check to see if a file of a certan mimeType is previewable inline in the browser

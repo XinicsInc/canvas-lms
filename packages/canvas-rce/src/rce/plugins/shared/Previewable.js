@@ -41,6 +41,15 @@ export const previewableMimeTypes = [
   'application/postscript',
   'application/pdf',
   'application/vnd.ms-powerpoint',
+  'application/haansoftdoc',
+  'application/haansoftdocx',
+  'application/haansoftppt',
+  'application/haansoftpptx',
+  'application/haansoftxls',
+  'application/haansoftxlsx',
+  'application/haansoftodp',
+  'application/haansoftods',
+  'application/haansoftpdf',
 ]
 
 export function isPreviewable(type) {
