@@ -47,7 +47,7 @@ class CSVWithI18n < CSV
   end
 
   def self.include_bom?(user, encoding)
-    encoding == "UTF-8" && user.feature_enabled?(:include_byte_order_mark_in_gradebook_exports)
+    encoding == "UTF-8" # && user.feature_enabled?(:include_byte_order_mark_in_gradebook_exports)
   end
   private_class_method :include_bom?
 

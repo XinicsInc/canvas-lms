@@ -185,7 +185,9 @@ class Quizzes::QuizStatistics::StudentAnalysis < Quizzes::QuizStatistics::Report
 
   def to_csv
     include_root_accounts = quiz.context.root_account.trust_exists?
-    CSV.generate do |csv|
+
+    # Use CSVWithI18n simply. Apply only the essential options for BOM setting without user information.
+    CSVWithI18n.generate(encoding: 'UTF-8', include_bom: true) do |csv|
       context = quiz.context
 
       # write columns to csv

@@ -70,7 +70,8 @@ class Quizzes::QuizStatistics::ItemAnalysis < Quizzes::QuizStatistics::Report
 
   def to_csv
     @csv ||=
-      CSV.generate do |csv|
+      # Use CSVWithI18n simply. Apply only the essential options for BOM setting without user information.
+      CSVWithI18n.generate(encoding: 'UTF-8', include_bom: true) do |csv|
         stats = summary_stats_for_quiz
         headers = [
           I18n.t("csv.question.id", "Question Id"),
