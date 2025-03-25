@@ -41,6 +41,9 @@ describe Quizzes::QuizStatistics::ItemAnalysis do
     quiz_statistics = @quiz.statistics_csv("item_analysis")
     qs = @quiz.active_quiz_questions
     csv = quiz_statistics.csv_attachment.open.read
+    # TI-5296
+    csv = csv.force_encoding("UTF-8")
+    csv = csv.delete_prefix(CSVWithI18n::BYTE_ORDER_MARK)
     stats = CSV.parse(csv)
     expect(stats[0]).to eq ["Question Id", "Question Title", "Answered Student Count", "Top Student Count", "Middle Student Count", "Bottom Student Count", "Quiz Question Count", "Correct Student Count", "Wrong Student Count", "Correct Student Ratio", "Wrong Student Ratio", "Correct Top Student Count", "Correct Middle Student Count", "Correct Bottom Student Count", "Variance", "Standard Deviation", "Difficulty Index", "Alpha", "Point Biserial of Correct", "Point Biserial of Distractor 2", "Point Biserial of Distractor 3", "Point Biserial of Distractor 4"]
     expect(stats[1]).to eq [qs[0].id.to_s, "Question text", "6", "2", "2", "2", "4", "4", "2", "0.6666666666666666", "0.3333333333333333", "2", "2", "0", "0.22222222222222224", "0.4714045207910317", "0.6666666666666666", "0.7786666666666666", "0.8696263565463043", "-0.8696263565463043", nil, nil]
