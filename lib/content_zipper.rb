@@ -364,12 +364,12 @@ class ContentZipper
   end
 
   def ziptmp_filename_nfc_and_not_long(filename)
-    name = filename.encode('utf-8').unicode_normalize(:nfc)
+    name = filename.encode("utf-8").unicode_normalize(:nfc)
 
     # Attachment.make_unique_filename 참조 (동일 내용 가져옴)
     dir = File.dirname(name)
-    dir = dir == "." ? "" : "#{dir}/"
-    extname = name[/(\.[A-Za-z][A-Za-z0-9]*)*(\.[A-Za-z0-9]*)$/] || ''
+    dir = (dir == ".") ? "" : "#{dir}/"
+    extname = name[/(\.[A-Za-z][A-Za-z0-9]*)*(\.[A-Za-z0-9]*)$/] || ""
     basename = File.basename(name, extname)
 
     newbase = basename
@@ -377,8 +377,7 @@ class ContentZipper
       newbase = newbase[0..-2]
     end
 
-    newfilename = "#{dir}#{newbase}#{extname}"
-    newfilename
+    "#{dir}#{newbase}#{extname}"
   end
 
   def update_progress(zip_attachment, index, count)

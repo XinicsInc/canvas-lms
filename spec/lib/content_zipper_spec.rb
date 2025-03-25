@@ -693,7 +693,7 @@ describe ContentZipper do
 
     it "handles very long filenames with non-ASCII characters" do
       # "한"은 utf-8 인코딩에서 3바이트를 차지
-      korean_chars = "한" * 100  # 300 bytes
+      korean_chars = "한" * 100 # 300 bytes
       filename = "path/to/#{korean_chars}.pdf"
       result = zipper.ziptmp_filename_nfc_and_not_long(filename)
 
@@ -705,7 +705,7 @@ describe ContentZipper do
       # 더하면 최종 바이트 수가 된다.,
       len_path_and_ext = filename.length - korean_chars.length
       expected_num_korean_chars = (200 - len_path_and_ext) / 3
-      expected_len = expected_num_korean_chars * 3 + len_path_and_ext
+      expected_len = (expected_num_korean_chars * 3) + len_path_and_ext
 
       expect(File.basename(result, ".pdf").bytes.length).to eq expected_len
       expect(File.extname(result)).to eq ".pdf"
@@ -716,5 +716,4 @@ describe ContentZipper do
       expect(zipper.ziptmp_filename_nfc_and_not_long("")).to eq ""
     end
   end
-
 end
