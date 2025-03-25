@@ -642,4 +642,79 @@ describe ContentZipper do
       ContentZipper.process_attachment(attachment, quiz)
     end
   end
+
+  describe "ziptmp_filename_nfc_and_not_long" do
+    let(:zipper) { ContentZipper.new }
+
+    it "normalizes filename to NFC form" do
+      # NFD form: ë = e + combining diaeresis
+      nfd_filename = "re\u0301sume\u0308.pdf"
+      # NFC form: combined characters
+      nfc_filename = "résumë.pdf"
+
+      expect(zipper.ziptmp_filename_nfc_and_not_long(nfd_filename)).to eq nfc_filename
+    end
+
+    it "normalizes filename to NFC form Korean" do
+      # NFD form: macOS 스타일("ᄀ,ᅧ,ᆫ")
+      nfd_filename = "\u1100\u1167\u11AB.pdf"
+      # NFC form: combined characters
+      nfc_filename = "견.pdf"
+      puts "nfd_filename: #{nfd_filename}"
+      puts "nfc_filename: #{nfc_filename}"
+
+      expect(zipper.ziptmp_filename_nfc_and_not_long(nfd_filename)).to eq nfc_filename
+    end
+
+    it "truncates basename to 200 bytes maximum" do
+      # 210 bytes in basename
+      long_basename = "a" * 210
+      filename = "#{long_basename}.txt"
+      result = zipper.ziptmp_filename_nfc_and_not_long(filename)
+
+      expect(File.basename(result, ".txt").bytes.length).to eq 200
+      expect(File.extname(result)).to eq ".txt"
+    end
+
+    it "preserves directory path and extension" do
+      filename = "some/path/to/file_with_длинное_имя.docx"
+      result = zipper.ziptmp_filename_nfc_and_not_long(filename)
+
+      expect(File.dirname(result)).to eq "some/path/to"
+      expect(File.extname(result)).to eq ".docx"
+    end
+
+    it "handles files without extension" do
+      filename = "some/path/to/file_without_extension"
+      result = zipper.ziptmp_filename_nfc_and_not_long(filename)
+
+      expect(result).to eq filename
+    end
+
+    it "handles very long filenames with non-ASCII characters" do
+      # "한"은 utf-8 인코딩에서 3바이트를 차지
+      korean_chars = "한" * 100  # 300 bytes
+      filename = "path/to/#{korean_chars}.pdf"
+      result = zipper.ziptmp_filename_nfc_and_not_long(filename)
+
+      puts "result: #{result}"
+
+      # 200바이트를 넘지 않도록 구현했으므로,
+      # 200바이트에서 "path/to/"와 ".pdf"의 길이(len_path_and_ext, 12바이트)를 뺀
+      # 188바이트에 들어갈 수 있는 "한"의 글자수 x 3에 다시 "path/to/"와 ".pdf"의 길이를
+      # 더하면 최종 바이트 수가 된다.,
+      len_path_and_ext = filename.length - korean_chars.length
+      expected_num_korean_chars = (200 - len_path_and_ext) / 3
+      expected_len = expected_num_korean_chars * 3 + len_path_and_ext
+
+      expect(File.basename(result, ".pdf").bytes.length).to eq expected_len
+      expect(File.extname(result)).to eq ".pdf"
+      expect(File.dirname(result)).to eq "path/to"
+    end
+
+    it "handles empty strings" do
+      expect(zipper.ziptmp_filename_nfc_and_not_long("")).to eq ""
+    end
+  end
+
 end

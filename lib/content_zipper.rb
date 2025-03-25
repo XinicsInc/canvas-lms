@@ -314,22 +314,46 @@ class ContentZipper
   def add_attachment_to_zip(attachment, zipfile, filename = nil)
     filename ||= attachment.filename
 
+    # PTTLIW-282
+    @logger.info("add_attachment_to_zip filename: #{filename}")
+    safe_zipname = ziptmp_filename_nfc_and_not_long(filename)
+    filename = safe_zipname
+    @logger.info("add_attachment_to_zip safe_zipname: #{filename}")
+
     # we allow duplicate filenames in the same folder. it's a bit silly, but we
     # have to handle it here or people might not get all their files zipped up.
     @files_in_zip ||= Set.new
     filename = Attachment.make_unique_filename(filename, @files_in_zip)
     @files_in_zip << filename
 
+    # 에러 위치 구분을 위해서 attachment.open 과 get_output_stream 에러 기록 로직 분리
     handle = nil
     begin
       handle = attachment.open
+    rescue Attachment::FailedResponse, Net::ReadTimeout, Net::OpenTimeout => e
+      handle&.close
+      Canvas::Errors.capture_exception(:content_export, e, :warn)
+      @logger.error("  when attachment.open")
+      @logger.error("  skipping #{attachment.full_filename} with error: #{e.message}")
+      return false
+    rescue => e
+      handle&.close
+      Canvas::Errors.capture_exception(:content_export, e, :error)
+      @logger.error("  when attachment.open")
+      @logger.error("  skipping #{attachment.full_filename} with error: #{e.message}")
+      return false
+    end
+
+    begin
       zipfile.get_output_stream(filename) { |zos| Zip::IOExtras.copy_stream(zos, handle) }
     rescue Attachment::FailedResponse, Net::ReadTimeout, Net::OpenTimeout => e
       Canvas::Errors.capture_exception(:content_export, e, :warn)
+      @logger.error("  when zipfile.get_output_stream")
       @logger.error("  skipping #{attachment.full_filename} with error: #{e.message}")
       return false
     rescue => e
       Canvas::Errors.capture_exception(:content_export, e, :error)
+      @logger.error("  when zipfile.get_output_stream")
       @logger.error("  skipping #{attachment.full_filename} with error: #{e.message}")
       return false
     ensure
@@ -337,6 +361,24 @@ class ContentZipper
     end
 
     true
+  end
+
+  def ziptmp_filename_nfc_and_not_long(filename)
+    name = filename.encode('utf-8').unicode_normalize(:nfc)
+
+    # Attachment.make_unique_filename 참조 (동일 내용 가져옴)
+    dir = File.dirname(name)
+    dir = dir == "." ? "" : "#{dir}/"
+    extname = name[/(\.[A-Za-z][A-Za-z0-9]*)*(\.[A-Za-z0-9]*)$/] || ''
+    basename = File.basename(name, extname)
+
+    newbase = basename
+    until newbase.bytes.length <= 200
+      newbase = newbase[0..-2]
+    end
+
+    newfilename = "#{dir}#{newbase}#{extname}"
+    newfilename
   end
 
   def update_progress(zip_attachment, index, count)
