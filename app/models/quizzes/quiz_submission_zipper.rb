@@ -33,6 +33,8 @@ class Quizzes::QuizSubmissionZipper < ContentZipper
     @logger.debug("zipping into attachment: #{zip_attachment.id}")
     mark_attachment_as_zipping!(zip_attachment)
     make_zip_tmpdir(filename) do |zip_name|
+      # 기록되는 로그 예시
+      # creating /tmp/job-2039658-xinics.test.canvas.web.2350213-20250325-2350213-ewc340/d20250325-2350213-uh3ze7/경제학개론-_퀴즈_테스트_이희준_25_03_25_17_36_submissions.zip
       @logger.debug("creating #{zip_name}")
       Zip::File.open(zip_name, Zip::File::CREATE) do |zipfile|
         count = attachments_with_filenames.size

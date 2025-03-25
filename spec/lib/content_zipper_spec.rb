@@ -716,4 +716,42 @@ describe ContentZipper do
       expect(zipper.ziptmp_filename_nfc_and_not_long("")).to eq ""
     end
   end
+
+  describe "#make_zip_tmpdir" do
+    let(:zipper) { ContentZipper.new }
+    
+    it "preserves non-ASCII characters in filenames" do
+      # 테스트를 위한 한글 파일명
+      korean_filename = "경제학개론-기말고사 submissions"
+      
+      # make_zip_tmpdir 메소드 호출 및 결과 확인
+      zipper.make_zip_tmpdir(korean_filename) do |zip_name|
+        # 기대 결과: 한글이 보존되고 공백은 밑줄로 변환됨
+        expected_filename = "경제학개론-기말고사_submissions.zip"
+        expect(File.basename(zip_name)).to eq(expected_filename)
+      end
+    end
+    
+    it "handles filenames with various special characters" do
+      # 여러 특수문자가 포함된 파일명
+      complex_filename = "수학 시험 (2023) @특별반!.docx"
+      
+      zipper.make_zip_tmpdir(complex_filename) do |zip_name|
+        # 기대 결과: 한글과 숫자는 보존, 특수문자는 제거, 공백은 밑줄로 변환
+        expected_filename = "수학_시험_2023_특별반docx.zip"
+        expect(File.basename(zip_name)).to eq(expected_filename)
+      end
+    end
+    
+    it "handles filenames with different Unicode characters" do
+      # 다양한 언어의 문자가 포함된 파일명
+      mixed_filename = "경제학-Economics-经济学-économie"
+      
+      zipper.make_zip_tmpdir(mixed_filename) do |zip_name|
+        # 기대 결과: 모든 언어의 문자가 보존됨
+        expected_filename = "경제학-Economics-经济学-économie.zip"
+        expect(File.basename(zip_name)).to eq(expected_filename)
+      end
+    end
+  end
 end

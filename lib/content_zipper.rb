@@ -231,7 +231,7 @@ class ContentZipper
   # make a tmp directory and yield a filename under that directory to the block
   # given. the tmp directory is deleted when the block returns.
   def make_zip_tmpdir(filename)
-    filename = File.basename(filename.tr(" ", "_").gsub(/[^\w-]/, ""))
+    filename = File.basename(filename.tr(" ", "_").gsub(/[^[[:word:]]-]/, "")) # TI-7101
     Dir.mktmpdir do |dirname|
       zip_name = File.join(dirname, "#{filename}.zip")
       yield zip_name
