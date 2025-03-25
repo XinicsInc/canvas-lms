@@ -36,7 +36,9 @@ describe CSVWithI18n do
 
       it "is excluded when the user has it disabled" do
         @admin.disable_feature!(:include_byte_order_mark_in_gradebook_exports)
-        expect(CSVWithI18n.csv_i18n_settings(@admin)).to include(include_bom: false)
+        # TI-5296 always include BOM when UTF-8
+        # expect(CSVWithI18n.csv_i18n_settings(@admin)).to include(include_bom: false)
+        expect(CSVWithI18n.csv_i18n_settings(@admin)).to include(include_bom: true)
       end
     end
 
