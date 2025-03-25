@@ -412,7 +412,7 @@ class GroupCategoriesController < ApplicationController
       if authorized_action(@context, @current_user, [:manage_groups, :manage_groups_manage])
         include_sis_id = @context.grants_any_right?(@current_user, session, :read_sis, :manage_sis)
         # TI-7096 Use CSVWithI18n simply. Apply only the essential options for BOM setting without user information.
-        csv_string = CSVWithI18n.generate(encoding: 'UTF-8', include_bom: true) do |csv|
+        csv_string = CSVWithI18n.generate(encoding: "UTF-8", include_bom: true) do |csv|
           section_names = @context.course_sections.select(:id, :name).index_by(&:id)
           users = @context.participating_students
                           .select(<<~SQL.squish)
