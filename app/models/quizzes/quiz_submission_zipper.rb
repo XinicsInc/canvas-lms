@@ -71,7 +71,11 @@ class Quizzes::QuizSubmissionZipper < ContentZipper
   def question_attachment_filename(question, attach, user)
     name = user.last_name_first.gsub(/_(\d+)_/, '-\1-')
     name += user.id.to_s
-    name = name.tr(" ", "_").gsub(/[^-\w]/, "").downcase
+
+    # PTTLIW-1669 사용자 이름의 한글이 사라지는 문제가 있었다.
+    # ContentZipper#sanitize_filename 메소드를 참고해서 \w 대신 [[:word:]]를 사용하도록 수정
+    name = name.tr(" ", "_").gsub(/[^-[[:word:]]]/, "").downcase
+
     name = "#{name}_question_#{question[:question_id]}_#{attach.id}_#{attach.display_name}"
     [attach, name]
   end
