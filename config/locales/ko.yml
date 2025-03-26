@@ -22202,7 +22202,7 @@ ko:
   submission_items_b2db1b8d: 제출 항목
   submission_locked_a6074f8b: 제출물 잠김
   submission_locked_image_93aced38: 제출 잠금 이미지
-  submission_posted_title_course_138bd744: '제출물 게시 : %{title}, %{course}'
+  submission_posted_title_course_138bd744: '성적 입력/변경 : %{title}, %{course}'
   submission_preview_383473ec: 제출 미리보기
   submission_records_will_be_filtered_by_date_using__b3990a1: 제출 기록은 가능한 경우 "submitted_at"타임
     스탬프를 사용하여 날짜별로 필터링됩니다. "submitted_at"를 사용할 수없는 경우 "graded_at"필드가 사용됩니다. 필드가 채워지지
@@ -22335,7 +22335,7 @@ ko:
   submissions_folders_must_be_created_in_user_or_gro_aba44f76: 제출 폴더는 사용자 또는 그룹 컨텍스트에서
     생성되어야합니다.
   submissions_graded_status_f689110d: 제출물-채점 상태
-  submissions_posted_title_course_43677dba: '게시 된 제출 : %{title}, %{course}'
+  submissions_posted_title_course_43677dba: '성적 입력/변경 : %{title}, %{course}'
   submit_a3cc6859: 확인
   submit_a_comment_7edbf648: 코멘트 제출
   submit_a_feature_idea_2d4baa3d: 새로운 기능에 대한 아이디어 제출하기
