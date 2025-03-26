@@ -2274,7 +2274,9 @@ class User < ActiveRecord::Base
   end
 
   def can_view_content_shares?
-    non_student_enrollment? || account_membership?
+    # non_student_enrollment? || account_membership?
+    # TI-7109
+    false
   end
 
   def participating_current_and_concluded_course_ids
