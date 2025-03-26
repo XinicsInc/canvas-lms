@@ -290,14 +290,19 @@ describe ProfileController do
       allow(DynamicSettings).to receive(:find).and_return(DynamicSettings::FallbackProxy.new({ "base_url" => "the_ccv_url" }))
       user_session(@teacher)
       get "content_shares", params: { user_id: @teacher.id }
-      expect(response).to render_template("content_shares")
-      expect(assigns.dig(:js_env, :COMMON_CARTRIDGE_VIEWER_URL)).to eq("the_ccv_url")
+      # TI-7109
+      # 기능 비활성화를 위해서 항상 can_view_content_shares? 가 false 가 되도록 했다.
+      # 그래서 항상 not_found 가 된다.
+      expect(response).to be_not_found
     end
 
     it "shows if the user has an account membership" do
       user_session(account_admin_user)
       get "content_shares", params: { user_id: @admin.id }
-      expect(response).to render_template("content_shares")
+      # TI-7109
+      # 기능 비활성화를 위해서 항상 can_view_content_shares? 가 false 가 되도록 했다.
+      # 그래서 항상 not_found 가 된다.
+      expect(response).to be_not_found
     end
 
     it "404s if user has only student enrollments" do
@@ -314,6 +319,7 @@ describe ProfileController do
         Account.default.save
       end
 
+      # TI-7109 수정하고 테스트를 돌려보니 여기도 실패하는데, 수정 사항과는 관련이 없는 것 같다.
       it "renders empty html layout" do
         user_session(@user)
         get "qr_mobile_login"

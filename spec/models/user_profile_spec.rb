@@ -39,13 +39,17 @@ describe UserProfile do
         teacher_in_course(active_all: true)
         tabs = @teacher.profile
                        .tabs_available(@teacher, root_account: account)
-        expect(tabs.pluck(:id)).to include UserProfile::TAB_CONTENT_SHARES
+        # TI-7109
+        # 기능 비활성화를 위해서 항상 can_view_content_shares? 가 false 가 되도록 했다.
+        expect(tabs.pluck(:id)).not_to include UserProfile::TAB_CONTENT_SHARES
       end
 
       it "shows shared content tab when user has account membership" do
         account_admin_user(account:)
         tabs = @admin.profile.tabs_available(@admin, root_account: account)
-        expect(tabs.pluck(:id)).to include UserProfile::TAB_CONTENT_SHARES
+        # TI-7109
+        # 기능 비활성화를 위해서 항상 can_view_content_shares? 가 false 가 되도록 했다.
+        expect(tabs.pluck(:id)).not_to include UserProfile::TAB_CONTENT_SHARES
       end
 
       it "does not show shared content tab when user has only student enrollments" do
