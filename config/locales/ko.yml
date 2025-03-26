@@ -26521,3 +26521,4 @@ ko:
     other: "%{count} 성과"
   the_search_returned_no_results_c2e4d13c: 검색 결과가 없습니다.
   new_analytics_description: New Analytics에서 과목 및 사용자 정보를 보여줍니다. 이 기능 플래그를 ON으로 설정한 후 New Analytics에 데이터가 표시되기까지 최대 24시간이 걸릴 수 있습니다. 자세한 내용은 Canvas 커뮤니티의 *New Analytics 사용자 그룹*을 참조하세요.
+  you_created_this_announcement_42d745a7: '공지사항 등록:'
