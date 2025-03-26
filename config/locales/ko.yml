@@ -1,6 +1,6 @@
-#고객서비스기획팀 허채원
 #Canvas2024 로컬라이징
-#24.11.04 - 진행 https://xinics.atlassian.net/browse/TI-5889 반영
+#https://xinics.atlassian.net/browse/TI-6859 반영
+#업데이트 일자 : 25.03.26
 
 ko:
   1_item_scores_5512cd03: 1- 항목 점수
@@ -3229,7 +3229,7 @@ ko:
   assignment_submissions_uploaded_ba0dbc84: '%{assignment} : 제출물 업로드'
   assignment_title_82b4422e: '과제 제목 :'
   assignment_title_8a707dd2: 과제 제목
-  assignment_title_e3192978: '할당 : %{title}'
+  assignment_title_e3192978: '제목 : %{title}'
   assignment_type_60255aac: 할당 유형
   assignment_unmuted_2cffe4ca: 알림 해제된 과제
   assignment_updated_c7482598: 과제가 업데이트되었습니다.
@@ -22025,7 +22025,7 @@ ko:
   student_must_complete_one_of_these_requirements_6046eb3a: 학생은 다음 요건 중 하나를 완료해야합니다
   student_n_a_30b1753f: '학생 : N / A'
   student_name: 학생 이름
-  student_name_a30d555e: 'Student: %{name}'
+  student_name_a30d555e: '학생: %{name}'
   student_name_b446c661: 학생 이름
   student_name_c45b2a7: 학생 이름
   student_name_options_cb029725: 학생 이름 옵션
