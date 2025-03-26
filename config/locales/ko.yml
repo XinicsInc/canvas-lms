@@ -18170,7 +18170,7 @@ ko:
       add_bank: 문제 은행 추가
       course_question_banks: 과목 문제 은행
       labels:
-        title: 문제 은행 이름
+        title: 문제은행 이름 (입력 후 Enter하여 저장)
       page_title: 문제 은행
       see_bookmarked_banks: 북마크된 문제 은행 보기
       user_question_banks: 사용자 문제 은행
@@ -18210,7 +18210,7 @@ ko:
         keep_copy: 이 문제 은행에도 사본을 보관
         new_bank_name: 새 문제 은행 이름
         new_question_bank: 새 문제 은행
-        title: 은행 이름
+        title: 문제은행 이름 (입력 후 Enter하여 저장 및 새로고침)
       links:
         align_outcome: 성과 정렬
         more_questions: 더 많은 문제
