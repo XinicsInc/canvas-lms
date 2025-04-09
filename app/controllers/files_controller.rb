@@ -486,7 +486,7 @@ class FilesController < ApplicationController
         unless course_id.nil?
           course = Course.find_by(id: course_id)
         end
-      when 'User'
+      when 'User', 'Group'
         if @attachment.associated_with_submission?
           submission = @attachment.attachment_associations.where(context_type: "Submission").first.submission
           unless submission.nil?
