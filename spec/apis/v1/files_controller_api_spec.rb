@@ -1437,6 +1437,35 @@ describe "Files API", type: :request do
         expect(json["preview_url"]).to include(pdf_comment_editor_base_url)
         expect(json["canvadoc_session_url"]).to include(custom_preview_base_url)
       end
+
+      context "when previewing file submitted to group assignment as student, for pdf comment editor" do
+        before do
+          # spec/factories/assignment_factory.rb의 assignment_model 메서드,
+          # spec/models/assignment_spec.rb 의 setup_assignment_with_group 메서드를 참고하여
+          # 그룹 할당 과제를 만들고 제출한 상태를 만듭니다.
+          @assignment = assignment_model(course: @course, title: "group assignment", submission_types: "online_upload", group_category: "Group Cat 001")
+          @group_category = @assignment.group_category
+          @group = @course.groups.create!(name: "Group 001-1", group_category: @group_category)
+          @group.add_user(@student)
+          @file = attachment_model(
+            context: @group,
+            uploaded_data: stub_file_data("test.pdf", "pdf content", "application/pdf")
+          )
+          @submission = @assignment.submit_homework(@student, attachments: [@file])
+        end
+
+        it "returns appropriate preview urls for submitted pdf file to group assignment" do
+          json = api_call(
+            :get,
+            "/api/v1/files/#{@file.id}",
+            { controller: "files", action: "api_show", format: "json", id: @file.id.to_param },
+            { include: ["preview_url"] }
+          )
+
+          expect(json["preview_url"]).to include(pdf_comment_editor_base_url)
+          expect(json["canvadoc_session_url"]).to include(custom_preview_base_url)
+        end
+      end
     end
   end
 
