@@ -573,16 +573,6 @@ class DiscussionRow extends Component {
     if (this.props.DIRECT_SHARE_ENABLED && !this.isInaccessibleDueToAnonymity()) {
       menuList.push(
         this.createMenuItem(
-          'sendTo',
-          <span aria-hidden="true">
-            <IconUserLine />
-            &nbsp;&nbsp;{I18n.t('Send To...')}
-          </span>,
-          I18n.t('Send %{title} to user', {title: discussionTitle})
-        )
-      )
-      menuList.push(
-        this.createMenuItem(
           'copyTo',
           <span aria-hidden="true">
             <IconDuplicateLine />

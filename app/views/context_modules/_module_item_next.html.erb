@@ -294,17 +294,6 @@
                 <li role="presentation">
                   <a
                     href="#"
-                    class="module_item_send_to"
-                    data-content-id="<%= module_item&.content_id.to_s %>"
-                    data-content-type="<%= module_item&.direct_share_type %>"
-                    title="<%= t("Send this module item to another user...") %>"
-                    aria-label="<%= t("Send this module item to another user...") %>"
-                    ><%= @module_item_image_tags['send_to'] %> <%= t('Send To...') %>
-                  </a>
-                </li>
-                <li role="presentation">
-                  <a
-                    href="#"
                     class="module_item_copy_to"
                     data-select-id="<%= module_item&.content_id.to_s %>"
                     data-select-class="<%= module_item&.direct_share_select_class %>"
@@ -357,17 +346,6 @@
                 <li role="presentation"><a href="<%= context_url(@context, :context_url) %>/modules/items/<%= module_item ? module_item.id : "{{ id }}" %>" class="delete_item_link delete_link" title="<%= t('Remove this item from the module') %>"><i class="icon-trash"></i> <%= t('Remove') %></a></li>
               <% end %>
               <% if can_direct_share && (!module_item || module_item.direct_shareable?) %>
-                <li role="presentation">
-                  <a
-                    href="#"
-                    class="module_item_send_to"
-                    data-content-id="<%= module_item&.content_id.to_s %>"
-                    data-content-type="<%= module_item&.direct_share_type %>"
-                    title="<%= t("Send this module item to another user...") %>"
-                    aria-label="<%= t("Send this module item to another user...") %>"
-                    ><%= @module_item_image_tags['send_to'] %> <%= t('Send To...') %>
-                  </a>
-                </li>
                 <li role="presentation">
                   <a
                     href="#"

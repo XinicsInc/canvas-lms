@@ -1946,10 +1946,8 @@ class Course < ActiveRecord::Base
     can :read_prior_roster
 
     given do |user|
-      # grants_any_right?(user, :manage_content, :manage_course_content_add) ||
-      #   (concluded? && grants_right?(user, :read_as_admin))
-      # TI-7109
-      false
+      grants_any_right?(user, :manage_content, :manage_course_content_add) ||
+        (concluded? && grants_right?(user, :read_as_admin))
     end
     can :direct_share
 

@@ -262,14 +262,6 @@ export default class DiscussionsIndex extends Component {
             open={this.props.copyToOpen}
             onDismiss={() => this.props.setCopyToOpen(false)}
           />
-        )}
-        {this.props.DIRECT_SHARE_ENABLED && (
-          <DirectShareUserModal
-            courseId={this.props.COURSE_ID}
-            open={this.props.sendToOpen}
-            contentShare={this.props.sendToSelection}
-            onDismiss={() => this.props.setSendToOpen(false)}
-          />
         )}{' '}
       </View>
     )
