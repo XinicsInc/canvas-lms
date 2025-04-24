@@ -153,7 +153,9 @@ describe "quizzes/quizzes/show" do
     assign(:quiz, @course.quizzes.create!)
     render "quizzes/quizzes/show"
     doc = Nokogiri::HTML5(response)
-    expect(doc.css(".direct-share-send-to-menu-item")).not_to be_empty
+    # PTTLIW-4819(TI-7109) 공유 기능 표시를 삭제했다.
+    # expect(doc.css(".direct-share-send-to-menu-item")).not_to be_empty
+    expect(doc.css(".direct-share-send-to-menu-item")).to be_empty
   end
 
   it "renders direct share menu items when enabled with permission" do
@@ -162,7 +164,9 @@ describe "quizzes/quizzes/show" do
     assign(:quiz, @course.quizzes.create!)
     render "quizzes/quizzes/show"
     doc = Nokogiri::HTML5(response)
-    expect(doc.css(".direct-share-send-to-menu-item")).not_to be_empty
+    # PTTLIW-4819(TI-7109) 공유 기능 표시를 삭제했다.
+    # expect(doc.css(".direct-share-send-to-menu-item")).not_to be_empty
+    expect(doc.css(".direct-share-send-to-menu-item")).to be_empty
   end
 
   it "renders student partial for students" do

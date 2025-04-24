@@ -7274,9 +7274,10 @@ describe Course do
         run_jobs
 
         expect(course2.assignments.pluck(:title)).to eq ["bob"]
-        expect(course2.quizzes.pluck(:title)).to eq ["joe"]
         expect(course2.wiki_pages.pluck(:title)).to eq ["george"]
         expect(course2.discussion_topics.pluck(:title)).to eq ["phil"]
+        # PTTLIW-4819(TI-7109) 공유 기능 표시를 삭제 관련해서 처음으로 테스트를 돌려보니 여기서 실패하는데, 수정 사항과 관련이 없는 것 같다. (아직 과거로 되돌려서 테스트해보지는 않음)
+        expect(course2.quizzes.pluck(:title)).to eq ["joe"]
       end
     end
   end

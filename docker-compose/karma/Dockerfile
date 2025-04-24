@@ -29,7 +29,8 @@ RUN apt-get update --quiet=2 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-USER docker
+# 여기도, 사용자를 docker 로 지정하는 부분은 모두 주석처리한다. (23a8aded7efca716f3ddc9f180277a43b5c9cadc 도 참고)
+#USER docker
 
 RUN set -eux; \
   mkdir -p \

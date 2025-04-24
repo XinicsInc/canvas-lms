@@ -233,9 +233,7 @@ RSpec.describe ApplicationController do
           course_with_teacher(active_all: true)
           controller.instance_variable_set(:@current_user, @teacher)
           controller.instance_variable_set(:@context, @course)
-          # TI-7109
-          # 기능 비활성화를 위해서 항상 :direct_share 권한은 false가 되도록 했다.
-          expect(controller.js_env[:DIRECT_SHARE_ENABLED]).to be_falsey
+          expect(controller.js_env[:DIRECT_SHARE_ENABLED]).to be_truthy
         end
 
         it "sets the env var to false when the user can't use it" do
@@ -272,9 +270,7 @@ RSpec.describe ApplicationController do
             it "sets the env var to true when the user can use it" do
               controller.instance_variable_set(:@current_user, @teacher)
               controller.instance_variable_set(:@context, @course)
-              # TI-7109
-              # 기능 비활성화를 위해서 항상 :direct_share 권한은 false가 되도록 했다.
-              expect(controller.js_env[:DIRECT_SHARE_ENABLED]).to be_falsey
+              expect(controller.js_env[:DIRECT_SHARE_ENABLED]).to be_truthy
             end
 
             it "sets the env var to false when the user can't use it" do

@@ -136,9 +136,10 @@ describe "context_modules/index" do
       render "context_modules/index"
       page = Nokogiri("<document>" + response.body + "</document>")
       expect(page.css(".module_copy_to").length).to eq 1
-      expect(page.css(".module_send_to").length).to eq 1
+      # PTTLIW-4819(TI-7109) 공유 기능 표시를 삭제했다.
+      # expect(page.css(".module_send_to").length).to eq 1
       expect(page.css(".module_item_copy_to").length).to eq 1
-      expect(page.css(".module_item_send_to").length).to eq 1
+      # expect(page.css(".module_item_send_to").length).to eq 1
     end
 
     it "does not include item sharing menu items for things that can't stand alone" do
