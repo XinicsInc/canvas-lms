@@ -256,45 +256,98 @@ describe "Files API", type: :request do
       expect(@attachment.file_state).to eq "available"
     end
 
-    it "sets the attachment to available (s3 storage)" do
-      s3_storage!
+    context "when s3 storage, sets the attachment to available (s3 storage)" do
+      before do
+        s3_storage!
 
-      expect_any_instance_of(Aws::S3::Object).to receive(:data).and_return({
-                                                                             content_type: "text/plain",
-                                                                             content_length: 1234,
-                                                                           })
+        expect_any_instance_of(Aws::S3::Object).to receive(:data).and_return({
+                                                                               content_type: "text/plain",
+                                                                               content_length: 1234,
+                                                                             })
+      end
 
-      json = call_create_success
-      @attachment.reload
-      expect(json).to eq({
-                           "id" => @attachment.id,
-                           "uuid" => @attachment.uuid,
-                           "folder_id" => @attachment.folder_id,
-                           "url" => file_download_url(@attachment, verifier: @attachment.uuid, download: "1", download_frd: "1"),
-                           "content-type" => "text/plain",
-                           "display_name" => "test.txt",
-                           "filename" => @attachment.filename,
-                           "size" => @attachment.size,
-                           "unlock_at" => nil,
-                           "locked" => false,
-                           "hidden" => false,
-                           "lock_at" => nil,
-                           "locked_for_user" => false,
-                           "preview_url" => context_url(@attachment.context, :context_file_file_preview_url, @attachment, annotate: 0),
-                           "hidden_for_user" => false,
-                           "created_at" => @attachment.created_at.as_json,
-                           "updated_at" => @attachment.updated_at.as_json,
-                           "upload_status" => "success",
-                           "thumbnail_url" => nil,
-                           "modified_at" => @attachment.modified_at.as_json,
-                           "mime_class" => @attachment.mime_class,
-                           "media_entry_id" => @attachment.media_entry_id,
-                           "canvadoc_session_url" => nil,
-                           "crocodoc_session_url" => nil,
-                           "category" => "uncategorized",
-                           "visibility_level" => @attachment.visibility_level
-                         })
-      expect(@attachment.reload.file_state).to eq "available"
+      it "sets the attachment to available (s3 storage), when workflow_state = :unattached" do
+        # 여기는 테스트 시작 부분
+        # describe "api_create_success" do
+        #   before :once do
+        # 에서 workflow_state = :unattached 로 세팅해 둔 상태에서의 테스트
+
+        json = call_create_success
+        @attachment.reload
+        expect(json).to eq({
+                             "id" => @attachment.id,
+                             "uuid" => @attachment.uuid,
+                             "folder_id" => @attachment.folder_id,
+                             "url" => file_download_url(@attachment, verifier: @attachment.uuid, download: "1", download_frd: "1"),
+                             "content-type" => "text/plain",
+                             "display_name" => "test.txt",
+                             "filename" => @attachment.filename,
+                             "size" => @attachment.size,
+                             "unlock_at" => nil,
+                             "locked" => false,
+                             "hidden" => false,
+                             "lock_at" => nil,
+                             "locked_for_user" => false,
+                             "preview_url" => context_url(@attachment.context, :context_file_file_preview_url, @attachment, annotate: 0),
+                             "hidden_for_user" => false,
+                             "created_at" => @attachment.created_at.as_json,
+                             "updated_at" => @attachment.updated_at.as_json,
+                             "upload_status" => "success",
+                             "thumbnail_url" => nil,
+                             "modified_at" => @attachment.modified_at.as_json,
+                             "mime_class" => @attachment.mime_class,
+                             "media_entry_id" => @attachment.media_entry_id,
+                             "canvadoc_session_url" => nil,
+                             "crocodoc_session_url" => nil,
+                             "category" => "uncategorized",
+                             "visibility_level" => @attachment.visibility_level
+                           })
+        expect(@attachment.reload.file_state).to eq "available"
+      end
+
+      it "sets the attachment to available, but deleted (s3 storage), when workflow_state = :unattached_temporary" do
+        # TI-7324 에서 Object Storage의 과제 제출물 업로드 시에는 unattached_temporary
+        # 상태로 create_success API가 호출되었을 때 400 Bad request 응답이 나오는 문제
+        # 수정한 것에 대한 테스트
+        @attachment.workflow_state = "unattached_temporary"
+        @attachment.save!
+
+        json = call_create_success
+        @attachment.reload
+        expect(json).to eq({
+                             "id" => @attachment.id,
+                             "uuid" => @attachment.uuid,
+                             "folder_id" => @attachment.folder_id,
+                             "url" => file_download_url(@attachment, verifier: @attachment.uuid, download: "1", download_frd: "1"),
+                             "content-type" => "text/plain",
+                             "display_name" => "test.txt",
+                             "filename" => @attachment.filename,
+                             "size" => @attachment.size,
+                             "unlock_at" => nil,
+                             "locked" => false,
+                             "hidden" => false,
+                             "lock_at" => nil,
+                             "locked_for_user" => false,
+                             "preview_url" => context_url(@attachment.context, :context_file_file_preview_url, @attachment, annotate: 0),
+                             "hidden_for_user" => false,
+                             "created_at" => @attachment.created_at.as_json,
+                             "updated_at" => @attachment.updated_at.as_json,
+                             "upload_status" => "success",
+                             "thumbnail_url" => nil,
+                             "modified_at" => @attachment.modified_at.as_json,
+                             "mime_class" => @attachment.mime_class,
+                             "media_entry_id" => @attachment.media_entry_id,
+                             "canvadoc_session_url" => nil,
+                             "crocodoc_session_url" => nil,
+                             "category" => "uncategorized",
+                             "visibility_level" => @attachment.visibility_level
+                           })
+        # 보통은 파일상태가 deleted -> available 로 변경되는데,
+        # 과제 제출물 업로드 시에는 그 단계가 없고 deleted 상태로 남아있다.
+        # 히스토리적인 문제인 것 같은데, 이 상태로도 동작에 문제가 드러나지 않는 것으로 보여서
+        # deleted 상태로 남아 있는 것은 수정하지 않았다. (Canvas 2020에서부터 그랬다.)
+        expect(@attachment.reload.file_state).to eq "deleted"
+      end
     end
 
     it "includes usage rights if overwriting a file that has them already" do
