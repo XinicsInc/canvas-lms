@@ -18157,7 +18157,7 @@ ko:
     question_bank: 문제 은행
     remove_outcome_from_bank: 이 성과를 문제 은행에서 제거하시겠습니까?
     title:
-      move_copy_questions: 문제 이동/복사
+      move_copy_questions: 문제 이동
     update_outcomes_fail: 성과 업데이트 실패
     updating_outcomes: 성과 업데이트 중...
   question_bank_f6c44d62: 문제 은행
@@ -18190,7 +18190,7 @@ ko:
       links:
         delete_question: 이 문제 삭제
         edit_question: 이 문제 편집
-      move_bank: 다른 은행으로 문제 이동/복사
+      move_bank: 다른 은행으로 문제 이동
     show:
       button:
         cancel: 취소
@@ -18207,7 +18207,7 @@ ko:
       headings:
         aligned_outcomes: 정렬된 성과
       labels:
-        keep_copy: 이 문제 은행에도 사본을 보관
+        keep_copy: 복사본 생성 (원본 유지)
         new_bank_name: 새 문제 은행 이름
         new_question_bank: 새 문제 은행
         title: 문제은행 이름 (입력 후 Enter하여 저장 및 새로고침)
@@ -18216,7 +18216,7 @@ ko:
         more_questions: 더 많은 문제
       loading_banks: 문제 은행 로드 중...
       mastery_threshold: '%{threshold_percentage}에서 숙달'
-      move_copy: 이동/복사
+      move_copy: 이동
       select_bank: '이동할 대상 문제 은행을 선택하십시오:'
       show_details: 문제 펼쳐보기
   question_banks_45bdf347: 문제 은행
@@ -18477,7 +18477,7 @@ ko:
         links:
           delete_question: 문제 삭제하기
           edit_question: 문제 편집하기
-          move_copy_question: 다른 문제 은행으로 문제 이동/복사
+          move_copy_question: 다른 문제 은행으로 문제 이동
         not_yet_graded: 평가 안 됨
         original_score: '원래 점수:'
         points_possible: '%{points_possible}점'
