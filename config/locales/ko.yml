@@ -601,7 +601,7 @@ ko:
       full_name_description: 채점시 교수자들이 사용할 이름입니다.
       labels:
         course_code: 참조 코드
-        enrollment_term_id: 등록 기간
+        enrollment_term_id: 학기
         full_name: 전체 이름
         name: 과목 이름
         path: 이메일
@@ -9264,7 +9264,7 @@ ko:
       delete_default_term: 기본 학기를 삭제할 수 없습니다.
       delete_term_with_courses: 활성 과목이 있는 학기는 삭제할 수 없습니다.
       not_unique: '"%{sis_source_id}" SIS ID를 이미 사용 중임'
-  enrollment_term_7bfe840: 등록 기간
+  enrollment_term_7bfe840: 학기
   enrollment_terms_8753ec11: 등록 학기
   enrollment_type_2e6e58e4: 등록 유형
   enrollment_type_699c944: 등록 유형
