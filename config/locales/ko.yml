@@ -2967,7 +2967,7 @@ ko:
   are_you_sure_you_want_to_delete_this_discussion_334554e0: 이 게시물을 삭제하시겠습니까?
   are_you_sure_you_want_to_delete_this_domain_lookup_f7d8bbba: 이 도메인 조회를 삭제 하시겠습니까?
   are_you_sure_you_want_to_delete_this_entry_9aecd6d3: 이 항목을 삭제하시겠습니까?
-  are_you_sure_you_want_to_delete_this_event_824b1e33: 이 이벤트를 삭제 하시겠습니까?
+  are_you_sure_you_want_to_delete_this_event_824b1e33: '[주의] 이 항목을 삭제하면 연결되어 있는 학습요소도 함께 삭제되어 더 이상 해당 과목에서 학습하거나, 학습 내역을 확인할 수 없습니다. 이 학습요소를 정말 삭제하시겠습니까?'
   are_you_sure_you_want_to_delete_this_grading_perio_380b040d: 이 채점 기간 세트를 삭제 하시겠습니까?
   are_you_sure_you_want_to_delete_this_grading_perio_422359cd: 이 채점 기간을 삭제 하시겠습니까?
   are_you_sure_you_want_to_delete_this_grading_schem_df8b75f9: 이 평가 기준표를 삭제하시겠습니까?
