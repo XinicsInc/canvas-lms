@@ -18189,7 +18189,7 @@ ko:
       links:
         delete_question: 이 문제 삭제
         edit_question: 이 문제 편집
-      move_bank: 다른 은행으로 문제 이동
+      move_bank: 다른 문제 은행으로 문제 이동
     show:
       button:
         cancel: 취소
@@ -18215,7 +18215,7 @@ ko:
         more_questions: 더 많은 문제
       loading_banks: 문제 은행 로드 중...
       mastery_threshold: '%{threshold_percentage}에서 숙달'
-      move_copy: 이동
+      move_copy: '이동하기 -'
       select_bank: '이동할 대상 문제 은행을 선택하십시오:'
       show_details: 문제 펼쳐보기
   question_banks_45bdf347: 문제 은행
