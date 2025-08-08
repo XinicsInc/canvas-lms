@@ -2016,7 +2016,7 @@ ko:
       full_name_description: 채점시 교수자들이 사용할 이름입니다.
       labels:
         course_code: 참조 코드
-        enrollment_term_id: 등록 기간
+        enrollment_term_id: 학기
         full_name: 전체 이름
         name: 과목 이름
         path: 이메일
@@ -3858,7 +3858,7 @@ ko:
         attachment: 첨부할 파일
         remove_attachment: 첨부 제거
     autocomplete_result:
-      no_results: 파일(콘텐츠)이 없습니다
+      no_results: 검색 결과가 없습니다.
       group_people: '사용자: %{people}'
     compose_button_bar:
       titles:
@@ -6821,7 +6821,7 @@ ko:
       links:
         edit_question: 이 문제 편집
         delete_question: 이 문제 삭제
-      move_bank: 다른 은행으로 문제 이동/복사
+      move_bank: 다른 문제 은행으로 문제 이동
     index:
       page_title: 문제 은행
       add_bank: 문제 은행 추가
@@ -6830,7 +6830,7 @@ ko:
       user_question_banks: 사용자 문제 은행
       account_question_banks: 계정 문제 은행
       labels:
-        title: 문제 은행 이름
+        title: 문제은행 이름 (입력 후 Enter하여 저장)
     show:
       buttons:
         add_a_question: 문제 추가
@@ -6846,18 +6846,18 @@ ko:
         align_outcome: 성과 정렬
         more_questions: 더 많은 문제
       labels:
-        title: 은행 이름
+        title: 문제은행 이름 (입력 후 Enter하여 저장 및 새로고침)
         new_question_bank: 새 문제 은행
         new_bank_name: 새 문제 은행 이름
-        keep_copy: 이 문제 은행에도 사본을 보관
+        keep_copy: 복사본 생성 (원본 유지)
       edit_warning: 문제를 변경하더라도 해당 문제를 사용해 이미 생성되어 있는 퀴즈에는 자동으로 업데이트되지 않습니다. 필요 시 생성되어 있는 퀴즈에서 직접 수정해야 합니다.
       show_details: 문제 펼쳐보기
-      move_copy: 이동/복사
+      move_copy: '이동하기 -'
       select_bank: '이동할 대상 문제 은행을 선택하십시오:'
       loading_banks: 문제 은행 로드 중...
       button:
         cancel: 취소
-        move_copy_question: 문제 이동/복사
+        move_copy_question: 문제 이동
     delete_question_bank_prompt: 이 문제 은행을 삭제하시겠습니까?
   quizzes:
     quiz_submission_events:
@@ -6916,7 +6916,7 @@ ko:
         links:
           edit_question: 문제 편집하기
           delete_question: 문제 삭제하기
-          move_copy_question: 다른 문제 은행으로 문제 이동/복사
+          move_copy_question: 다른 문제 은행으로 문제 이동
         labels:
           warning_icon: 경고
           for_answer_number: 정답 %{answer_number}
@@ -8612,7 +8612,7 @@ ko:
   highest_28ad71e6: 최고
   latest_f604a75: 최근
   average_49c63f9b: 평균
-  no_e16d9132: 아니요
+  no_e16d9132: 아니오
   from_from_to_to_e31f6422: '%{from}부터 %{to}까지'
   after_date_981cd41b: '%{date} 이후'
   until_date_949017c4: '%{date} 까지'
@@ -9807,7 +9807,7 @@ ko:
     alpha: 알파
     point:
       biserial: 정답의 점수 이계열
-      distractor: 오답 %{num}의 점수 이계열
+      distractor: 보기 %{num}의 점수 이계열
     encoding: UTF-8
     read_only_field: (읽기 전용)
     column_delimiter: ','
@@ -13900,7 +13900,7 @@ ko:
   course_role_role_type_119c2f64: '과목 역할 : %{role_type}'
   accepted_user_role_type_course_course_2ce91589: '수락 됨 : %{user}, %{role_type}, 과목, %{course}'
   you_ve_been_invited_to_participate_in_the_course_c_a8d1f6a8: '[%{course}]에 참여하도록 초대 받았습니다. 과목 역할 : %{role_type}'
-  get_started_b9507525: 시작하다
+  get_started_b9507525: 시작하기
   you_ve_been_invited_to_the_course_course_2aac8140: '%{course} 과목에 초대되었습니다.'
   you_ve_been_invited_to_the_course_course_course_ro_a74d748b: '%{course} 과목에 초대되었습니다. 과목 역할 : %{role_type}'
   canvas_alert_invited_course_as_role_type_9ed79ce3: 'Canvas Alert-초대 됨 : %{course} as %{role_type}'
@@ -13943,7 +13943,7 @@ ko:
   canvas_alert_grade_change_date_for_name_56f680ed: 'Canvas 알림-성적 변경 : %{name}에 대한 %{name}'
   assignment_has_been_graded_for_name_4384f9b: '%{name}에 대해 %{name}가 채점되었습니다.'
   canvas_alert_graded_assignment_context_for_name_459fdf31: 'Canvas 알림-채점 됨 : %{name}에 대한 %{name}, %{name}'
-  submission_posted_title_course_138bd744: '제출물 게시 : %{title}, %{course}'
+  submission_posted_title_course_138bd744: '성적 입력/변경 : %{title}, %{course}'
   your_instructor_has_released_grade_changes_and_new_ffe458c8: >-
     교수가 %{title}에 대한 성적 변경 사항과 새 의견을 배포했습니다. 이제 변경 사항을 볼 수 있습니다.
 
@@ -13957,7 +13957,7 @@ ko:
 
     %{url}에서 추가 정보
   grade_changes_and_new_comments_released_for_title__f1350f92: '%{title}, %{course}에 대한 성적 변경 및 새 댓글 공개'
-  submissions_posted_title_course_43677dba: '게시 된 제출 : %{title}, %{course}'
+  submissions_posted_title_course_43677dba: '성적 입력/변경 : %{title}, %{course}'
   grade_changes_and_comments_have_been_released_for__624411ff: '%{section_names} 섹션에서 채점 한 모든 사용자에 대한 성적 변경 및 댓글이 공개되었습니다.'
   grade_changes_and_comments_have_been_released_for__79d3473e: 채점 된 모든 사람에 대한 성적 변경 및 댓글이 공개되었습니다.
   grade_changes_and_comments_have_been_released_for__5d6a01a0: '%{section_names} 섹션의 모든 사용자에 대한 성적 변경 및 댓글이 공개되었습니다.'
@@ -14759,7 +14759,7 @@ ko:
   see_vericite_results_b44dd8c8: VeriCite 결과보기
   final_grade_info_2aa35d25: 최종 성적 정보
   close_grade_info_58ef5a20: 성적 정보 닫기
-  close_d634289d: 닫기
+  close_d634289d: 취소
   assessment_by_name_7b879a2c: '%{name}의 평가'
   gradebook_context_name_9dbae5bc: 성적부-%{context_name}
   gradebook_1620a0aa: 성적표
@@ -14802,7 +14802,7 @@ ko:
   comments_for_this_attempt_a5fae61f: 과제 코멘트
   assignment_comments_e43ed898: 과제 코멘트
   draft_comment_b2376ea4: 초안 주석
-  submit_a3cc6859: 등록
+  submit_a3cc6859: 확인
   delete_comment_a71040c3: 댓글 삭제
   click_here_to_view_ec8cb2fd: 보려면 여기를 클릭하십시오
   all_comments_are_sent_to_the_whole_group_284591e7: 모든 댓글은 전체 그룹에 전송됩니다.
@@ -15809,7 +15809,7 @@ ko:
       avg_time: 평균 시간
     question_header: 문제 %{position}
     attempts: '시도 : %{count} / %{total}'
-    discrimination_index_help: '*이 측정 항목은 하나의 문제가 시험에서 잘하는 학생과 그렇지 않은 학생의 차이 (또는 차별)를 얼마나 잘 구분할 수 있는지를 측정합니다. * ** 전체 퀴즈 점수를 기준으로 학생들을 3 개의 그룹으로 나누고, 누가 정답을했는지에 따라 그룹을 표시합니다. ** *** **** 퀴즈 통계에 대해 자세히 알아보세요. **** ***'
+    discrimination_index_help: '*이 측정 항목은 하나의 문제가 시험에서 잘하는 학생과 그렇지 않은 학생의 차이 (또는 차별)를 얼마나 잘 구분할 수 있는지를 측정합니다. * ** 전체 퀴즈 점수를 기준으로 학생들을 3 개의 그룹으로 나누고, 누가 정답을했는지에 따라 그룹을 표시합니다. ** *** **** 퀴즈 통계에 대해 자세히 알아보세요. **** ***' 
     discrimination_index:
       discrimination_index: 차별 지수
       discrimination_index_dialog_title: 차별 지수 차트
@@ -16321,7 +16321,7 @@ ko:
     bookmark_failed: 북마크 실패
     question_bank: 문제 은행
     title:
-      move_copy_questions: 문제 이동/복사
+      move_copy_questions: 문제 이동
     buttons:
       submit_moving:
         one: 문제 이동 ...
@@ -18205,7 +18205,7 @@ ko:
   course_name_63b973d1: 과목명
   reference_code_3e8355dd: 참조 코드
   subaccount_91f4c279: 하위 계정
-  enrollment_term_7bfe840: 등록 기간
+  enrollment_term_7bfe840: 학기
   add_course_406cb773: 과목 추가
   there_was_an_error_with_your_query_please_try_a_di_761dff12: 검색어에 오류가 있습니다. 다른 검색을 시도하십시오
   no_users_found_64a043ff: 사용자가 없습니다.
@@ -20117,8 +20117,8 @@ ko:
   when_posting_grades_for_anonymous_assignments_grad_b13f3ae6: 익명 과제에 대한 성적을 게시 할 때 과목의 모든 사람에게 성적이 게시됩니다. 익명 성이 제거됩니다.
   select_whether_to_post_for_all_submissions_or_only_b18d681f: 모든 제출물을 공개할지 또는 채점 된 항목 만 공개할지 선택합니다.
   post_types_93ff86d9: 포스트 유형
-  all_students_will_be_able_to_see_their_grade_and_o_66c1beab: 모든 학생은 자신의 성적 및 / 또는 제출 댓글을 볼 수 있습니다.
-  students_who_have_received_a_grade_or_a_submission_7ef046cc: 성적 또는 제출 댓글을받은 학생은 성적 및 / 또는 제출 댓글을 볼 수 있습니다.
+  all_students_will_be_able_to_see_their_grade_and_o_66c1beab: 과제 제출 여부와 무관하게 모든 학생들은 자신의 성적과 코멘트를 볼 수 있습니다.
+  students_who_have_received_a_grade_or_a_submission_7ef046cc: 과제를 제출한 학생들만 자신의 성적과 코멘트를 볼 수 있습니다.
   at_least_one_section_must_be_selected_to_post_grad_2c140f52: 섹션별로 성적을 게시하려면 하나 이상의 섹션을 선택해야합니다.
   success_grades_have_been_posted_for_the_selected_s_54c73ef0: 성공! %{assignmentName}의 선택한 섹션에 대한 성적이 게시되었습니다.
   success_grades_have_been_posted_to_postedto_for_as_255bc974: 성공! %{assignmentName}에 대한 성적이 %{assignmentName}에 게시되었습니다.
@@ -23121,3 +23121,4 @@ ko:
     notices:
       uploading_complete: 업로드 완료!
     zip_import_filename: zip_import_%{id}.zip
+  you_created_this_announcement_42d745a7: '공지사항 등록:'
