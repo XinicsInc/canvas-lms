@@ -21,6 +21,15 @@ import useFetchApi from './useFetchApi'
 export default function useModuleCourseSearchApi(fetchApiOpts) {
   const courseId = fetchApiOpts?.params?.contextId
   if (courseId) delete fetchApiOpts.params.contextId
+
+  // LXCCOP-466: 모듈 선택 드롭다운에서 15주차까지 표시하기 위해 per_page 50 설정
+  if (!fetchApiOpts.params) {
+    fetchApiOpts.params = {}
+  }
+  if (!fetchApiOpts.params.per_page) {
+    fetchApiOpts.params.per_page = 50
+  }
+
   useFetchApi({
     path: `/api/v1/courses/${courseId}/modules`,
     ...fetchApiOpts
