@@ -52,7 +52,8 @@ class Quizzes::QuizzesController < ApplicationController
   after_action :lock_results, only: [ :show, :submission_html ]
   # The number of questions that can display "details". After this number, the "Show details" option is disabled
   # and the data is not even loaded.
-  QUIZ_QUESTIONS_DETAIL_LIMIT = 25
+  # [LXCCUP-196] 문제 펼쳐보기 제한을 25에서 100으로 상향
+  QUIZ_QUESTIONS_DETAIL_LIMIT = 100
   QUIZ_MAX_COMBINATION_COUNT = 200
 
   QUIZ_TYPE_ASSIGNMENT = 'assignment'
