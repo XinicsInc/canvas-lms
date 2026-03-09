@@ -162,7 +162,7 @@ module Context
         memo[key] = type_to_check.call
       end
     end
-    Rails.cache.write(cache_key, value_to_cache)
+    Rails.cache.write(cache_key, value_to_cache, expires_in: 5.minutes)
     @active_record_types[only_check] = value_to_cache
   end
 

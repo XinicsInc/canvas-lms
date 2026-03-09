@@ -90,28 +90,34 @@ module SectionTabHelper
     def to_a
       return [] unless context.respond_to?(:tabs_available)
 
-      Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-        if context.respond_to?(:feature_enabled?)
-          new_collaborations_enabled = context.feature_enabled?(:new_collaborations)
-        end
+      key = cache_key
+      cached = Rails.cache.read(key)
+      return cached if cached
 
-        context.tabs_available(
-          current_user,
-          {
-            session: session,
-            root_account: domain_root_account,
-            precalculated_permissions: @precalculated_permissions
-          }
-        ).select { |tab| tab_has_required_attributes?(tab) }.reject do |tab|
-          if tab_is?(tab, 'TAB_COLLABORATIONS')
-            new_collaborations_enabled || !Collaboration.any_collaborations_configured?(@context)
-          elsif tab_is?(tab, 'TAB_COLLABORATIONS_NEW')
-            !new_collaborations_enabled
-          elsif tab_is?(tab, 'TAB_CONFERENCES')
-            !WebConference.config(context: @context)
-          end
+      if context.respond_to?(:feature_enabled?)
+        new_collaborations_enabled = context.feature_enabled?(:new_collaborations)
+      end
+
+      tabs = context.tabs_available(
+        current_user,
+        {
+          session: session,
+          root_account: domain_root_account,
+          precalculated_permissions: @precalculated_permissions
+        }
+      ).select { |tab| tab_has_required_attributes?(tab) }.reject do |tab|
+        if tab_is?(tab, 'TAB_COLLABORATIONS')
+          new_collaborations_enabled || !Collaboration.any_collaborations_configured?(@context)
+        elsif tab_is?(tab, 'TAB_COLLABORATIONS_NEW')
+          !new_collaborations_enabled
+        elsif tab_is?(tab, 'TAB_CONFERENCES')
+          !WebConference.config(context: @context)
         end
       end
+
+      ttl = tabs.any? { |tab| tab[:hidden_unused] } ? 5.minutes : 1.hour
+      Rails.cache.write(key, tabs, expires_in: ttl)
+      tabs
     end
 
     private
