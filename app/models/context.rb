@@ -156,13 +156,17 @@ module Context
     end
 
     # otherwise compute it and store it in the cache
+    # Run EXISTS queries on primary to avoid read replica lag causing
+    # stale false negatives that get cached indefinitely
     value_to_cache = nil
-    ActiveRecord::Base.uncached do
-      value_to_cache = types_to_check.each_with_object({}) do |(key, type_to_check), memo|
-        memo[key] = type_to_check.call
+    GuardRail.activate(:primary) do
+      ActiveRecord::Base.uncached do
+        value_to_cache = types_to_check.each_with_object({}) do |(key, type_to_check), memo|
+          memo[key] = type_to_check.call
+        end
       end
     end
-    Rails.cache.write(cache_key, value_to_cache, expires_in: 5.minutes)
+    Rails.cache.write(cache_key, value_to_cache)
     @active_record_types[only_check] = value_to_cache
   end
 
