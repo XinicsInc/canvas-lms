@@ -51,7 +51,7 @@
     <% if question[:entry_type] == "quiz_group" %>
       <%= render :partial => "question_group", :object => question %>
     <% else %>
-      <%= render :partial => (@quiz.active_quiz_questions.size > 100 ? "question_teaser" : "display_question"), :object => question, :locals => {:editing => true, :asset_string => "quiz_question_#{question['id']}"} %>
+      <%= render :partial => (@quiz.active_quiz_questions.size > 300 ? "question_teaser" : "display_question"), :object => question, :locals => {:editing => true, :asset_string => "quiz_question_#{question['id']}"} %>
     <% end %>
   <% end %>
 </div>
