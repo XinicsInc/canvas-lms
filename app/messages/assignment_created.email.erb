@@ -3,7 +3,11 @@
 <% end %>
 
 <% define_content :subject do %>
-  <%= I18n.t("Assignment Created - %{assignment_name}, %{course_name}", :assignment_name => asset.title, :course_name => asset.context.name) %>
+  <% if asset.quiz? %>
+    <%= I18n.t("Quiz Created - %{assignment_name}, %{course_name}", :assignment_name => asset.title, :course_name => asset.context.name) %>
+  <% else %>
+    <%= I18n.t("Assignment Created - %{assignment_name}, %{course_name}", :assignment_name => asset.title, :course_name => asset.context.name) %>
+  <% end %>
 <% end %>
 
 <%= I18n.t("A new assignment has been created for your course, %{course_name}", :course_name => asset.context.name) %>
