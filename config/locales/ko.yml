@@ -13855,6 +13855,7 @@ ko:
   new_comment_on_announcement_discussion_topic_cours_7905b782: 공지 사항 %{discussion_topic}, %{course}에 대한 새 댓글
   signup_type_8b4506f3: 가입 유형
   assignment_created_assignment_name_course_name_324a5639: '과제 생성됨 - [%{course_name}] %{assignment_name}'
+  quiz_created_assignment_name_course_name_35bbefa9: '퀴즈 생성됨 - [%{course_name}] %{assignment_name}'
   a_new_assignment_has_been_created_for_your_course__12b72639: '[%{course_name}]에 새 과제가 생성되었습니다.'
   due_multiple_dates_ea8a95e1: '마감일 : 여러 날짜'
   due_no_due_date_3c1d1651: '마감일: 마감일 없음'
