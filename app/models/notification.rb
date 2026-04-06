@@ -19,6 +19,7 @@
 #
 
 class Notification < ActiveRecord::Base
+  self.primary_key = 'id'
   self.shard_category = :unsharded
 
   include Workflow
