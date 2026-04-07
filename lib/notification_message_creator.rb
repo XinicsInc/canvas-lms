@@ -224,7 +224,11 @@ class NotificationMessageCreator
       policy ||= override_policy_for(channel, @message_data&.dig(:root_account_id), 'Account')
     end
     if !policy && should_use_default_policy?(user, channel)
-      policy ||= channel.notification_policies.new(notification_id: @notification.id, frequency: @notification.default_frequency(user))
+      begin
+        policy = channel.notification_policies.create!(notification_id: @notification.id, frequency: @notification.default_frequency(user))
+      rescue ActiveRecord::RecordNotUnique => e
+        Canvas::Errors.capture_exception(:notifications, e, :info)
+      end
     end
     policy ||= channel.notification_policies.find { |np| np.notification_id == @notification.id }
     policy

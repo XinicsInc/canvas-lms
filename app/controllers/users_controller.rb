@@ -756,7 +756,7 @@ class UsersController < ApplicationController
 
     # include concluded enrollments as well as active ones if requested
     include_concluded = params[:include].try(:include?, 'concluded')
-    limit = 100
+    limit = 300 # LXCCUP-319: 드롭다운 항목 개수 limit 300개로 향상
     @query = params[:course].try(:[], :name) || params[:term]
     @courses = []
     Shard.with_each_shard(@context.in_region_associated_shards) do

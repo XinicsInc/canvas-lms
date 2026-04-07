@@ -582,12 +582,15 @@ class ContentMigrationsController < ApplicationController
   end
 
   def should_show_course_copy_dropdown
-    if @current_user.adminable_accounts.any?
-      false # assume that if they're an account admin they're probably managing so many courses it's not worth it to even try the count
-    else
-      course_count = Shard.with_each_shard(@current_user.in_region_associated_shards) { @current_user.manageable_courses(true).count }.sum
-      course_count <= 100
-    end
+    # if @current_user.adminable_accounts.any?
+    #   false
+    # else
+    #   course_count = Shard.with_each_shard(@current_user.in_region_associated_shards) { @current_user.manageable_courses(true).count }.sum
+    #   course_count <= 100
+    # end
+
+    # LXCCUP-319: 과목 수와 관계없이 항상 드롭다운 UI를 표시하도록 변경, 드롭다운 항목 개수 limit 300개로 향상
+    true
   end
 
   def link_content_export_attachment
