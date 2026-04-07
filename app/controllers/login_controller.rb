@@ -57,12 +57,16 @@ class LoginController < ApplicationController
     params[:authentication_provider] ||= params[:id]
 
     if @domain_root_account.auth_discovery_url && !params[:authentication_provider]
-      auth_discovery_url = @domain_root_account.auth_discovery_url
-      if flash[:delegated_message]
-        auth_discovery_url << (URI.parse(auth_discovery_url).query ? '&' : '?')
-        auth_discovery_url << "message=#{URI.escape(flash[:delegated_message])}"
+      if params[:fromlx_failed] == '1' && flash[:delegated_message]
+        # FromLX 인증이 실패하여 넘어온 경우, 무한 루프 방지를 위해 자동 리다이렉트를 건너뛰고 에러 화면을 노출한다.
+      else
+        auth_discovery_url = @domain_root_account.auth_discovery_url
+        if flash[:delegated_message]
+          auth_discovery_url << (URI.parse(auth_discovery_url).query ? '&' : '?')
+          auth_discovery_url << "message=#{URI.escape(flash[:delegated_message])}"
+        end
+        return redirect_to auth_discovery_url
       end
-      return redirect_to auth_discovery_url
     end
 
     if params[:authentication_provider]
