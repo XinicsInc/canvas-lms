@@ -372,6 +372,9 @@ en:
           download_lockdown: If you have not already installed the browser, please download it from here
         links:
           download_lockdown: "[Download TrustLock Browser]"
+        requires_lockdown_1: 1. This quiz requires TrustLock Browser. Please launch TrustLock Browser to take this quiz or view your quiz results. 
+        requires_lockdown_2: 2. Once TrustLock Browser has been installed, please use it to take this quiz.
+        requires_lockdown_3: 3. If you have not already installed the browser, please download it from here.
       refresh_quiz_after_popup:
         headers:
           loading_in_lockdown: Loading Quiz in TrustLock Browser
