@@ -17,7 +17,7 @@
 %>
 
 <h1>
-  <%= t('headers.requires_lockdown', "TrustLock Browser Required") %>
+  <%= t('requires_lockdown_h', "TrustLock Browser Required") %>
 </h1>
 
 <p>
@@ -32,6 +32,6 @@
     <%= t('requires_lockdown_3', "3. If you have not already installed the browser, please download it from here") %>
     <br />
     &nbsp;&nbsp;
-    <%= link_to(t('links.download_lockdown', "[Download Respondus LockDown Browser]"), @lockdown_browser_download_url) %>
+    <%= link_to(t('download_lockdown_link', "[Download TrustLock Browser]"), @lockdown_browser_download_url) %>
   </p>
 <% end %>
