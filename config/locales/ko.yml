@@ -7297,11 +7297,11 @@ ko:
           download_lockdown: 아직 시험 전용 브라우저를 설치하지 않았다면 여기에서 다운로드 하여 설치해 주시기 바랍니다.
         links:
           download_lockdown: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
-          requires_lockdown_h: 시험 전용 브라우저 (TrustLock Browser)를 통한 응시 필요
-          requires_lockdown_1: 1. 이 퀴즈는 반드시 최신 버전의 시험 전용 브라우저 (TrustLock Browser)를 통해서만 시험 응시 및 결과 확인이 가능합니다.
-          requires_lockdown_2: 2. 아직 최신 버전을 설치하지 않았다면 아래 링크를 통해 최신 버전의 시험 전용 브라우저를 다운로드하여 설치해 주시기 바랍니다.
-          requires_lockdown_3: 3. 설치가 완료되었다면, 다운로드 받은 최신 버전의 시험 전용 브라우저를 실행하여 다시 접속 후 시험에 응시해 주십시오.
-          download_lockdown_link: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
+        requires_lockdown_h: 시험 전용 브라우저 (TrustLock Browser)를 통한 응시 필요
+        requires_lockdown_1: 1. 이 퀴즈는 반드시 최신 버전의 시험 전용 브라우저 (TrustLock Browser)를 통해서만 시험 응시 및 결과 확인이 가능합니다.
+        requires_lockdown_2: 2. 아직 최신 버전을 설치하지 않았다면 아래 링크를 통해 최신 버전의 시험 전용 브라우저를 다운로드하여 설치해 주시기 바랍니다.
+        requires_lockdown_3: 3. 설치가 완료되었다면, 다운로드 받은 최신 버전의 시험 전용 브라우저를 실행하여 다시 접속 후 시험에 응시해 주십시오.
+        download_lockdown_link: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
       managed_quiz_data:
         titles:
           submission_needs_review: 이 제출물은 검토가 필요함
