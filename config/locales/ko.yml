@@ -18711,6 +18711,11 @@ ko:
           download_lockdown: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
         requires_lockdown: 이 퀴즈는 반드시 시험 전용 브라우저 (TrustLock Browser)를 통해서만 응시할 수 있습니다.
           퀴즈를 응시하거나, 퀴즈 결과를 보려면 시험 전용 브라우저를 설치해 주시기 바랍니다.
+        requires_lockdown_h: 시험 전용 브라우저 (TrustLock Browser)를 통한 응시 필요
+        requires_lockdown_1: 1. 이 퀴즈는 반드시 최신 버전의 시험 전용 브라우저 (TrustLock Browser)를 통해서만 시험 응시 및 결과 확인이 가능합니다.
+        requires_lockdown_2: 2. 아직 최신 버전을 설치하지 않았다면 아래 링크를 통해 최신 버전의 시험 전용 브라우저를 다운로드하여 설치해 주시기 바랍니다.
+        requires_lockdown_3: 3. 설치가 완료되었다면, 다운로드 받은 최신 버전의 시험 전용 브라우저를 실행하여 다시 접속 후 시험에 응시해 주십시오.
+        download_lockdown_link: '[시험 전용 브라우저 (TrustLock Browser) 설치]'
       managed_quiz_data:
         anonymous_student: 학생 %{user_counter}
         logged_out_user: 사용자 %{user_counter} 로그 아웃

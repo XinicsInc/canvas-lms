@@ -21,12 +21,18 @@
 </h1>
 
 <p>
-  <%= t(:requires_lockdown, "This quiz requires Respondus LockDown Browser.  Please launch Respondus LockDown Browser to take this quiz or view your quiz results.") %>
+  <%= t(:requires_lockdown_1, "1. This quiz must only be taken through the latest version of the exam-only browser (TrustLock Browser). Quiz attempts and result viewing are only available through it.") %>
 </p>
 
 <% unless @lockdown_browser_download_url.blank? %>
   <p>
-    <%= before_label(:download_lockdown, "If you have not already installed the browser, please download it from here") %>
-    <%= link_to(t('links.download_lockdown', "[Download Respondus LockDown Browser]"), @lockdown_browser_download_url) %>
+    <%= t(:requires_lockdown_2, "2. If you have not yet installed the latest version, please download and install the latest version of the exam-only browser through the link below.") %>
+    <br />
+    &nbsp;&nbsp;
+    <%= link_to(t('download_lockdown_link', "[Download TrustLock  Browser]"), @lockdown_browser_download_url) %>
   </p>
 <% end %>
+
+<p>
+  <%= t(:requires_lockdown_3, "3. Once installation is complete, run the downloaded latest version of the exam-only browser, reconnect, and take the quiz.") %>
+</p>
