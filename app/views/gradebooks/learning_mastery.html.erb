@@ -20,7 +20,7 @@
   provide :page_title, t('Learning Mastery - %{context_name}', context_name: @context.name)
   add_body_class "gradebook full-width"
   @show_left_side = true
-  @collapse_course_menu = true
+  @collapse_course_menu = false
   @show_embedded_chat = false
   css_bundle :slickgrid, :learning_mastery
 %>
