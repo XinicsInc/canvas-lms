@@ -124,7 +124,12 @@
   }
 
   .ic-item-row__meta-actions {
-    height: 23px;
+    // a fixed height lets the manage menu button and the blueprint lock icon
+    // overflow onto the meta content below, so only guarantee a minimum
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 23px;
   }
 
   .ic-item-row__meta-content {
@@ -201,6 +206,13 @@
       vertical-align: text-bottom;
       margin-#{direction(left)}: 10px;
       margin-#{direction(right)}: 2px;
+
+      .icon-blueprint,
+      .icon-blueprint-lock {
+        // uneven bottom spacing shifts the glyph above the manage menu icon
+        margin-bottom: 0;
+        padding: 8px;
+      }
     }
   }
 
