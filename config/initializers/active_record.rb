@@ -258,6 +258,10 @@ class ActiveRecord::Base
     end
   end
 
+  # 프로세스 전역 스위치. 값을 쓰는 곳은 self.skip_touch_context 뿐이어야 한다.
+  # 읽는 쪽에서 대입이 일어나면 객체 하나의 건너뛰기가 프로세스 전체로 새어 나간다.
+  @@skip_touch_context = false
+
   def self.skip_touch_context(skip=true)
     @@skip_touch_context = skip
   end
@@ -265,11 +269,12 @@ class ActiveRecord::Base
   def save_without_touching_context
     @skip_touch_context = true
     self.save
+  ensure
     @skip_touch_context = false
   end
 
   def touch_context
-    return if (@@skip_touch_context ||= false || @skip_touch_context ||= false)
+    return if @@skip_touch_context || @skip_touch_context
     if self.respond_to?(:context_type) && self.respond_to?(:context_id) && self.context_type && self.context_id
       self.class.connection.after_transaction_commit do
         self.context_type.constantize.where(id: self.context_id).update_all(updated_at: Time.now.utc)
