@@ -32,6 +32,7 @@ function renderStatusBar(overrideProps) {
       onResize={() => {}}
       onKBShortcutModalOpen={() => {}}
       onA11yChecker={() => {}}
+      onFullscreen={() => {}}
       {...overrideProps}
     />
   )
@@ -126,7 +127,7 @@ describe('RCE StatusBar', () => {
 
   describe('in fullscreen mode', () => {
     it('labels the button "Exit Fullscreen" instead of "Fullscreen"', () => {
-      const {getByText, queryByText} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const {getByText, queryByText} = renderStatusBar({isFullscreen: true})
       expect(getByText('Exit Fullscreen')).toBeInTheDocument()
       expect(queryByText('Fullscreen')).toBeNull()
     })
@@ -139,7 +140,7 @@ describe('RCE StatusBar', () => {
     })
 
     it('fixes the exit button to the bottom right, above the fullscreen editor', () => {
-      const {getByTestId} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const {getByTestId} = renderStatusBar({isFullscreen: true})
       const exitContainer = getByTestId('RCEFullscreenExit')
       expect(exitContainer.style.position).toBe('fixed')
       // TinyMCE 5 CSS fullscreen (.tox-fullscreen) uses z-index 1200,
@@ -149,7 +150,7 @@ describe('RCE StatusBar', () => {
     })
 
     it('always makes the exit button the tab stop while fullscreen', () => {
-      const {getByTestId, container} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const {getByTestId, container} = renderStatusBar({isFullscreen: true})
       const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
       // focusedIndex starts at 0 (kb shortcut button), but the covered
       // status-bar buttons must not hold the tab stop during fullscreen
@@ -161,7 +162,7 @@ describe('RCE StatusBar', () => {
     })
 
     it('does not move focus with arrow keys while fullscreen', () => {
-      const {getByTestId} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const {getByTestId} = renderStatusBar({isFullscreen: true})
       const statusbar = getByTestId('RCEStatusBar')
       const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
       exitButton.focus()
@@ -177,11 +178,7 @@ describe('RCE StatusBar', () => {
       // element behind the overlay stays in the tab order (a stray Tab+Enter
       // can even hit a quiz's hidden Submit button), so Tab must be trapped
       const onFocusEditor = jest.fn()
-      const {getByTestId} = renderStatusBar({
-        isFullscreen: true,
-        onFullscreen: () => {},
-        onFocusEditor
-      })
+      const {getByTestId} = renderStatusBar({isFullscreen: true, onFocusEditor})
       const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
       exitButton.focus()
       const tabEvent = fireEvent.keyDown(exitButton, {keyCode: keycode.codes.tab})
@@ -198,7 +195,7 @@ describe('RCE StatusBar', () => {
     })
 
     it('does not render the fixed exit button when not in fullscreen', () => {
-      const {queryByTestId} = renderStatusBar({isFullscreen: false, onFullscreen: () => {}})
+      const {queryByTestId} = renderStatusBar({isFullscreen: false})
       expect(queryByTestId('RCEFullscreenExit')).toBeNull()
     })
   })
