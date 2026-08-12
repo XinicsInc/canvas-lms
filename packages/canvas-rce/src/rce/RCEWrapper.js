@@ -212,6 +212,7 @@ class RCEWrapper extends React.Component {
       path: [],
       wordCount: 0,
       isHtmlView: false,
+      isFullscreen: false,
       KBShortcutModalOpen: false,
       messages: [],
       announcement: null,
@@ -521,7 +522,8 @@ class RCEWrapper extends React.Component {
   }
 
   focus() {
-    this.onTinyMCEInstance('mceFocus')
+    // the mceFocus exec command was removed in TinyMCE 5 — use the API
+    this.mceInstance().focus()
   }
 
   is_dirty() {
@@ -670,7 +672,7 @@ class RCEWrapper extends React.Component {
     } else if (event.code === 'Escape') {
       // ESC
       this._forceCloseFloatingToolbar()
-      if (this._fullscreenState.isFullscreen) {
+      if (this.state.isFullscreen) {
         this.mceInstance().execCommand('mceFullScreen') // turn it off
       } else {
         bridge.hideTrays()
@@ -711,8 +713,7 @@ class RCEWrapper extends React.Component {
   }
 
   _fullscreenState = {
-    headerDisp: 'static',
-    isFullscreen: false
+    headerDisp: 'static'
   }
 
   _toggleFullscreen = event => {
@@ -720,13 +721,12 @@ class RCEWrapper extends React.Component {
     if (header) {
       if (event.state) {
         this._fullscreenState.headerDisp = header.style.display
-        this._fullscreenState.isFullscreen = true
         header.style.display = 'none'
       } else {
         header.style.display = this._fullscreenState.headerDisp
-        this._fullscreenState.isFullscreen = false
       }
     }
+    this.setState({isFullscreen: !!event.state})
   }
 
   _forceCloseFloatingToolbar = () => {
@@ -1253,10 +1253,17 @@ class RCEWrapper extends React.Component {
           path={this.state.path}
           wordCount={this.state.wordCount}
           isHtmlView={this.state.isHtmlView}
+          isFullscreen={this.state.isFullscreen}
           onResize={this.onResize}
           onKBShortcutModalOpen={this.openKBShortcutModal}
           onA11yChecker={this.onA11yChecker}
           onFullscreen={this.handleClickFullscreen}
+          onFocusEditor={() => {
+            // NOT this.focus(): canvas's polyfill.wrapEditor() shadows the
+            // instance's focus with a legacy editor.focus(true) (skipFocus)
+            // that marks the editor active without moving DOM focus
+            this.mceInstance().focus()
+          }}
         />
         <CanvasContentTray
           key={this.id}

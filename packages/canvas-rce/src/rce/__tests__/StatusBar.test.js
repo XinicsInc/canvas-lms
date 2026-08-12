@@ -123,4 +123,83 @@ describe('RCE StatusBar', () => {
     a11yButton.click()
     expect(onA11yCallback).toHaveBeenCalled()
   })
+
+  describe('in fullscreen mode', () => {
+    it('labels the button "Exit Fullscreen" instead of "Fullscreen"', () => {
+      const {getByText, queryByText} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      expect(getByText('Exit Fullscreen')).toBeInTheDocument()
+      expect(queryByText('Fullscreen')).toBeNull()
+    })
+
+    it('calls onFullscreen when clicking the exit fullscreen button', () => {
+      const onFullscreen = jest.fn()
+      const {getByText} = renderStatusBar({isFullscreen: true, onFullscreen})
+      getByText('Exit Fullscreen').click()
+      expect(onFullscreen).toHaveBeenCalled()
+    })
+
+    it('fixes the exit button to the bottom right, above the fullscreen editor', () => {
+      const {getByTestId} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const exitContainer = getByTestId('RCEFullscreenExit')
+      expect(exitContainer.style.position).toBe('fixed')
+      // TinyMCE 5 CSS fullscreen (.tox-fullscreen) uses z-index 1200,
+      // its modal dialogs (.tox-tinymce-aux) use 1300 — stay between them
+      expect(parseInt(exitContainer.style.zIndex, 10)).toBeGreaterThan(1200)
+      expect(parseInt(exitContainer.style.zIndex, 10)).toBeLessThan(1300)
+    })
+
+    it('always makes the exit button the tab stop while fullscreen', () => {
+      const {getByTestId, container} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
+      // focusedIndex starts at 0 (kb shortcut button), but the covered
+      // status-bar buttons must not hold the tab stop during fullscreen
+      expect(exitButton.getAttribute('tabindex')).toBe('0')
+      const others = Array.from(container.querySelectorAll('[tabindex]')).filter(
+        b => b !== exitButton
+      )
+      others.forEach(b => expect(b.getAttribute('tabindex')).toBe('-1'))
+    })
+
+    it('does not move focus with arrow keys while fullscreen', () => {
+      const {getByTestId} = renderStatusBar({isFullscreen: true, onFullscreen: () => {}})
+      const statusbar = getByTestId('RCEStatusBar')
+      const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
+      exitButton.focus()
+      expect(document.activeElement).toBe(exitButton)
+      fireEvent.keyDown(statusbar, {keyCode: keycode.codes.right})
+      expect(document.activeElement).toBe(exitButton)
+      fireEvent.keyDown(statusbar, {keyCode: keycode.codes.left})
+      expect(document.activeElement).toBe(exitButton)
+    })
+
+    it('returns focus to the editor instead of tabbing to covered page content', () => {
+      // on desktop TinyMCE's CSS fullscreen only covers the page — every
+      // element behind the overlay stays in the tab order (a stray Tab+Enter
+      // can even hit a quiz's hidden Submit button), so Tab must be trapped
+      const onFocusEditor = jest.fn()
+      const {getByTestId} = renderStatusBar({
+        isFullscreen: true,
+        onFullscreen: () => {},
+        onFocusEditor
+      })
+      const exitButton = getByTestId('RCEFullscreenExit').querySelector('button')
+      exitButton.focus()
+      const tabEvent = fireEvent.keyDown(exitButton, {keyCode: keycode.codes.tab})
+      expect(tabEvent).toBe(false) // fireEvent returns false when default was prevented
+      expect(onFocusEditor).toHaveBeenCalled()
+
+      onFocusEditor.mockClear()
+      const shiftTabEvent = fireEvent.keyDown(exitButton, {
+        keyCode: keycode.codes.tab,
+        shiftKey: true
+      })
+      expect(shiftTabEvent).toBe(false)
+      expect(onFocusEditor).toHaveBeenCalled()
+    })
+
+    it('does not render the fixed exit button when not in fullscreen', () => {
+      const {queryByTestId} = renderStatusBar({isFullscreen: false, onFullscreen: () => {}})
+      expect(queryByTestId('RCEFullscreenExit')).toBeNull()
+    })
+  })
 })
