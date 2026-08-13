@@ -131,7 +131,8 @@ describe('RCEWrapper', () => {
       },
       execCommand: editorCommandSpy,
       serializer: {serialize: sinon.stub()},
-      ui: {registry: {addIcon: () => {}}}
+      ui: {registry: {addIcon: () => {}}},
+      focus: sinon.spy()
     }
 
     fakeTinyMCE = {
@@ -181,9 +182,11 @@ describe('RCEWrapper', () => {
     })
 
     it('calls focus on its tinyMCE instance', () => {
+      // TinyMCE 5 removed the v4 mceFocus command — focus() must use the
+      // editor's focus() API for anything to actually happen
       element = createBasicElement({textareaId: 'myOtherUniqId'})
       element.focus()
-      assert(editorCommandSpy.withArgs('mceFocus', false, 'myOtherUniqId', undefined).called)
+      assert(editor.focus.called)
     })
 
     it('resets the doc of the editor on removal', () => {
@@ -745,6 +748,36 @@ describe('RCEWrapper', () => {
       const editor = createBasicElement({onFocus: sinon.spy()})
       editor.handleFocus()
       sinon.assert.calledWith(editor.props.onFocus, editor)
+    })
+  })
+
+  describe('fullscreen state', () => {
+    it('reflects FullscreenStateChanged in component state', () => {
+      const instance = createdMountedElement().getMountedInstance()
+      assert.equal(instance.state.isFullscreen, false)
+      instance._toggleFullscreen({state: true})
+      assert.equal(instance.state.isFullscreen, true)
+      instance._toggleFullscreen({state: false})
+      assert.equal(instance.state.isFullscreen, false)
+    })
+
+    it('passes isFullscreen to the status bar', () => {
+      const tree = createdMountedElement()
+      const instance = tree.getMountedInstance()
+      assert.equal(tree.subTree('StatusBar').props.isFullscreen, false)
+      instance._toggleFullscreen({state: true})
+      assert.equal(tree.subTree('StatusBar').props.isFullscreen, true)
+    })
+
+    it('gives the status bar a way to return focus to the editor', () => {
+      const tree = createdMountedElement()
+      const onFocusEditor = tree.subTree('StatusBar').props.onFocusEditor
+      assert.equal(typeof onFocusEditor, 'function')
+      onFocusEditor()
+      assert(editor.focus.called)
+      // focus(true) means skipFocus — it only marks the editor active and
+      // never moves DOM focus, which would break the fullscreen Tab trap
+      assert(!editor.focus.calledWith(true))
     })
   })
 
