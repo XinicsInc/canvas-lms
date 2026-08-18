@@ -63,8 +63,10 @@ describe "quizzes section hierarchy" do
     # make sure it does not create a blank submissions
     expect(f("#content")).not_to contain_css('.quiz_score')
     expect(f("#content")).not_to contain_css('.quiz_duration')
+    # PRT-109: 퀴즈 이탈 확인이 네이티브 confirm에서 페이지 내부 모달로 변경됨
     f('#section-tabs .quizzes').click
-    accept_alert
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
     wait_for_ajaximations
   end
 
@@ -144,7 +146,6 @@ describe "quizzes section hierarchy" do
       end
 
       it "should allow student in section to take quiz", priority: "1", test_id: 323321 do
-        skip_if_safari(:alert)
         user_session(@student)
         verify_quiz_accessible
       end
@@ -161,7 +162,6 @@ describe "quizzes section hierarchy" do
       end
 
       it "should allow student to take quiz", priority: "1", test_id: 323326 do
-        skip_if_safari(:alert)
         user_session(@student)
         verify_quiz_accessible
       end
