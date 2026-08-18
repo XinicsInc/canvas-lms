@@ -21,7 +21,9 @@ import {
   getSubmitWarningMessage,
   decideLinkClick,
   decideSubmitAttempt,
-  neutralizeUjsLinkAttributes
+  neutralizeUjsLinkAttributes,
+  showQuizWarningDialog,
+  cancelPendingWarning
 } from 'quiz_taking_dialogs'
 
 QUnit.module('getSubmitWarningMessage')
@@ -237,4 +239,107 @@ test('중화 후 판정 함수는 해당 링크를 일반 링크로 취급한다
   neutralizeUjsLinkAttributes($('#quiz-instructions, #questions'))
   equal(decideLinkClick(freshState(), $('#l2')[0], EVT), 'intercept')
   equal(decideLinkClick(freshState(), $('#l1')[0], EVT), 'ignore') // href="#"는 해시 예외
+})
+
+QUnit.module('showQuizWarningDialog', {
+  setup() {
+    $('#fixtures').html(
+      '<div style="display:none" id="quiz_warning_dialog">' +
+        '<p class="quiz_warning_message"></p>' +
+        '</div>'
+    )
+  },
+  teardown() {
+    cancelPendingWarning()
+    const $d = $('#quiz_warning_dialog')
+    if ($d.data('ui-dialog')) $d.dialog('destroy')
+    $('#fixtures').empty()
+  }
+})
+
+test('메시지를 텍스트로 표시하고 [확인] 클릭 시 onConfirm을 정확히 한 번 호출한다', () => {
+  let calls = 0
+  showQuizWarningDialog({
+    message: '<b>3 unanswered</b>',
+    confirmText: 'OK',
+    onConfirm() {
+      calls++
+    }
+  })
+  // XSS 방지 — text()로 넣으므로 태그가 이스케이프되어야 한다
+  equal($('.quiz_warning_message').text(), '<b>3 unanswered</b>')
+  equal($('.quiz_warning_message').find('b').length, 0)
+  $(".ui-dialog-buttonpane button:contains('OK')").click()
+  equal(calls, 1)
+  notOk($('#quiz_warning_dialog').dialog('isOpen'))
+})
+
+test('모달이 열리면 포커스가 모달 내부로 이동한다 (spec AC10 전반)', () => {
+  showQuizWarningDialog({message: 'm', confirmText: 'OK', onConfirm() {}})
+  ok($.contains($('.ui-dialog:visible')[0], document.activeElement))
+})
+
+test('[취소] 클릭 시 onConfirm을 호출하지 않고 닫는다', () => {
+  let calls = 0
+  showQuizWarningDialog({
+    message: 'm',
+    confirmText: 'OK',
+    onConfirm() {
+      calls++
+    }
+  })
+  $(".ui-dialog-buttonpane button:contains('Cancel')").click()
+  equal(calls, 0)
+  notOk($('#quiz_warning_dialog').dialog('isOpen'))
+})
+
+test('ESC로 닫아도 onConfirm을 호출하지 않는다 (spec AC10)', () => {
+  let calls = 0
+  showQuizWarningDialog({
+    message: 'm',
+    confirmText: 'OK',
+    onConfirm() {
+      calls++
+    }
+  })
+  const esc = $.Event('keydown', {keyCode: $.ui.keyCode.ESCAPE})
+  $('#quiz_warning_dialog').trigger(esc)
+  notOk($('#quiz_warning_dialog').dialog('isOpen'))
+  equal(calls, 0)
+})
+
+test('cancelPendingWarning은 열려 있는 모달을 닫고 보류 콜백을 폐기한다', () => {
+  let calls = 0
+  showQuizWarningDialog({
+    message: 'm',
+    confirmText: 'OK',
+    onConfirm() {
+      calls++
+    }
+  })
+  cancelPendingWarning()
+  notOk($('#quiz_warning_dialog').dialog('isOpen'))
+  equal(calls, 0)
+})
+
+test('모달이 열린 채 다시 호출하면 이전 콜백을 폐기하고 새 콜백으로 교체한다', () => {
+  let first = 0
+  let second = 0
+  showQuizWarningDialog({
+    message: 'a',
+    confirmText: 'OK',
+    onConfirm() {
+      first++
+    }
+  })
+  showQuizWarningDialog({
+    message: 'b',
+    confirmText: 'OK',
+    onConfirm() {
+      second++
+    }
+  })
+  $(".ui-dialog-buttonpane button:contains('OK')").click()
+  equal(first, 0)
+  equal(second, 1)
 })

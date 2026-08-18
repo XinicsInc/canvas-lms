@@ -18,6 +18,7 @@
 
 import $ from 'jquery'
 import I18n from 'i18n!quizzes.take_quiz'
+import 'jqueryui/dialog'
 
 // PRT-109: 응시 중 브라우저 네이티브 다이얼로그 제거를 위한 헬퍼 모듈.
 // spec: docs/superpowers/specs/2026-08-18-PRT-109-spec.md
@@ -131,4 +132,56 @@ export function getSubmitWarningMessage({
   }
 
   return warningMessage
+}
+
+// 열려 있는 확인 모달의 보류 콜백. 한 번에 하나만 유지한다.
+let pendingConfirm = null
+
+// 페이지 내부 확인 모달 (spec D1 — #times_up_dialog/#deauthorized_dialog와 동일한 jQuery UI 방식).
+// 네이티브 confirm과 달리 비동기이므로, 호출측은 원래 동작을 막아두고
+// onConfirm에서 정확히 한 번 재개해야 한다 (spec D2).
+export function showQuizWarningDialog({message, confirmText, onConfirm}) {
+  cancelPendingWarning()
+  const $dialog = $('#quiz_warning_dialog')
+  // i18n 문자열이지만 방어적으로 text()로 삽입한다 (HTML 해석 금지)
+  $dialog.find('.quiz_warning_message').text(message)
+  pendingConfirm = {onConfirm}
+  $dialog.dialog({
+    title: I18n.t('titles.quiz_warning', 'Attention'),
+    modal: true,
+    width: 400,
+    resizable: false,
+    buttons: [
+      {
+        text: I18n.t('#buttons.cancel', 'Cancel'),
+        click() {
+          $dialog.dialog('close')
+        }
+      },
+      {
+        class: 'btn-primary',
+        text: confirmText,
+        click() {
+          const pending = pendingConfirm
+          pendingConfirm = null
+          $dialog.dialog('close')
+          if (pending) pending.onConfirm()
+        }
+      }
+    ],
+    // 취소·ESC·X 등 어떤 경로로 닫혀도 보류 콜백은 폐기한다
+    close() {
+      pendingConfirm = null
+    }
+  })
+  if (!$dialog.dialog('isOpen')) $dialog.dialog('open')
+}
+
+// 시간 만료(times_up) 등 외부 사유로 확인 모달을 강제 종료할 때 사용 (spec D5).
+export function cancelPendingWarning() {
+  pendingConfirm = null
+  const $dialog = $('#quiz_warning_dialog')
+  if ($dialog.data('ui-dialog') && $dialog.dialog('isOpen')) {
+    $dialog.dialog('close')
+  }
 }

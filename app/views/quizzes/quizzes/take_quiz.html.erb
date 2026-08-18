@@ -120,6 +120,11 @@
     </div>
   </div>
 
+  <%# PRT-109: 응시 중 링크 이탈·제출 확인을 위한 페이지 내부 모달 (네이티브 confirm 대체) %>
+  <div style="display: none;" id="quiz_warning_dialog">
+    <p class="quiz_warning_message"></p>
+  </div>
+
   <div class=form-actions>
     <span id="last_saved_indicator"><%= t("not_saved", "Not saved") %></span>
     <button type="submit" class="btn submit_button quiz_submit btn-secondary" id="submit_quiz_button" data-action="<%= @quiz_presenter.submit_form_action(session, @current_user) %>">
