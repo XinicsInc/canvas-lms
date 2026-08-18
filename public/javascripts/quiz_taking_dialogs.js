@@ -41,10 +41,10 @@ export function neutralizeUjsLinkAttributes($roots) {
 // 응시 중 링크 클릭 판정 + 상태 전이 (take_quiz.js 링크 delegate의 판단부).
 // 기존 핸들러(원 614–649행)의 예외 순서를 그대로 보존한다.
 // state는 quizSubmission 객체 — warningBypassLink·alreadyAcceptedNavigatingAway를 읽고 쓴다.
-// - 'ignore'    통과, 상태 전이 없음 (다이얼로그 내부·파일 미리보기·UJS·이미 prevented·해시)
+// - 'ignore'    통과, 상태 전이 없음 (다이얼로그 내부·파일 미리보기·UJS·보조키 클릭·이미 prevented·해시)
 // - 'proceed'   통과, 상태 전이 수행 (no-warning: 이탈 승인 / bypass: 플래그 1회 소비 + 이탈 승인)
 // - 'intercept' 이탈 경고 모달 표시 대상
-export function decideLinkClick(state, link, {defaultPrevented, locationHref}) {
+export function decideLinkClick(state, link, {defaultPrevented, locationHref, hasModifier}) {
   const $link = $(link)
   if ($link.closest('.ui-dialog,.mceToolbar,.ui-selectmenu').length > 0) return 'ignore'
   if ($link.hasClass('no-warning')) {
@@ -54,6 +54,9 @@ export function decideLinkClick(state, link, {defaultPrevented, locationHref}) {
   if ($link.hasClass('file_preview_link')) return 'ignore'
   // UJS 계열은 인터셉트하지 않는다 (spec D2 — ujsLinks와의 바인딩 순서 비결정)
   if ($link.is('[data-method], [data-confirm], [data-remove]')) return 'ignore'
+  // 보조키(ctrl/cmd/shift) 클릭은 새 탭/창으로 열려 현재 응시 페이지를 떠나지 않으므로
+  // 이탈 경고 대상이 아니다. 재발행으로는 보조키 의미를 보존할 수 없으므로 인터셉트하지 않는다.
+  if (hasModifier) return 'ignore'
   if (state.warningBypassLink === link) {
     // [계속]으로 재발행된 클릭: 정확히 1회만 통과 (재진입 방지, spec R7)
     state.warningBypassLink = null

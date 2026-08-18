@@ -167,6 +167,10 @@ test('일반 링크는 intercept이며 상태를 바꾸지 않는다', () => {
   notOk(state.alreadyAcceptedNavigatingAway)
 })
 
+test('보조키(ctrl/cmd/shift) 클릭은 ignore — 새 탭 열기는 이탈이 아니다', () => {
+  equal(decideLinkClick(freshState(), $('#normal')[0], {...EVT, hasModifier: true}), 'ignore')
+})
+
 QUnit.module('decideSubmitAttempt')
 
 test('[확인] 재제출 플래그가 있으면 proceed하며 플래그를 소비하고 submitting을 세운다 (spec R7)', () => {

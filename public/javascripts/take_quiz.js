@@ -629,7 +629,8 @@ $(function() {
       // PRT-109: 판정·재진입 방지 플래그 소비는 decideLinkClick(단위 테스트 완료)이 수행한다
       const verdict = decideLinkClick(quizSubmission, this, {
         defaultPrevented: event.isDefaultPrevented(),
-        locationHref: location.href
+        locationHref: location.href,
+        hasModifier: event.ctrlKey || event.metaKey || event.shiftKey
       })
       if (verdict !== 'intercept') return
       // 네이티브 confirm 대신 페이지 내부 모달 (spec D1/D2).
