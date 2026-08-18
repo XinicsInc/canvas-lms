@@ -112,10 +112,10 @@ describe 'taking a quiz' do
             quiz: quiz_with_unlimited_attempts
           )
 
-          # exit quiz without submitting
+          # PRT-109: 퀴즈 이탈 확인이 네이티브 confirm에서 페이지 내부 모달로 변경됨
           expect_new_page_load do
             fln('Quizzes').click
-            driver.switch_to.alert.accept
+            fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
           end
 
           yield if block_given?
@@ -124,8 +124,8 @@ describe 'taking a quiz' do
           # This prevents selenium from freezing when the dialog appears upon leaving the quiz
           begin
             fln('Quizzes').click
-            driver.switch_to.alert.accept
-          rescue Selenium::WebDriver::Error::NoSuchAlertError
+            fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
+          rescue Selenium::WebDriver::Error::NoSuchElementError, Selenium::WebDriver::Error::TimeoutError
             # Do nothing
           end
         end

@@ -29,6 +29,11 @@ import QuizLogAuditing from 'compiled/quizzes/log_auditing'
 import QuizLogAuditingEventDumper from 'compiled/quizzes/dump_events'
 import KeyboardShortcuts from 'compiled/views/editor/KeyboardShortcuts'
 import RichContentEditor from 'jsx/shared/rce/RichContentEditor'
+import {
+  neutralizeUjsLinkAttributes,
+  decideLinkClick,
+  showQuizWarningDialog
+} from 'quiz_taking_dialogs'
 import './jquery.ajaxJSON'
 import './jquery.toJSON'
 import './jquery.instructure_date_and_time' /* friendlyDatetime, friendlyDate */
@@ -92,6 +97,8 @@ const quizSubmission = (function() {
     clockInterval: 500,
     backupsDisabled: document.location.search.search(/backup=false/) > -1,
     clearAccessCode: true,
+    // PRT-109: [계속] 클릭 시 재발행할 링크를 1회만 통과시키기 위한 플래그 (소비는 decideLinkClick)
+    warningBypassLink: null,
     updateSubmission(repeat, autoInterval) {
       /**
        * Transient: CNVS-9844
@@ -612,40 +619,28 @@ $(function() {
     )
 
     $(document).delegate('a', 'click', function(event) {
-      if ($(this).closest('.ui-dialog,.mceToolbar,.ui-selectmenu').length > 0) {
-        return
-      }
-
-      if ($(this).hasClass('no-warning')) {
-        quizSubmission.alreadyAcceptedNavigatingAway = true
-        return
-      }
-
-      if ($(this).hasClass('file_preview_link')) {
-        return
-      }
-
-      if (!event.isDefaultPrevented()) {
-        const url = $(this).attr('href') || ''
-        let hashStripped = location.href
-        if (hashStripped.indexOf('#')) {
-          hashStripped = hashStripped.substring(0, hashStripped.indexOf('#'))
+      // PRT-109: 판정·재진입 방지 플래그 소비는 decideLinkClick(단위 테스트 완료)이 수행한다
+      const verdict = decideLinkClick(quizSubmission, this, {
+        defaultPrevented: event.isDefaultPrevented(),
+        locationHref: location.href
+      })
+      if (verdict !== 'intercept') return
+      // 네이티브 confirm 대신 페이지 내부 모달 (spec D1/D2).
+      // 일단 이동을 막고, [계속] 시 원래 클릭을 정확히 한 번 재발행한다
+      // (location.href 직접 이동은 target 등 링크 의미를 잃으므로 금지).
+      event.preventDefault()
+      const link = this
+      showQuizWarningDialog({
+        message: I18n.t(
+          'confirms.navigate_away',
+          "You're about to navigate away from this page.  Continue anyway?"
+        ),
+        confirmText: I18n.t('buttons.continue_anyway', 'Continue'),
+        onConfirm() {
+          quizSubmission.warningBypassLink = link
+          link.click()
         }
-        if (url.indexOf('#') == 0 || url.indexOf(hashStripped + '#') == 0) {
-          return
-        }
-        const result = confirm(
-          I18n.t(
-            'confirms.navigate_away',
-            "You're about to navigate away from this page.  Continue anyway?"
-          )
-        )
-        if (!result) {
-          event.preventDefault()
-        } else {
-          quizSubmission.alreadyAcceptedNavigatingAway = true
-        }
-      }
+      })
     })
   }
   const $questions = $('#questions')
@@ -1036,6 +1031,9 @@ $(() => {
 })
 
 $(document).ready(() => {
+  // PRT-109: 본문 노출 전에 user content의 UJS 트리거 속성을 중화한다 (spec D2).
+  // user_content()는 .user_content 클래스 밖에도 렌더링되므로 서브트리 전체를 대상으로 한다.
+  neutralizeUjsLinkAttributes($('#quiz-instructions, #questions'))
   $('.loaded').show()
   $('.loading').hide()
 })
