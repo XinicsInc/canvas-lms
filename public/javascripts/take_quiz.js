@@ -32,7 +32,10 @@ import RichContentEditor from 'jsx/shared/rce/RichContentEditor'
 import {
   neutralizeUjsLinkAttributes,
   decideLinkClick,
-  showQuizWarningDialog
+  decideSubmitAttempt,
+  getSubmitWarningMessage,
+  showQuizWarningDialog,
+  cancelPendingWarning
 } from 'quiz_taking_dialogs'
 import './jquery.ajaxJSON'
 import './jquery.toJSON'
@@ -99,6 +102,8 @@ const quizSubmission = (function() {
     clearAccessCode: true,
     // PRT-109: [계속] 클릭 시 재발행할 링크를 1회만 통과시키기 위한 플래그 (소비는 decideLinkClick)
     warningBypassLink: null,
+    // PRT-109: [확인] 재제출을 1회만 통과시키기 위한 플래그 (소비는 decideSubmitAttempt)
+    warningConfirmedSubmit: false,
     updateSubmission(repeat, autoInterval) {
       /**
        * Transient: CNVS-9844
@@ -413,6 +418,8 @@ const quizSubmission = (function() {
     },
 
     showTimeUpDialog(now) {
+      // PRT-109: 열려 있는 확인 모달을 닫고 보류 중이던 링크 이동·제출 재개 동작을 폐기한다 (spec D5)
+      cancelPendingWarning()
       quizSubmission.dialogged = true
       quizSubmission.countDown = new Date(now.getTime() + 10000)
 
@@ -861,60 +868,33 @@ $(function() {
       $(this).change()
     })
 
-    let unanswered
-    let warningMessage
+    const warningMessage = getSubmitWarningMessage({
+      cantGoBack: quizSubmission.cantGoBack,
+      currentQuestionAnswered: $('.question').hasClass('answered'),
+      finalSubmitButtonClicked: quizSubmission.finalSubmitButtonClicked,
+      unseenCount: $('#question_list .list_question:not(.seen)').length,
+      unansweredCount: $('#question_list .list_question:not(.answered):not(.text_only)').length
+    })
+    quizSubmission.finalSubmitButtonClicked = false // reset in case user cancels
 
-    if (quizSubmission.cantGoBack) {
-      if (!$('.question').hasClass('answered')) {
-        warningMessage = I18n.t(
-          'confirms.cant_go_back_blank',
-          "You can't come back to this question once you hit next. Are you sure you want to leave it blank?"
-        )
-      }
-    }
-
-    if (quizSubmission.finalSubmitButtonClicked) {
-      quizSubmission.finalSubmitButtonClicked = false // reset in case user cancels
-
-      if (quizSubmission.cantGoBack) {
-        const unseen = $('#question_list .list_question:not(.seen)').length
-        if (unseen > 0) {
-          warningMessage = I18n.t(
-            'confirms.unseen_questions',
-            {
-              one: "There is still 1 question you haven't seen yet.  Submit anyway?",
-              other: "There are still %{count} questions you haven't seen yet.  Submit anyway?"
-            },
-            {count: unseen}
-          )
+    // PRT-109: 판정·플래그 소비·submitting 세팅은 decideSubmitAttempt(단위 테스트 완료)가 수행한다.
+    // 자동 제출(시간 만료·end_at 폴백)은 submitting=true를 먼저 세우므로 'proceed'가 된다 (spec D5)
+    const verdict = decideSubmitAttempt(quizSubmission, warningMessage)
+    if (verdict === 'warn') {
+      // 네이티브 confirm 대신 페이지 내부 모달 (spec D1/D2)
+      event.preventDefault()
+      event.stopPropagation()
+      showQuizWarningDialog({
+        message: warningMessage,
+        confirmText: I18n.t('buttons.warning_ok', 'OK'),
+        onConfirm() {
+          quizSubmission.warningConfirmedSubmit = true
+          $('#submit_quiz_form').submit()
         }
-      } else {
-        unanswered = $('#question_list .list_question:not(.answered):not(.text_only)').length
-        if (unanswered > 0) {
-          warningMessage = I18n.t(
-            'confirms.unanswered_questions',
-            {
-              one:
-                'You have 1 unanswered question (see the right sidebar for details).  Submit anyway?',
-              other:
-                'You have %{count} unanswered questions (see the right sidebar for details).  Submit anyway?'
-            },
-            {count: unanswered}
-          )
-        }
-      }
+      })
+      return false
     }
-
-    if (warningMessage != undefined && !quizSubmission.submitting) {
-      const result = confirm(warningMessage)
-      if (!result) {
-        event.preventDefault()
-        event.stopPropagation()
-        return false
-      }
-    }
-
-    quizSubmission.submitting = true
+    // verdict === 'proceed' — decideSubmitAttempt가 submitting을 세웠으므로 추가 동작 없음
   })
 
   $('.submit_quiz_button').click(event => {
