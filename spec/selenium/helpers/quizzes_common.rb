@@ -368,7 +368,10 @@ module QuizzesCommon
   ensure
     # This step is to prevent selenium from freezing when the dialog appears when leaving the page
     fln('Quizzes').click
-    driver.switch_to.alert.accept if alert_present?
+    # PRT-109: 이탈 확인이 페이지 내부 모달로 변경됨 — 정리 경로에서 모달이 열려 있으면 계속 진행
+    if element_exists?('#quiz_warning_dialog') && f('#quiz_warning_dialog').displayed?
+      fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
+    end
   end
 
   def take_and_answer_quiz(opts={})
@@ -406,7 +409,10 @@ module QuizzesCommon
 
   def submit_quiz
     f('#submit_quiz_button').click
-    accept_alert if alert_present?
+    # PRT-109: 미응답 제출 경고가 페이지 내부 모달로 변경됨 — 표시되면 확인하고 제출 진행
+    if element_exists?('#quiz_warning_dialog') && f('#quiz_warning_dialog').displayed?
+      fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
+    end
     wait_for_ajax_requests
 
     expect(f('.quiz-submission .quiz_score .score_value')).to be_truthy

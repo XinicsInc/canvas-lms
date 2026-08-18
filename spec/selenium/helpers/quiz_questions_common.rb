@@ -165,17 +165,19 @@ module QuizQuestionsCommon
   def submit_unfinished_quiz(alert_message)
     submit_the_quiz
 
-    expect(driver.switch_to.alert.text).to include alert_message
-
-    driver.switch_to.alert.accept
-    driver.switch_to.default_content
+    # PRT-109: 미응답 제출 경고가 네이티브 confirm에서 페이지 내부 모달로 변경됨
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    expect(f('#quiz_warning_dialog .quiz_warning_message')).to include_text(alert_message)
+    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
   end
 
   def click_next_button_and_accept_warning
     expect_new_page_load {
       f("button.next-question").click
-      expect(driver.switch_to.alert.text).to include "leave it blank?"
-      driver.switch_to.alert.accept
+      # PRT-109: 공란 이동 경고가 네이티브 confirm에서 페이지 내부 모달로 변경됨
+      expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+      expect(f('#quiz_warning_dialog .quiz_warning_message')).to include_text('leave it blank?')
+      fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
     }
   end
 

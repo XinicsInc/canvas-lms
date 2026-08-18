@@ -66,7 +66,9 @@ describe "quizzes section hierarchy" do
     # PRT-109: 퀴즈 이탈 확인이 네이티브 confirm에서 페이지 내부 모달로 변경됨
     f('#section-tabs .quizzes').click
     expect(fj('#quiz_warning_dialog:visible')).to be_displayed
-    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
+    expect_new_page_load do
+      fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Continue')").click
+    end
     wait_for_ajaximations
   end
 
