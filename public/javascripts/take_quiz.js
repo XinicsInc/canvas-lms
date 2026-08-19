@@ -29,6 +29,14 @@ import QuizLogAuditing from 'compiled/quizzes/log_auditing'
 import QuizLogAuditingEventDumper from 'compiled/quizzes/dump_events'
 import KeyboardShortcuts from 'compiled/views/editor/KeyboardShortcuts'
 import RichContentEditor from 'jsx/shared/rce/RichContentEditor'
+import {
+  neutralizeUjsLinkAttributes,
+  decideLinkClick,
+  decideSubmitAttempt,
+  getSubmitWarningMessage,
+  showQuizWarningDialog,
+  cancelPendingWarning
+} from 'quiz_taking_dialogs'
 import './jquery.ajaxJSON'
 import './jquery.toJSON'
 import './jquery.instructure_date_and_time' /* friendlyDatetime, friendlyDate */
@@ -92,6 +100,10 @@ const quizSubmission = (function() {
     clockInterval: 500,
     backupsDisabled: document.location.search.search(/backup=false/) > -1,
     clearAccessCode: true,
+    // PRT-109: [계속] 클릭 시 재발행할 링크를 1회만 통과시키기 위한 플래그 (소비는 decideLinkClick)
+    warningBypassLink: null,
+    // PRT-109: [확인] 재제출을 1회만 통과시키기 위한 플래그 (소비는 decideSubmitAttempt)
+    warningConfirmedSubmit: false,
     updateSubmission(repeat, autoInterval) {
       /**
        * Transient: CNVS-9844
@@ -406,6 +418,8 @@ const quizSubmission = (function() {
     },
 
     showTimeUpDialog(now) {
+      // PRT-109: 열려 있는 확인 모달을 닫고 보류 중이던 링크 이동·제출 재개 동작을 폐기한다 (spec D5)
+      cancelPendingWarning()
       quizSubmission.dialogged = true
       quizSubmission.countDown = new Date(now.getTime() + 10000)
 
@@ -612,40 +626,29 @@ $(function() {
     )
 
     $(document).delegate('a', 'click', function(event) {
-      if ($(this).closest('.ui-dialog,.mceToolbar,.ui-selectmenu').length > 0) {
-        return
-      }
-
-      if ($(this).hasClass('no-warning')) {
-        quizSubmission.alreadyAcceptedNavigatingAway = true
-        return
-      }
-
-      if ($(this).hasClass('file_preview_link')) {
-        return
-      }
-
-      if (!event.isDefaultPrevented()) {
-        const url = $(this).attr('href') || ''
-        let hashStripped = location.href
-        if (hashStripped.indexOf('#')) {
-          hashStripped = hashStripped.substring(0, hashStripped.indexOf('#'))
+      // PRT-109: 판정·재진입 방지 플래그 소비는 decideLinkClick(단위 테스트 완료)이 수행한다
+      const verdict = decideLinkClick(quizSubmission, this, {
+        defaultPrevented: event.isDefaultPrevented(),
+        locationHref: location.href,
+        hasModifier: event.ctrlKey || event.metaKey || event.shiftKey
+      })
+      if (verdict !== 'intercept') return
+      // 네이티브 confirm 대신 페이지 내부 모달 (spec D1/D2).
+      // 일단 이동을 막고, [계속] 시 원래 클릭을 정확히 한 번 재발행한다
+      // (location.href 직접 이동은 target 등 링크 의미를 잃으므로 금지).
+      event.preventDefault()
+      const link = this
+      showQuizWarningDialog({
+        message: I18n.t(
+          'confirms.navigate_away',
+          "You're about to navigate away from this page.  Continue anyway?"
+        ),
+        confirmText: I18n.t('buttons.continue_anyway', 'Continue'),
+        onConfirm() {
+          quizSubmission.warningBypassLink = link
+          link.click()
         }
-        if (url.indexOf('#') == 0 || url.indexOf(hashStripped + '#') == 0) {
-          return
-        }
-        const result = confirm(
-          I18n.t(
-            'confirms.navigate_away',
-            "You're about to navigate away from this page.  Continue anyway?"
-          )
-        )
-        if (!result) {
-          event.preventDefault()
-        } else {
-          quizSubmission.alreadyAcceptedNavigatingAway = true
-        }
-      }
+      })
     })
   }
   const $questions = $('#questions')
@@ -866,60 +869,33 @@ $(function() {
       $(this).change()
     })
 
-    let unanswered
-    let warningMessage
+    const warningMessage = getSubmitWarningMessage({
+      cantGoBack: quizSubmission.cantGoBack,
+      currentQuestionAnswered: $('.question').hasClass('answered'),
+      finalSubmitButtonClicked: quizSubmission.finalSubmitButtonClicked,
+      unseenCount: $('#question_list .list_question:not(.seen)').length,
+      unansweredCount: $('#question_list .list_question:not(.answered):not(.text_only)').length
+    })
+    quizSubmission.finalSubmitButtonClicked = false // reset in case user cancels
 
-    if (quizSubmission.cantGoBack) {
-      if (!$('.question').hasClass('answered')) {
-        warningMessage = I18n.t(
-          'confirms.cant_go_back_blank',
-          "You can't come back to this question once you hit next. Are you sure you want to leave it blank?"
-        )
-      }
-    }
-
-    if (quizSubmission.finalSubmitButtonClicked) {
-      quizSubmission.finalSubmitButtonClicked = false // reset in case user cancels
-
-      if (quizSubmission.cantGoBack) {
-        const unseen = $('#question_list .list_question:not(.seen)').length
-        if (unseen > 0) {
-          warningMessage = I18n.t(
-            'confirms.unseen_questions',
-            {
-              one: "There is still 1 question you haven't seen yet.  Submit anyway?",
-              other: "There are still %{count} questions you haven't seen yet.  Submit anyway?"
-            },
-            {count: unseen}
-          )
+    // PRT-109: 판정·플래그 소비·submitting 세팅은 decideSubmitAttempt(단위 테스트 완료)가 수행한다.
+    // 자동 제출(시간 만료·end_at 폴백)은 submitting=true를 먼저 세우므로 'proceed'가 된다 (spec D5)
+    const verdict = decideSubmitAttempt(quizSubmission, warningMessage)
+    if (verdict === 'warn') {
+      // 네이티브 confirm 대신 페이지 내부 모달 (spec D1/D2)
+      event.preventDefault()
+      event.stopPropagation()
+      showQuizWarningDialog({
+        message: warningMessage,
+        confirmText: I18n.t('buttons.warning_ok', 'OK'),
+        onConfirm() {
+          quizSubmission.warningConfirmedSubmit = true
+          $('#submit_quiz_form').submit()
         }
-      } else {
-        unanswered = $('#question_list .list_question:not(.answered):not(.text_only)').length
-        if (unanswered > 0) {
-          warningMessage = I18n.t(
-            'confirms.unanswered_questions',
-            {
-              one:
-                'You have 1 unanswered question (see the right sidebar for details).  Submit anyway?',
-              other:
-                'You have %{count} unanswered questions (see the right sidebar for details).  Submit anyway?'
-            },
-            {count: unanswered}
-          )
-        }
-      }
+      })
+      return false
     }
-
-    if (warningMessage != undefined && !quizSubmission.submitting) {
-      const result = confirm(warningMessage)
-      if (!result) {
-        event.preventDefault()
-        event.stopPropagation()
-        return false
-      }
-    }
-
-    quizSubmission.submitting = true
+    // verdict === 'proceed' — decideSubmitAttempt가 submitting을 세웠으므로 추가 동작 없음
   })
 
   $('.submit_quiz_button').click(event => {
@@ -1036,6 +1012,9 @@ $(() => {
 })
 
 $(document).ready(() => {
+  // PRT-109: 본문 노출 전에 user content의 UJS 트리거 속성을 중화한다 (spec D2).
+  // user_content()는 .user_content 클래스 밖에도 렌더링되므로 서브트리 전체를 대상으로 한다.
+  neutralizeUjsLinkAttributes($('#quiz-instructions, #questions'))
   $('.loaded').show()
   $('.loading').hide()
 })

@@ -7659,6 +7659,7 @@ ko:
         less_time: 이 퀴즈에 대한 시간이 줄어들었습니다.
       titles:
         times_up: 시간 종료!
+        quiz_warning: 주의
         come_back_later: 나중에 돌아오기 위해 이 문제를 표시
       labels:
         time_elapsed: 지난 시간
@@ -7692,6 +7693,9 @@ ko:
         unanswered_questions:
           one: 답변하지 않은 문제가 %{count}개 있습니다(상세 정보는 오른쪽 사이드바 참고). 제출하시겠습니까?
           other: 답변하지 않은 문제가 %{count}개 있습니다(상세 정보는 오른쪽 사이드바 참고). 제출하시겠습니까?
+      buttons:
+        continue_anyway: 계속
+        warning_ok: 확인
       show_time_link: 표시
       hide_time_link: 숨기기
       login_successful: 성공적 로그인.

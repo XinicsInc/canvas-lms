@@ -81,19 +81,31 @@ describe "quiz taking" do
   end
 
   it "should show a prompt when attempting to submit with unanswered questions", priority: "1", test_id: 140608 do
-    skip_if_safari(:alert)
     get "/courses/#{@course.id}/quizzes/#{@quiz.id}"
     expect_new_page_load{f('#take_quiz_link').click}
     # answer just one question
     question = @quiz.stored_questions[0][:id]
     fj("input[type=radio][name= 'question_#{question}']").click
     f('#submit_quiz_button').click
-    # expect alert prompt to show, dismiss and answer the remaining questions
-    expect(driver.switch_to.alert.text).to be_present
-    dismiss_alert
+    # PRT-109: 미응답 제출 경고가 네이티브 confirm에서 페이지 내부 모달로 변경됨
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('Cancel')").click
     question = @quiz.stored_questions[1][:id]
     fj("input[type=radio][name= 'question_#{question}']").click
     expect_new_page_load { f('#submit_quiz_button').click }
+    expect(f('.quiz-submission .quiz_score .score_value')).to be_displayed
+  end
+
+  it "PRT-109: 미응답 경고 모달에서 확인을 누르면 그대로 제출된다", priority: "1" do
+    get "/courses/#{@course.id}/quizzes/#{@quiz.id}"
+    expect_new_page_load{f('#take_quiz_link').click}
+    # 한 문항만 답하고 제출 시도
+    question = @quiz.stored_questions[0][:id]
+    fj("input[type=radio][name= 'question_#{question}']").click
+    f('#submit_quiz_button').click
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    # 확인 클릭 시 경고를 다시 표시하지 않고 제출이 완료되어야 한다
+    expect_new_page_load { fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click }
     expect(f('.quiz-submission .quiz_score .score_value')).to be_displayed
   end
 

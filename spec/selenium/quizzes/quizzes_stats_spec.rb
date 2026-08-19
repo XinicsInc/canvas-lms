@@ -50,7 +50,6 @@ describe 'quizzes stats' do
 
     context 'teacher preview' do
       it 'should not show a quiz stats button if there was a teacher preview', priority: "2", test_id: 140645 do
-        skip_if_safari(:alert)
         quiz_with_new_questions(!:goto_edit)
         get "/courses/#{@course.id}/quizzes/#{@quiz.id}"
 
@@ -58,7 +57,9 @@ describe 'quizzes stats' do
         f('#preview_quiz_button').click
         wait_for_ajaximations
         f('#submit_quiz_button').click
-        driver.switch_to.alert.accept
+        # PRT-109: 미응답 제출 경고가 네이티브 confirm에서 페이지 내부 모달로 변경됨
+        expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+        fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
 
         expect(f('ul.page-action-list')).not_to include_text('Quiz Statistics')
       end
