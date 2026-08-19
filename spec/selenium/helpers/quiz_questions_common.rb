@@ -183,7 +183,9 @@ module QuizQuestionsCommon
 
   def submit_finished_quiz
     submit_the_quiz
-    expect(alert_present?).to be_falsey
+    # PRT-109: 모든 문항을 답한 제출에는 경고 모달이 표시되지 않아야 한다
+    # (네이티브 alert 부재 단정은 confirm 제거 후 항상 참이 되어 검증력을 잃었다)
+    expect(element_exists?('#quiz_warning_dialog') && f('#quiz_warning_dialog').displayed?).to be_falsey
   end
 
   def answer_the_question_correctly
