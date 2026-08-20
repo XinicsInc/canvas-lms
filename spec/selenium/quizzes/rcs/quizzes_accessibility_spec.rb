@@ -98,7 +98,9 @@ describe 'quizzes accessibility' do
     f("#question_#{q[:id]}_answer_#{q[:answers][1][:id]}").click
 
     f('#submit_quiz_button').click
-    accept_alert # it will warn about having unanswered questions
+    # PRT-109: 미응답 제출 경고가 네이티브 confirm에서 페이지 내부 모달로 변경됨
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
     wait_for_ajaximations
 
     get "/courses/#{@course.id}/quizzes/#{quiz.id}/history?version=1"

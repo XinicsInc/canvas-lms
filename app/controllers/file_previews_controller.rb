@@ -60,7 +60,12 @@ class FilePreviewsController < ApplicationController
       # google docs
       elsif GoogleDocsPreview.previewable?(@domain_root_account, @file)
         url = GoogleDocsPreview.url_for(@file)
-        redirect_to('//docs.google.com/viewer?' + { embedded: true, url: url }.to_query) and return
+        # office documents are rendered by the office web viewer, everything else by google docs
+        if GoogleDocsPreview.is_office_doc?(@file)
+          redirect_to('//view.officeapps.live.com/op/embed.aspx?' + { src: url }.to_query) and return
+        else
+          redirect_to('//docs.google.com/viewer?' + { embedded: true, url: url }.to_query) and return
+        end
       # images
       elsif @file.content_type =~ %r{\Aimage/}
         return render template: 'file_previews/img_preview', layout: false

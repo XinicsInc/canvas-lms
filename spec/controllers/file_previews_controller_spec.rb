@@ -70,10 +70,19 @@ describe FilePreviewsController do
     expect(response).to redirect_to @attachment.canvadoc_url
   end
 
-  it "should redirect to a google doc preview if available" do
+  it "should redirect to an office web viewer preview for office documents" do
     allow_any_instance_of(Attachment).to receive(:crocodoc_url).and_return(nil)
     allow_any_instance_of(Attachment).to receive(:canvadoc_url).and_return(nil)
     attachment_model content_type: 'application/msword'
+    get :show, params: {course_id: @course.id, file_id: @attachment.id}
+    expect(response).to be_redirect
+    expect(response.location).to match %r{\A//view.officeapps.live.com/op/embed.aspx}
+  end
+
+  it "should redirect to a google doc preview if available" do
+    allow_any_instance_of(Attachment).to receive(:crocodoc_url).and_return(nil)
+    allow_any_instance_of(Attachment).to receive(:canvadoc_url).and_return(nil)
+    attachment_model content_type: 'application/vnd.oasis.opendocument.text'
     get :show, params: {course_id: @course.id, file_id: @attachment.id}
     expect(response).to be_redirect
     expect(response.location).to match %r{\A//docs.google.com/viewer}

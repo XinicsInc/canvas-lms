@@ -27,37 +27,41 @@ import './jquery.instructure_misc_helpers' /*  /\$\.uniq/, capitalize */
 import './jquery.loadingImg'
 import sanitizeUrl from '../../app/jsx/shared/helpers/sanitizeUrl'
 
-// first element in array is if scribd can handle it, second is if google can.
-const previewableMimeTypes = {
+const officeMimeTypes = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.template': [1, 1],
-  'application/vnd.oasis.opendocument.spreadsheet': [1, 1],
-  'application/vnd.sun.xml.writer': [1, 1],
   'application/excel': [1, 1],
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [1, 1],
-  'text/rtf': [1, 1],
   'application/vnd.openxmlformats-officedocument.spreadsheetml.template': [1, 1],
-  'application/vnd.sun.xml.impress': [1, 1],
-  'application/vnd.sun.xml.calc': [1, 1],
   'application/vnd.ms-excel': [1, 1],
   'application/msword': [1, 1],
   'application/mspowerpoint': [1, 1],
-  'application/rtf': [1, 1],
-  'application/vnd.oasis.opendocument.presentation': [1, 1],
-  'application/vnd.oasis.opendocument.text': [1, 1],
   'application/vnd.openxmlformats-officedocument.presentationml.template': [1, 1],
   'application/vnd.openxmlformats-officedocument.presentationml.slideshow': [1, 1],
-  'text/plain': [1, 1],
   'application/vnd.openxmlformats-officedocument.presentationml.presentation': [1, 1],
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [1, 1],
-  'application/postscript': [1, 1],
-  'application/pdf': [1, 1],
   'application/vnd.ms-powerpoint': [1, 1],
   'application/haansoftdoc': [1, 1],
   'application/haansoftdocx': [1, 1],
   'application/haansoftppt': [1, 1],
   'application/haansoftpptx': [1, 1],
   'application/haansoftxls': [1, 1],
-  'application/haansoftxlsx': [1, 1],
+  'application/haansoftxlsx': [1, 1]
+}
+
+// first element in array is if scribd can handle it, second is if google can.
+const previewableMimeTypes = {
+  ...officeMimeTypes,
+  'application/vnd.oasis.opendocument.spreadsheet': [1, 1],
+  'application/vnd.sun.xml.writer': [1, 1],
+  'text/rtf': [1, 1],
+  'application/vnd.sun.xml.impress': [1, 1],
+  'application/vnd.sun.xml.calc': [1, 1],
+  'application/rtf': [1, 1],
+  'application/vnd.oasis.opendocument.presentation': [1, 1],
+  'application/vnd.oasis.opendocument.text': [1, 1],
+  'text/plain': [1, 1],
+  'application/postscript': [1, 1],
+  'application/pdf': [1, 1],
   'application/haansoftodp': [1, 1],
   'application/haansoftods': [1, 1],
   'application/haansoftpdf': [1, 1]
@@ -78,6 +82,16 @@ $.isPreviewable = function(mimeType, service) {
       (!INST['disable' + $.capitalize(service) + 'Previews'] &&
         previewableMimeTypes[mimeType][{scribd: 0, google: 1}[service]]))
   )
+}
+$.isPreviewableOfficeDoc = function(opts) {
+  let mimeType = opts.mimetype
+  if (!mimeType) {
+    mimeType = opts.mimeType
+  }
+  if (!mimeType) {
+    return false
+  }
+  return !!officeMimeTypes[mimeType]
 }
 
 $.fn.loadDocPreview = function(options) {
@@ -158,14 +172,18 @@ $.fn.loadDocPreview = function(options) {
       opts.public_url
     ) {
       // else if it's something google docs preview can handle and we can get a public url to this document.
+      const makeGoogleDocPreviewUrl = function() {
+        let result = ''
+        if ($.isPreviewableOfficeDoc(opts)) {
+          result = '//view.officeapps.live.com/op/embed.aspx?' + $.param({src: opts.public_url})
+        } else {
+          result = '//docs.google.com/viewer?' + $.param({embedded: true, url: opts.public_url})
+        }
+        return result
+      }
       const loadGooglePreview = function() {
         // this handles both ssl and plain http.
-        const googleDocPreviewUrl =
-          '//docs.google.com/viewer?' +
-          $.param({
-            embedded: true,
-            url: opts.public_url
-          })
+        const googleDocPreviewUrl = makeGoogleDocPreviewUrl()
         if (!opts.ajax_valid || opts.ajax_valid()) {
           $(
             '<iframe src="' +
