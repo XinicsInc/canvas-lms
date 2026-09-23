@@ -945,6 +945,12 @@ class Quizzes::QuizzesController < ApplicationController
       js_env QUIZ_SUBMISSION_EVENTS_URL: events_url
     end
 
+    # Starting an LDB quiz via GET renders take_quiz in the same request that
+    # created the submission, so #show skipped UPLOAD_URL before it existed.
+    if !@js_env || !@js_env[:UPLOAD_URL]
+      js_env UPLOAD_URL: api_v1_quiz_submission_files_path(course_id: @context.id, quiz_id: @quiz.id)
+    end
+
     js_env IS_PREVIEW: true if @submission.preview?
 
     @quiz_presenter = Quizzes::TakeQuizPresenter.new(@quiz, @submission, params)
