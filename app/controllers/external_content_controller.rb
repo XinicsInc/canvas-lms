@@ -95,15 +95,13 @@ class ExternalContentController < ApplicationController
 
   end
 
+  # LXCCOP-2015 (75926) oEmbed 조회 API 비활성화.
+  # use_oembed_token 플래그가 꺼져 있으면 로그인/JWT 검증이 모두 생략되고(외부 도구가
+  # 넘긴 endpoint 파라미터가 검증 없이 CanvasHttp 요청 대상이 되어) 무인증 SSRF가 성립한다.
+  # oEmbed(return_type=oembed)를 사용하는 LTI 도구가 없어 엔드포인트 자체를 닫는다.
+  # 사용하는 도구가 생기면 플래그 강제화 + endpoint 도메인 화이트리스트가 선행되어야 한다.
   def oembed_retrieve
-    begin
-      res = CanvasHttp.get(oembed_object_uri.to_s)
-      data = JSON.parse(res.body)
-      content_item = Lti::ContentItemConverter.convert_oembed(data)
-    rescue StandardError
-      content_item = {}
-    end
-    render :json => [content_item]
+    head :gone
   end
 
   # this is a simple LTI link selection extension example
