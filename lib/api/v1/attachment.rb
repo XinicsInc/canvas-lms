@@ -221,7 +221,9 @@ module Api::V1::Attachment
 
     if opts[:check_quota]
       get_quota
-      if params[:size] && @quota < @quota_used + params[:size].to_i
+      # LXCCOP-2015 잔여 쿼터가 없으면 size 미전송 요청도 여기서 막는다.
+      # 통과시키면 아래 max_size 가 1바이트 정책을 발급해 스토리지 오류가 그대로 노출된다.
+      if @quota <= @quota_used || (params[:size] && @quota < @quota_used + params[:size].to_i)
         over_quota = I18n.t('lib.api.over_quota', 'file size exceeds quota')
         if opts[:return_json]
           return { error: true, message: over_quota }
@@ -316,6 +318,17 @@ module Api::V1::Attachment
       else
         on_duplicate = nil if on_duplicate == 'overwrite'
         quota_exemption = @attachment.quota_exemption_key if !opts[:check_quota]
+
+        # LXCCOP-2015 업로드 정책의 크기 상한을 잔여 쿼터와 연동한다.
+        # 서명된 값이라 클라이언트가 위조할 수 없고 스토리지가 실측 바이트로 검사한다.
+        # 하한이 1 인 이유: ajax_upload_params 가 `max_size || CONTENT_LENGTH_RANGE` 로 읽는데
+        # Ruby 에서 0 은 참이라 0 을 넘기면 ['content-length-range', 1, 0] 이 된다.
+        # 한계: 발급 시점의 잔여 쿼터로 서명되고 30분 유효하며 발급 횟수 제한이 없다.
+        # preflight 를 반복하면 각각 상한을 지키면서 합계로는 쿼터를 넘길 수 있다.
+        max_size = if opts[:check_quota]
+          [[@quota - @quota_used, 1].max, Attachment::CONTENT_LENGTH_RANGE].min
+        end
+
         json = @attachment.ajax_upload_params(
           api_v1_files_create_url(
             on_duplicate: on_duplicate,
@@ -329,7 +342,8 @@ module Api::V1::Attachment
             include: params[:success_include]),
           ssl: request.ssl?,
           file_param: opts[:file_param],
-          no_redirect: params[:no_redirect])
+          no_redirect: params[:no_redirect],
+          max_size: max_size)
         json = json.slice(:upload_url, :upload_params, :file_param)
       end
     end
