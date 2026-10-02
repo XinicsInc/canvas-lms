@@ -183,9 +183,16 @@ module QuizQuestionsCommon
 
   def submit_finished_quiz
     submit_the_quiz
+    # PRT-109 당시의 검증 기준:
     # PRT-109: 모든 문항을 답한 제출에는 경고 모달이 표시되지 않아야 한다
     # (네이티브 alert 부재 단정은 confirm 제거 후 항상 참이 되어 검증력을 잃었다)
-    expect(element_exists?('#quiz_warning_dialog') && f('#quiz_warning_dialog').displayed?).to be_falsey
+    # LXCCUP-636: 위 기준을 변경하여 모든 문항에 답했어도 최종 제출은 확인한다.
+    # PRT-109의 페이지 내부 모달을 그대로 사용하며 네이티브 confirm은 사용하지 않는다.
+    expect(fj('#quiz_warning_dialog:visible')).to be_displayed
+    expect(f('#quiz_warning_dialog .quiz_warning_message')).to include_text(
+      'Submitting will end the quiz immediately. Are you sure you want to submit?'
+    )
+    fj(".ui-dialog:visible .ui-dialog-buttonpane button:contains('OK')").click
   end
 
   def answer_the_question_correctly
