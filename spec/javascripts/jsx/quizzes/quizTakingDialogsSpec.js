@@ -58,10 +58,13 @@ test('최종 제출 + 일반 퀴즈 + 미응답 문항이 있으면 unanswered �
     unseenCount: 0,
     unansweredCount: 3
   })
-  ok(/3 unanswered questions/.test(msg))
+  equal(
+    msg,
+    'You have 3 unanswered questions (see the right sidebar for details). Submitting will end the quiz immediately. Are you sure you want to submit?'
+  )
 })
 
-test('경고 조건이 없으면 null을 반환한다', () => {
+test('전체 답변 후 최종 제출에도 종료 확인을 한다', () => {
   equal(
     getSubmitWarningMessage({
       cantGoBack: false,
@@ -70,7 +73,7 @@ test('경고 조건이 없으면 null을 반환한다', () => {
       unseenCount: 0,
       unansweredCount: 0
     }),
-    null
+    'Submitting will end the quiz immediately. Are you sure you want to submit?'
   )
 })
 
@@ -84,6 +87,32 @@ test('최종 제출이 아니고 문항이 답변된 상태면 null을 반환한
       unansweredCount: 5
     }),
     null
+  )
+})
+
+test('뒤로 이동 불가 퀴즈도 전체 답변 후 최종 제출을 확인한다', () => {
+  equal(
+    getSubmitWarningMessage({
+      cantGoBack: true,
+      currentQuestionAnswered: true,
+      finalSubmitButtonClicked: true,
+      unseenCount: 0,
+      unansweredCount: 0
+    }),
+    'Submitting will end the quiz immediately. Are you sure you want to submit?'
+  )
+})
+
+test('최종 제출에서도 기존 공란 경고를 우선 유지한다', () => {
+  equal(
+    getSubmitWarningMessage({
+      cantGoBack: true,
+      currentQuestionAnswered: false,
+      finalSubmitButtonClicked: true,
+      unseenCount: 0,
+      unansweredCount: 1
+    }),
+    "You can't come back to this question once you hit next. Are you sure you want to leave it blank?"
   )
 })
 

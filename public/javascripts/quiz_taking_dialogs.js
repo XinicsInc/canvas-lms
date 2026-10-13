@@ -92,6 +92,7 @@ export function decideSubmitAttempt(state, warningMessage) {
 
 // 제출 시 경고 메시지 결정. take_quiz.js 제출 핸들러의 분기(원 872–911행)를
 // 우선순위 그대로 순수 함수로 옮긴 것 — 반환 null이면 경고 없음.
+// LXCCUP-636: 기존 경고가 없는 최종 제출에도 종료 확인을 추가한다.
 export function getSubmitWarningMessage({
   cantGoBack,
   currentQuestionAnswered,
@@ -125,13 +126,20 @@ export function getSubmitWarningMessage({
         'confirms.unanswered_questions',
         {
           one:
-            'You have 1 unanswered question (see the right sidebar for details).  Submit anyway?',
+            'You have 1 unanswered question (see the right sidebar for details). Submitting will end the quiz immediately. Are you sure you want to submit?',
           other:
-            'You have %{count} unanswered questions (see the right sidebar for details).  Submit anyway?'
+            'You have %{count} unanswered questions (see the right sidebar for details). Submitting will end the quiz immediately. Are you sure you want to submit?'
         },
         {count: unansweredCount}
       )
     }
+  }
+
+  if (finalSubmitButtonClicked && warningMessage == null) {
+    warningMessage = I18n.t(
+      'confirms.final_submit',
+      'Submitting will end the quiz immediately. Are you sure you want to submit?'
+    )
   }
 
   return warningMessage

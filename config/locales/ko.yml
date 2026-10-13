@@ -7486,8 +7486,8 @@ ko:
         quiz_instructions: 설명
         audible_quiz_timer_shortcut_description: '참고 : 이것은 시간 제한 퀴즈입니다. SHIFT, ALT 및 T ... 키보드 조합을 눌러 퀴즈를 풀 때 언제든지 남은 시간을 확인할 수 있습니다. 다시 : SHIFT, ALT 및 T ...'
         buttons:
-          previous: 이전
-          next: 다음
+          previous: 이전 문제
+          next: 다음 문제
           out_of_time_submit: 네, 알겠습니다.
           submit_quiz: 퀴즈 제출
         not_saved: 저장 안 됨
@@ -7687,12 +7687,13 @@ ko:
         unfinished_quiz: 퀴즈를 마치지 않은 채로 나가려고 합니다. 계속 진행하시겠습니까?
         navigate_away: 이 페이지에서 나가려고 합니다. 계속 진행하시겠습니까?
         cant_go_back_blank: 다음을 클릭하면 이 문제로 돌아올 수 없습니다. 공란으로 두시겠습니까?
+        final_submit: 제출 시 퀴즈 응시가 즉시 종료됩니다. 제출하시겠습니까?
         unseen_questions:
           one: 아직 문제 %{count}개를 보지 않았습니다.  제출하시겠습니까?
           other: 아직 문제 %{count}개를 보지 않았습니다.  제출하시겠습니까?
         unanswered_questions:
-          one: 답변하지 않은 문제가 %{count}개 있습니다(상세 정보는 오른쪽 사이드바 참고). 제출하시겠습니까?
-          other: 답변하지 않은 문제가 %{count}개 있습니다(상세 정보는 오른쪽 사이드바 참고). 제출하시겠습니까?
+          one: 답하지 않은 문제가 %{count}개 있습니다 (상세 정보는 오른쪽 사이드바 참고). 제출 시 퀴즈 응시가 즉시 종료됩니다. 제출하시겠습니까?
+          other: 답하지 않은 문제가 %{count}개 있습니다 (상세 정보는 오른쪽 사이드바 참고). 제출 시 퀴즈 응시가 즉시 종료됩니다. 제출하시겠습니까?
       buttons:
         continue_anyway: 계속
         warning_ok: 확인
@@ -11848,12 +11849,12 @@ ko:
     file_unpublished_module: 이 파일은 공개 안 된 모듈의 일부로서 아직 사용할 수 없습니다.
     page_unpublished_module: 이 페이지는 공개 안 된 모듈의 일부로서 아직 사용할 수 없습니다.
     content_unpublished_module: 이 내용은 공개 안 된 모듈의 일부로서 아직 사용할 수 없습니다.
-    quiz_module_time_locked: 이 퀴즈는 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
-    assignment_module_time_locked: 이 과제는 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
-    topic_module_time_locked: 이 항목은 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
-    file_module_time_locked: 이 파일은 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
-    page_module_time_locked: 이 페이지는 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
-    content_module_time_locked: 이 콘텐츠는 %{time}까지 잠긴 모듈 * %{time} *의 일부입니다.
+    quiz_module_time_locked: 이 퀴즈는 *%{time}*까지 잠겨 있습니다.
+    assignment_module_time_locked: 이 과제는 *%{time}*까지 잠겨 있습니다.
+    topic_module_time_locked: 이 항목은 *%{time}*까지 잠겨 있습니다.
+    file_module_time_locked: 이 파일은 *%{time}*까지 잠겨 있습니다.
+    page_module_time_locked: 이 페이지는 *%{time}*까지 잠겨 있습니다.
+    content_module_time_locked: 이 콘텐츠는 *%{time}*까지 잠겨 있습니다.
     quiz_locked_module: 이 퀴즈는 *%{module}* 모듈의 일부로 아직 잠금이 해제되지 않았습니다.
     assignment_locked_module: 이 과제는 *%{module}* 모듈의 일부로서 아직 잠금이 해제되지 않았습니다.
     topic_locked_module: 이 주제는 *%{module}* 모듈의 일부로서 아직 잠금 해제되지 않았습니다.
@@ -16314,9 +16315,9 @@ ko:
   sending_message_failed_please_try_again_b53cc904: 메시지 전송에 실패했습니다. 다시 시도하십시오.
   prerequisites_lookup:
     headers:
-      completion_prerequisites: 완료 필수 구성 요소
+      completion_prerequisites: 선행 조건
     labels:
-      requirements_must_be_completed: 이 페이지를 잠금 해제하기 전에 다음 요구 사항이 완료되어야 합니다.
+      requirements_must_be_completed: 설정된 선행 조건이 있다면 모두 완료해주세요
   question_bank:
     updating_outcomes: 성과 업데이트 중...
     align_outcomes: 성과 정렬
